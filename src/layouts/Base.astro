@@ -1,0 +1,82 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/fraunces';
+import '../styles/global.css';
+import { getImage } from 'astro:assets';
+import { site } from '../data/site';
+import { walkBilder } from '../data/images';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Unterseiten (Impressum etc.) nicht in den Index */
+  noindex?: boolean;
+}
+
+const { title, description, noindex = false } = Astro.props;
+
+// OG-Image: stärkstes Galeriebild (Station 1)
+const ogImage = await getImage({
+  src: walkBilder[0]!.src,
+  width: 1200,
+  format: 'jpeg',
+});
+const ogImageUrl = new URL(ogImage.src, Astro.site);
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Carpenter',
+  name: `Tischlerei ${site.name}`,
+  description:
+    'Meistertischlerei in Berlin-Pankow: Möbel nach Maß, Möbelrestaurierung und Innenausbau.',
+  url: Astro.site?.href,
+  telephone: site.phoneHref,
+  email: site.email,
+  foundingDate: String(site.foundingYear),
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.street,
+    postalCode: site.zip,
+    addressLocality: site.city,
+    addressCountry: 'DE',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: site.geo.lat,
+    longitude: site.geo.lng,
+  },
+  openingHours: site.openingHoursSchema, // TODO: echte Öffnungszeiten
+  areaServed: { '@type': 'City', name: 'Berlin' },
+  image: ogImageUrl.href,
+};
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <link rel="canonical" href={canonical.href} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#2B2523" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={`Tischlerei ${site.name}`} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:image" content={ogImageUrl.href} />
+    <meta property="og:locale" content="de_DE" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <slot />
+    <script src="../scripts/reveal.ts"></script>
+  </body>
+</html>

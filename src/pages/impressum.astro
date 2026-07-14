@@ -1,0 +1,76 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+---
+
+<Base
+  title="Impressum | Fandrich GmbH — Tischlerei Berlin Pankow"
+  description="Impressum der Fandrich GmbH, Tischlerei und Möbelrestaurierung in Berlin-Pankow."
+  noindex
+>
+  <Nav client:load solid />
+  <main class="legal">
+    <div class="wrap">
+      <p class="eyebrow">Rechtliches</p>
+      <h1 class="headline">Impressum</h1>
+
+      <h2>Angaben gemäß § 5 DDG</h2>
+      <p>
+        {site.name}<br />
+        {site.street}<br />
+        {site.zip} {site.city}
+      </p>
+
+      <h2>Vertreten durch</h2>
+      <p>TODO: Geschäftsführer:in eintragen</p>
+
+      <h2>Kontakt</h2>
+      <p>
+        Telefon: {site.phone}<br />
+        E-Mail: {site.email}
+      </p>
+
+      <h2>Registereintrag</h2>
+      <p>
+        TODO: Registergericht und Handelsregisternummer eintragen<br />
+        (z. B. Amtsgericht Charlottenburg, HRB XXXXX)
+      </p>
+
+      <h2>Umsatzsteuer-ID</h2>
+      <p>TODO: USt-IdNr. gemäß § 27a UStG eintragen</p>
+
+      <h2>Handwerksrolle</h2>
+      <p>
+        TODO: Eintragung bei der Handwerkskammer Berlin prüfen und eintragen (Tischlerhandwerk,
+        zuständige Kammer: Handwerkskammer Berlin, Blücherstraße 68, 10961 Berlin)
+      </p>
+
+      <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+      <p>TODO: Verantwortliche Person mit Anschrift eintragen</p>
+
+      <h2>Streitschlichtung</h2>
+      <p>
+        Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
+        Verbraucherschlichtungsstelle teilzunehmen.
+      </p>
+    </div>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .legal {
+    padding-block: clamp(8rem, 18vh, 12rem) var(--section-gap);
+  }
+
+  .legal h2 {
+    font-size: 1.3rem;
+    margin-top: 2.5rem;
+  }
+
+  .legal p {
+    margin-top: 0.75rem;
+  }
+</style>

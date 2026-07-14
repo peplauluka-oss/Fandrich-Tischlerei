@@ -1,0 +1,114 @@
+import { useState, type FormEvent } from 'react';
+import '../styles/form.css';
+
+type Status = 'idle' | 'sending' | 'success' | 'error';
+
+interface Errors {
+  name?: string;
+  email?: string;
+  nachricht?: string;
+}
+
+// TODO Formular-Backend: Formspree-Endpoint eintragen (https://formspree.io),
+// z. B. 'https://formspree.io/f/XXXXXXXX'. Solange leer, zeigt das Formular
+// nach dem Absenden eine ehrliche Fehlermeldung statt vorzutäuschen, dass
+// die Nachricht ankam.
+const FORM_ENDPOINT = '';
+
+export default function KontaktForm() {
+  const [status, setStatus] = useState<Status>('idle');
+  const [errors, setErrors] = useState<Errors>({});
+
+  const validate = (data: FormData): Errors => {
+    const next: Errors = {};
+    const name = String(data.get('name') ?? '').trim();
+    const email = String(data.get('email') ?? '').trim();
+    const nachricht = String(data.get('nachricht') ?? '').trim();
+    if (name.length < 2) next.name = 'Bitte nennen Sie uns Ihren Namen.';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+      next.email = 'Bitte geben Sie eine gültige E-Mail-Adresse an.';
+    if (nachricht.length < 10)
+      next.nachricht = 'Bitte beschreiben Sie Ihr Projekt in ein paar Sätzen.';
+    return next;
+  };
+
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const nextErrors = validate(data);
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length > 0) return;
+
+    if (!FORM_ENDPOINT) {
+      setStatus('error');
+      return;
+    }
+
+    setStatus('sending');
+    try {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        body: data,
+        headers: { Accept: 'application/json' },
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      setStatus('success');
+      form.reset();
+    } catch {
+      setStatus('error');
+    }
+  };
+
+  if (status === 'success') {
+    return (
+      <p className="form__result" role="status">
+        Ihre Nachricht ist angekommen. Wir melden uns innerhalb von zwei Werktagen bei Ihnen.
+      </p>
+    );
+  }
+
+  return (
+    <form className="form" onSubmit={onSubmit} noValidate>
+      <div className="form__field">
+        <input type="text" id="name" name="name" placeholder=" " autoComplete="name" required />
+        <label htmlFor="name">Name</label>
+        {errors.name && <p className="form__error">{errors.name}</p>}
+      </div>
+
+      <div className="form__field">
+        <input type="email" id="email" name="email" placeholder=" " autoComplete="email" required />
+        <label htmlFor="email">E-Mail</label>
+        {errors.email && <p className="form__error">{errors.email}</p>}
+      </div>
+
+      <div className="form__field">
+        <input type="tel" id="telefon" name="telefon" placeholder=" " autoComplete="tel" />
+        <label htmlFor="telefon">Telefon (optional)</label>
+      </div>
+
+      <div className="form__field">
+        <textarea id="nachricht" name="nachricht" placeholder=" " rows={5} required />
+        <label htmlFor="nachricht">Ihr Projekt</label>
+        {errors.nachricht && <p className="form__error">{errors.nachricht}</p>}
+      </div>
+
+      <button type="submit" className="btn" disabled={status === 'sending'}>
+        {status === 'sending' ? 'Wird gesendet …' : 'Nachricht senden'}
+        <span className="arrow" aria-hidden="true">
+          →
+        </span>
+      </button>
+
+      {status === 'error' && (
+        <p className="form__result form__result--error" role="alert">
+          Das hat leider nicht geklappt. Schreiben Sie uns direkt an{' '}
+          <a href="mailto:kontakt@tischlerei-fandrich.de" className="link-static">
+            kontakt@tischlerei-fandrich.de
+          </a>{' '}
+          oder rufen Sie an: 030&nbsp;36&nbsp;44&nbsp;57&nbsp;60.
+        </p>
+      )}
+    </form>
+  );
+}

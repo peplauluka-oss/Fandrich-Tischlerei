@@ -1,0 +1,115 @@
+---
+import { Image } from 'astro:assets';
+import { materialBilder } from '../data/images';
+---
+
+<section class="section werkstatt on-ink" id="werkstatt" aria-label="Werkstatt und Material">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num" data-num="05" aria-hidden="true"></span>
+      <p class="eyebrow reveal">Werkstatt</p>
+      <h2 class="headline reveal">Material, das man ernst nimmt.</h2>
+    </div>
+
+    <div class="werkstatt__grid">
+      <div class="werkstatt__text reveal">
+        <p>
+          Wir arbeiten mit Massivholz, das wir selbst aussuchen — Eiche, Esche, Kirschbaum — und
+          mit Furnieren, deren Bild wir am Werkstück abstimmen. Verbindungen schneiden wir, wo es
+          das Möbel verlangt, von Hand: Zinken, Schlitz und Zapfen, Gratleisten.
+        </p>
+        <p>
+          Das dauert länger als ein Beschlag aus dem Katalog. Aber es hält länger — und man sieht
+          es jeden Tag.
+        </p>
+      </div>
+
+      {
+        materialBilder.map((bild) => (
+          <figure class="werkstatt__figure reveal" style="--reveal-delay: 0.15s">
+            <div class="photo werkstatt__frame">
+              <Image
+                src={bild.src}
+                alt={bild.alt}
+                widths={[480, 800]}
+                sizes="(min-width: 900px) 44vw, 100vw"
+                quality={80}
+              />
+            </div>
+            <figcaption>{bild.caption}</figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .werkstatt {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .werkstatt .eyebrow {
+    color: var(--oak);
+  }
+
+  .werkstatt__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: start;
+    margin-top: clamp(3rem, 7vh, 5rem);
+  }
+
+  .werkstatt__text p {
+    color: rgba(250, 247, 242, 0.82);
+    max-width: 52ch;
+  }
+
+  .werkstatt__text p + p {
+    margin-top: 1.25rem;
+  }
+
+  .werkstatt__frame {
+    overflow: clip;
+  }
+
+  .werkstatt__frame :global(img) {
+    width: 100%;
+    height: auto;
+    transition: transform 0.6s var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    .werkstatt__figure:hover :global(img) {
+      transform: scale(1.03);
+    }
+  }
+
+  .werkstatt__figure figcaption {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.1rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(250, 247, 242, 0.6);
+  }
+
+  .werkstatt__figure figcaption::before {
+    content: '';
+    flex: none;
+    width: 2.5rem;
+    height: 1px;
+    background: var(--oak);
+  }
+
+  @media (max-width: 899px) {
+    .werkstatt__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

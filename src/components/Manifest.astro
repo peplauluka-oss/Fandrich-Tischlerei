@@ -1,0 +1,92 @@
+---
+import { site } from '../data/site';
+
+const satz = `Seit ${site.foundingYear} fertigen wir Möbel und Innenausbauten, die Generationen überdauern — von Hand, in Pankow.`;
+const worte = satz.split(' ');
+
+// TODO: Alle drei Werte vom Betrieb verifizieren (Platzhalter).
+const zahlen = [
+  { wert: 60, suffix: '+', label: 'Jahre Erfahrung' },
+  { wert: 1200, suffix: '+', label: 'Realisierte Projekte' },
+  { wert: 3, suffix: '', label: 'Gewerke aus einer Hand' },
+];
+---
+
+<section class="section" id="werkstatt-manifest" aria-label="Über die Werkstatt">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num" data-num="02" aria-hidden="true"></span>
+      <p class="eyebrow reveal">Die Werkstatt</p>
+    </div>
+    <p class="manifest" data-manifest>
+      {worte.map((wort) => <span class="manifest-word">{wort} </span>)}
+    </p>
+
+    <dl class="zahlen">
+      {
+        zahlen.map((z, i) => (
+          <div class="zahl reveal" style={`--reveal-delay: ${i * 0.1}s`}>
+            <dt>{z.label}</dt>
+            <dd>
+              <span data-countup={z.wert} data-countup-suffix={z.suffix}>
+                0{z.suffix}
+              </span>
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>
+
+<style>
+  .manifest {
+    font-family: var(--font-head);
+    font-weight: 340;
+    font-size: clamp(1.6rem, 3.6vw, 2.4rem);
+    letter-spacing: -0.02em;
+    line-height: 1.4;
+    max-width: 28ch;
+  }
+
+  .manifest-word {
+    opacity: 0.15;
+  }
+
+  .zahlen {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    justify-content: start;
+    gap: clamp(2rem, 6vw, 5rem);
+    margin-top: clamp(3.5rem, 8vh, 6rem);
+  }
+
+  .zahl {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .zahl dd {
+    font-family: var(--font-head);
+    font-weight: 340;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .zahl dt {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  @media (max-width: 560px) {
+    .zahlen {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>

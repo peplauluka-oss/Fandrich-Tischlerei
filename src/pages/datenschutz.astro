@@ -1,0 +1,81 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+---
+
+<Base
+  title="Datenschutz | Fandrich GmbH — Tischlerei Berlin Pankow"
+  description="Datenschutzerklärung der Fandrich GmbH, Tischlerei und Möbelrestaurierung in Berlin-Pankow."
+  noindex
+>
+  <Nav client:load solid />
+  <main class="legal">
+    <div class="wrap">
+      <p class="eyebrow">Rechtliches</p>
+      <h1 class="headline">Datenschutz</h1>
+
+      <h2>1. Verantwortlicher</h2>
+      <p>
+        {site.name}, {site.street}, {site.zip} {site.city}<br />
+        Telefon: {site.phone}, E-Mail: {site.email}<br />
+        TODO: Angaben verifizieren, ggf. Datenschutzbeauftragte:n ergänzen.
+      </p>
+
+      <h2>2. Hosting und Server-Logfiles</h2>
+      <p>
+        Beim Aufruf dieser Website verarbeitet unser Hostinganbieter automatisch Informationen
+        (z. B. IP-Adresse, Datum und Uhrzeit, aufgerufene Seite), die Ihr Browser übermittelt.
+        Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse am sicheren Betrieb).
+        TODO: Hostinganbieter benennen und Auftragsverarbeitungsvertrag dokumentieren.
+      </p>
+
+      <h2>3. Kontaktformular und E-Mail</h2>
+      <p>
+        Wenn Sie uns über das Formular oder per E-Mail kontaktieren, verarbeiten wir die von Ihnen
+        mitgeteilten Daten (Name, E-Mail-Adresse, optional Telefonnummer, Inhalt der Nachricht) zur
+        Bearbeitung Ihrer Anfrage (Art. 6 Abs. 1 lit. b DSGVO). Die Daten werden gelöscht, sobald
+        sie für die Bearbeitung nicht mehr erforderlich sind und keine gesetzlichen
+        Aufbewahrungspflichten bestehen. TODO: Formular-Dienstleister (z. B. Formspree) benennen,
+        sobald das Formular-Backend angebunden ist.
+      </p>
+
+      <h2>4. Kartendarstellung (OpenStreetMap)</h2>
+      <p>
+        Die Karte auf dieser Website wird erst geladen, wenn Sie auf „Karte laden“ klicken. Erst
+        dann wird eine Verbindung zu Servern der OpenStreetMap Foundation (St John's Innovation
+        Centre, Cowley Road, Cambridge, CB4 0WS, Vereinigtes Königreich) hergestellt und Ihre
+        IP-Adresse übermittelt. Rechtsgrundlage ist Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO).
+      </p>
+
+      <h2>5. Cookies und Tracking</h2>
+      <p>Diese Website verwendet keine Cookies und keine Analyse- oder Tracking-Dienste.</p>
+
+      <h2>6. Ihre Rechte</h2>
+      <p>
+        Sie haben das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung
+        (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) und
+        Widerspruch (Art. 21). Sie können sich zudem bei einer Aufsichtsbehörde beschweren —
+        zuständig ist die Berliner Beauftragte für Datenschutz und Informationsfreiheit.
+      </p>
+    </div>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .legal {
+    padding-block: clamp(8rem, 18vh, 12rem) var(--section-gap);
+  }
+
+  .legal h2 {
+    font-size: 1.3rem;
+    margin-top: 2.5rem;
+  }
+
+  .legal p {
+    margin-top: 0.75rem;
+    max-width: 68ch;
+  }
+</style>

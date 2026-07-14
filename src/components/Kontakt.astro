@@ -1,0 +1,140 @@
+---
+import KontaktForm from './KontaktForm';
+import { site } from '../data/site';
+
+// OSM-Einbettung erst nach Klick (Two-Click, DSGVO-konform)
+const bbox = `${site.geo.lng - 0.008},${site.geo.lat - 0.004},${site.geo.lng + 0.008},${site.geo.lat + 0.004}`;
+const osmSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${site.geo.lat},${site.geo.lng}`;
+const osmLink = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lng}#map=16/${site.geo.lat}/${site.geo.lng}`;
+---
+
+<section class="section" id="kontakt" aria-label="Kontakt">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num" data-num="07" aria-hidden="true"></span>
+      <p class="eyebrow reveal">Kontakt</p>
+    </div>
+
+    <div class="kontakt__grid">
+      <div class="kontakt__info reveal">
+        <h2 class="headline">Erzählen Sie uns von Ihrem Projekt.</h2>
+        <address>
+          <p>
+            Tischlerei {site.name}<br />
+            {site.street}<br />
+            {site.zip} {site.city}
+          </p>
+          <p>
+            <a href={`tel:${site.phoneHref}`} class="link-line">{site.phone}</a>
+            <br />
+            <a href={`mailto:${site.email}`} class="link-line">{site.email}</a>
+          </p>
+          <p class="kontakt__hours">{site.openingHours}</p>
+        </address>
+      </div>
+
+      <div class="kontakt__form reveal" style="--reveal-delay: 0.12s">
+        <KontaktForm client:visible />
+      </div>
+    </div>
+
+    <div class="map reveal" data-map>
+      <div class="map__placeholder">
+        <p class="map__label">Treseburger Straße 30, 13129 Berlin-Pankow</p>
+        <button type="button" class="btn" data-map-load>
+          Karte laden <span class="arrow" aria-hidden="true">→</span>
+        </button>
+        <p class="map__hint">
+          Beim Laden wird eine Verbindung zu OpenStreetMap hergestellt.
+          <a href="/datenschutz" class="link-static">Hinweise zum Datenschutz</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .kontakt__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(3rem, 7vw, 6rem);
+    align-items: start;
+  }
+
+  address {
+    font-style: normal;
+    margin-top: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  address a {
+    line-height: 2;
+  }
+
+  .kontakt__hours {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+
+  .map {
+    margin-top: clamp(4rem, 9vh, 7rem);
+  }
+
+  .map__placeholder,
+  .map :global(iframe) {
+    width: 100%;
+    height: clamp(18rem, 45vh, 26rem);
+    border: 0;
+  }
+
+  .map__placeholder {
+    background: var(--paper-dim);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    text-align: center;
+    padding: var(--gutter);
+  }
+
+  .map__label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .map__hint {
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    max-width: 44ch;
+  }
+
+  @media (max-width: 899px) {
+    .kontakt__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script define:vars={{ osmSrc, osmLink }}>
+  const map = document.querySelector('[data-map]');
+  const btn = document.querySelector('[data-map-load]');
+  if (map && btn) {
+    btn.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.src = osmSrc;
+      iframe.title = 'Karte: Tischlerei Fandrich, Treseburger Straße 30, 13129 Berlin';
+      iframe.loading = 'lazy';
+      const link = document.createElement('p');
+      link.className = 'map__hint';
+      link.style.marginTop = '0.75rem';
+      link.innerHTML = `<a href="${osmLink}" target="_blank" rel="noopener" class="link-static">Größere Karte auf openstreetmap.org öffnen</a>`;
+      map.replaceChildren(iframe, link);
+    });
+  }
+</script>

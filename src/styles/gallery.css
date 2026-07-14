@@ -1,0 +1,97 @@
+.walk {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4rem, 10vh, 8rem);
+}
+
+.walk__station {
+  margin: 0;
+}
+
+/* Volle Breite: aus dem Container ausbrechen */
+.walk__station--full {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+}
+
+.walk__station--full .walk__frame {
+  height: min(80vh, 46rem);
+}
+
+/* Versetzte Stationen (Hochformate) */
+.walk__station--left,
+.walk__station--right {
+  width: min(70%, 30rem);
+}
+
+.walk__station--right {
+  margin-left: auto;
+}
+
+.walk__frame {
+  position: relative;
+  overflow: clip;
+}
+
+/* Innerer Container 115 % hoch für den Parallax-Spielraum */
+.walk__parallax {
+  position: absolute;
+  inset: -7.5% 0 auto 0;
+  height: 115%;
+  will-change: transform;
+}
+
+.walk__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Caption: gesperrte Versalien mit 1px Oak-Linie davor */
+.walk__caption {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.1rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.walk__station--full .walk__caption {
+  padding-inline: var(--gutter);
+}
+
+.walk__caption::before {
+  content: '';
+  flex: none;
+  width: 2.5rem;
+  height: 1px;
+  background: var(--oak);
+}
+
+/* Text-Zwischenstation */
+.walk__interlude {
+  margin: clamp(4rem, 10vh, 8rem) auto 0;
+  max-width: 34ch;
+  font-family: var(--font-head);
+  font-weight: 340;
+  font-size: clamp(1.5rem, 3.4vw, 2.2rem);
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+  text-align: center;
+  text-wrap: balance;
+}
+
+@media (max-width: 767px) {
+  .walk__station--left,
+  .walk__station--right {
+    width: 100%;
+  }
+
+  .walk__station--full .walk__frame {
+    height: 60vh;
+  }
+}

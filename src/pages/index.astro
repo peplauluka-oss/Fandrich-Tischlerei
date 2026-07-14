@@ -1,0 +1,73 @@
+---
+import { getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav';
+import Hero from '../components/Hero.astro';
+import Manifest from '../components/Manifest.astro';
+import Leistungen from '../components/Leistungen.astro';
+import GalleryWalk from '../components/GalleryWalk';
+import Werkstatt from '../components/Werkstatt.astro';
+import Prozess from '../components/Prozess.astro';
+import Kontakt from '../components/Kontakt.astro';
+import Footer from '../components/Footer.astro';
+import { walkBilder } from '../data/images';
+
+const title = 'Tischlerei Berlin Pankow — Möbel nach Maß & Restaurierung | Fandrich GmbH';
+const description =
+  'Meistertischlerei in Berlin-Pankow seit 1964: Einbaumöbel nach Maß, Möbelrestaurierung und Innenausbau — gefertigt in der eigenen Werkstatt.';
+
+// Bilder für den Gallery Walk (React-Island) über astro:assets optimieren
+const walkImages = await Promise.all(
+  walkBilder.map(async (b) => {
+    const widths = [...new Set([Math.min(480, b.src.width), b.src.width])];
+    const img = await getImage({ src: b.src, widths, quality: 80 });
+    return {
+      id: b.id,
+      src: img.src,
+      srcSet: img.srcSet.attribute,
+      sizes: b.hochformat ? '(min-width: 768px) 30rem, 100vw' : '100vw',
+      width: b.src.width,
+      height: b.src.height,
+      alt: b.alt,
+      caption: b.caption,
+      hochformat: b.hochformat,
+    };
+  }),
+);
+
+const interlude =
+  'Ein Möbel ist gut, wenn man nach zwanzig Jahren nichts daran ändern möchte.';
+---
+
+<Base title={title} description={description}>
+  <Nav client:load />
+  <main>
+    <Hero />
+    <Manifest />
+    <Leistungen />
+
+    <section class="section" id="arbeiten" aria-label="Ausgewählte Arbeiten">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="section-num" data-num="04" aria-hidden="true"></span>
+          <p class="eyebrow reveal">Ausgewählte Arbeiten</p>
+          <h2 class="headline reveal">Ein Gang durch unsere Projekte.</h2>
+        </div>
+      </div>
+      <div class="walk-outer wrap">
+        <GalleryWalk client:visible images={walkImages} interlude={interlude} />
+      </div>
+    </section>
+
+    <Werkstatt />
+    <Prozess />
+    <Kontakt />
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .walk-outer {
+    margin-top: clamp(3rem, 7vh, 5rem);
+  }
+</style>

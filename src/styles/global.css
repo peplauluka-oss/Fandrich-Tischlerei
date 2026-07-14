@@ -1,0 +1,258 @@
+/* ================================================================
+   Fandrich GmbH — Design-Tokens & Grundsystem
+   ================================================================ */
+
+:root {
+  /* Farben — keine weiteren! */
+  --paper: #faf7f2;
+  --ink: #2b2523;
+  --oak: #b8895a;
+  --paper-dim: #f1ebe2;
+  --ink-soft: rgba(43, 37, 35, 0.65);
+  --paper-soft: rgba(250, 247, 242, 0.72);
+  --oak-line: rgba(184, 137, 90, 0.25);
+
+  /* Typografie */
+  --font-head: 'Fraunces Variable', Georgia, serif;
+  --font-body: 'Inter Variable', system-ui, sans-serif;
+
+  /* Bewegung */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Raum */
+  --section-gap: clamp(6rem, 14vh, 11rem);
+  --gutter: clamp(1.25rem, 4vw, 4rem);
+
+  /* Einheitlicher warmer Look für alle Projektfotos */
+  --photo-filter: sepia(0.06) saturate(1.05) brightness(1.02) contrast(1.01);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: clamp(1.05rem, 0.4vw + 0.95rem, 1.125rem);
+  font-weight: 400;
+  line-height: 1.7;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--oak);
+  color: var(--paper);
+}
+
+img,
+picture,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+/* -------- Typografie -------- */
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-head);
+  font-weight: 340;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+p {
+  max-width: 62ch;
+}
+
+a {
+  color: inherit;
+}
+
+.eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--oak);
+  margin-bottom: clamp(1.25rem, 3vh, 2rem);
+}
+
+.headline {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+/* Sektionsnummer hinter der Headline (8 % Deckkraft) */
+.section-head {
+  position: relative;
+}
+
+/* Nummer als Pseudo-Element-Content: rein dekorativ, nicht im
+   Accessibility-Tree und nicht als DOM-Text (Kontrast-Audits). */
+.section-num {
+  position: absolute;
+  top: -0.55em;
+  left: -0.06em;
+  font-family: var(--font-head);
+  font-weight: 340;
+  font-size: clamp(5rem, 12vw, 9rem);
+  line-height: 1;
+  color: var(--ink);
+  opacity: 0.08;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.section-num::before {
+  content: attr(data-num);
+}
+
+.on-ink .section-num {
+  color: var(--paper);
+}
+
+.section-head > :not(.section-num) {
+  position: relative;
+  z-index: 1;
+}
+
+/* -------- Layout -------- */
+
+.wrap {
+  width: min(100% - 2 * var(--gutter), 72rem);
+  margin-inline: auto;
+}
+
+section[id] {
+  scroll-margin-top: 5.5rem;
+}
+
+.section {
+  padding-block: var(--section-gap);
+}
+
+/* -------- Buttons & Links -------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  padding: 1rem 1.75rem;
+  border: 0;
+  border-radius: 2px;
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.btn .arrow {
+  display: inline-block;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.btn:hover .arrow,
+.btn:focus-visible .arrow {
+  transform: translateX(4px);
+}
+
+.btn--paper {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.link-line {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  padding-bottom: 2px;
+  min-height: auto;
+}
+
+.link-line::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 100%;
+  background: var(--oak);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease-out);
+}
+
+.link-line:hover::after,
+.link-line:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Statischer Unterstrich für Fließtext-Links */
+.link-static {
+  text-decoration: underline;
+  text-decoration-color: var(--oak);
+  text-underline-offset: 3px;
+}
+
+/* -------- Projektfotos: einheitlicher warmer Look -------- */
+
+.photo img {
+  filter: var(--photo-filter);
+}
+
+/* -------- Scroll-Reveals (Astro-Teil, IntersectionObserver) -------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.8s var(--ease-out),
+    transform 0.8s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* -------- Reduced Motion: alles aus, Inhalte sofort sichtbar -------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

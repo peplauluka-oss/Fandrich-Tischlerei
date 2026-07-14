@@ -1,0 +1,75 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+}
+
+.form__field {
+  position: relative;
+}
+
+.form__field input,
+.form__field textarea {
+  width: 100%;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid rgba(43, 37, 35, 0.3);
+  border-radius: 0;
+  padding: 0.75rem 0 0.6rem;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  color: var(--ink);
+  min-height: 44px;
+  transition: border-color 0.4s var(--ease-out);
+}
+
+.form__field textarea {
+  resize: vertical;
+}
+
+.form__field input:focus,
+.form__field textarea:focus {
+  outline: none;
+  border-bottom-color: var(--oak);
+}
+
+.form__field label {
+  position: absolute;
+  left: 0;
+  top: 0.75rem;
+  font-size: 1rem;
+  color: var(--ink-soft);
+  pointer-events: none;
+  transform-origin: left top;
+  transition:
+    transform 0.35s var(--ease-out),
+    color 0.35s var(--ease-out);
+}
+
+.form__field input:focus + label,
+.form__field input:not(:placeholder-shown) + label,
+.form__field textarea:focus + label,
+.form__field textarea:not(:placeholder-shown) + label {
+  transform: translateY(-1.4rem) scale(0.72);
+  color: var(--oak);
+}
+
+.form__error {
+  margin-top: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--ink);
+}
+
+.form__error::before {
+  content: '— ';
+  color: var(--oak);
+}
+
+.form__result {
+  font-size: 1.05rem;
+  max-width: 42ch;
+}
+
+.form__result--error {
+  font-size: 0.95rem;
+}

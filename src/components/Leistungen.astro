@@ -1,0 +1,110 @@
+---
+const leistungen = [
+  {
+    nr: '01',
+    titel: 'Neuanfertigung',
+    text: 'Einbauschränke, Küchen, Bibliotheken — entworfen für Ihren Raum, gefertigt aus Massivholz und ausgesuchten Furnieren. Vom ersten Aufmaß bis zur letzten Fuge aus einer Hand.',
+  },
+  {
+    nr: '02',
+    titel: 'Restaurierung',
+    text: 'Wir setzen Möbel mit Geschichte instand: mit Schellackpolitur, traditionellen Leimen und Respekt vor der Substanz. Was Ihre Familie geprägt hat, bleibt erhalten.',
+  },
+  {
+    nr: '03',
+    titel: 'Innenausbau & Reparatur',
+    text: 'Türen, Dielung, Fensterinstandsetzung und Balkonverglasung im Berliner Altbau. Präzise Reparaturen, die man am Ende nicht mehr sieht.',
+  },
+];
+---
+
+<section class="section" id="leistungen" aria-label="Leistungen">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num" data-num="03" aria-hidden="true"></span>
+      <p class="eyebrow reveal">Leistungen</p>
+      <h2 class="headline reveal">Drei Gewerke, ein Anspruch.</h2>
+    </div>
+
+    <ul class="rows">
+      {
+        leistungen.map((l, i) => (
+          <li class="row reveal" style={`--reveal-delay: ${i * 0.1}s`}>
+            <span class="row__nr" aria-hidden="true">
+              {l.nr}
+            </span>
+            <div class="row__body">
+              <h3>{l.titel}</h3>
+              <p>{l.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .rows {
+    list-style: none;
+    margin-top: clamp(3rem, 7vh, 5rem);
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 4rem 1fr;
+    gap: 1.5rem;
+    padding-block: clamp(2rem, 4vh, 3rem);
+    border-top: 1px solid var(--oak-line);
+  }
+
+  .row:last-child {
+    border-bottom: 1px solid var(--oak-line);
+  }
+
+  .row__nr {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--oak);
+    opacity: 0.6;
+    padding-top: 0.5rem;
+    transition: opacity 0.5s var(--ease-out);
+  }
+
+  .row__body {
+    transition: transform 0.5s var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    .row:hover .row__nr {
+      opacity: 1;
+    }
+
+    .row:hover .row__body {
+      transform: translateY(-3px);
+    }
+  }
+
+  h3 {
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+  }
+
+  .row__body p {
+    margin-top: 0.75rem;
+    color: var(--ink-soft);
+    max-width: 58ch;
+  }
+
+  @media (max-width: 560px) {
+    .row {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+
+    .row__nr {
+      padding-top: 0;
+    }
+  }
+</style>

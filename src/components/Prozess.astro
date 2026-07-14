@@ -1,0 +1,116 @@
+---
+const schritte = [
+  {
+    nr: '01',
+    titel: 'Beratung vor Ort',
+    text: 'Wir sehen uns Ihren Raum an, nehmen Maß und hören zu. Erst dann sprechen wir über Lösungen.',
+  },
+  {
+    nr: '02',
+    titel: 'Entwurf & Material',
+    text: 'Sie erhalten einen Entwurf mit Materialmustern zum Anfassen — Holz, Furnier, Oberfläche. Entschieden wird am Original, nicht am Bildschirm.',
+  },
+  {
+    nr: '03',
+    titel: 'Fertigung in Pankow',
+    text: 'Ihr Möbel entsteht in unserer Werkstatt in der Treseburger Straße. Ein Ansprechpartner, kurze Wege, keine Zwischenhändler.',
+  },
+  {
+    nr: '04',
+    titel: 'Montage & Übergabe',
+    text: 'Wir montieren sauber, stellen ein und übergeben besenrein. Kleine Nacharbeiten gehören dazu, ohne Diskussion.',
+  },
+];
+---
+
+<section class="section" id="prozess" aria-label="Arbeitsweise">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num" data-num="06" aria-hidden="true"></span>
+      <p class="eyebrow reveal">So arbeiten wir</p>
+      <h2 class="headline reveal">Vier Schritte, ein Ergebnis.</h2>
+    </div>
+
+    <div class="steps" data-process-track>
+      <div class="steps__rail" aria-hidden="true">
+        <div class="steps__fill" data-process-line></div>
+      </div>
+      <ol class="steps__list">
+        {
+          schritte.map((s, i) => (
+            <li class="step reveal" style={`--reveal-delay: ${i * 0.08}s`}>
+              <span class="step__nr" aria-hidden="true">
+                {s.nr}
+              </span>
+              <div>
+                <h3>{s.titel}</h3>
+                <p>{s.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .steps {
+    position: relative;
+    margin-top: clamp(3rem, 7vh, 5rem);
+    padding-left: clamp(2.5rem, 6vw, 4rem);
+    max-width: 46rem;
+  }
+
+  .steps__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2.5rem, 6vh, 4rem);
+  }
+
+  /* Vertikale 1px-Linie, füllt sich mit Scrollfortschritt in --oak */
+  .steps__rail {
+    position: absolute;
+    left: 0.35rem;
+    top: 0.4rem;
+    bottom: 0.4rem;
+    width: 1px;
+    background: var(--oak-line);
+  }
+
+  .steps__fill {
+    width: 100%;
+    height: 100%;
+    background: var(--oak);
+    transform: scaleY(0);
+    transform-origin: top;
+    will-change: transform;
+  }
+
+  .step {
+    position: relative;
+  }
+
+  .step__nr {
+    position: absolute;
+    left: calc(-1 * clamp(2.5rem, 6vw, 4rem));
+    top: 0.45rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--oak);
+    background: var(--paper);
+    padding-block: 0.2rem;
+  }
+
+  h3 {
+    font-size: clamp(1.35rem, 2.6vw, 1.8rem);
+  }
+
+  .step p {
+    margin-top: 0.6rem;
+    color: var(--ink-soft);
+    max-width: 52ch;
+  }
+</style>
