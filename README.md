@@ -66,6 +66,25 @@ Statischer Build ohne Server-Funktionen — beide Anbieter erkennen Astro automa
 Danach in `astro.config.mjs` die finale Domain in `SITE` eintragen
 (wichtig für Sitemap, Canonical-URLs und OG-Image).
 
+## Bühne & Interaktion (Runde 3)
+
+- **Preloader** (einmal pro Session, `sessionStorage`): „Messen. → Fügen. →
+  Bleiben.", danach Vorhang-Reveal. Skip per Klick/Tap, bei reduced-motion aus.
+- **Lenis Smooth-Scroll** nur auf Desktop/feinen Zeigegeräten; Touch scrollt nativ.
+- **Zeilen-Reveal-System** (`.split`, vanilla): Headlines fahren zeilenweise aus
+  overflow-hidden-Masken hoch (`src/scripts/stage.ts`).
+- **Custom Cursor** (nur Desktop): Punkt, der über Galeriebildern zum
+  „Ansehen"-Kreis wird.
+- **Gallery Walk** horizontal gepinnt auf Desktop (Framer Motion `useScroll`,
+  transform-only), vertikal mit Rhythmus auf Mobil, statisch bei reduced-motion.
+- **Zum-Seitenanfang**-Button, feines SVG-Noise-Overlay, Marquee-Band.
+
+Aus den Referenzen übernommen und weiterentwickelt: warmer **Oak-Akzent-Button**
+(Benchmark Bräutigam) für Formular und Walk-Abschluss; nummerierte Sektionen
+(Carlwood); Zum-Seitenanfang (Lüdke). Bewusst **nicht** übernommen: gefälschte
+Erfahrungs-Zahlen und die Karten-Raster der Baukasten-Referenzen — Weißraum und
+editoriale Ruhe positionieren die Seite oberhalb dieser Vorlagen.
+
 ## Qualität
 
 Geprüft mit Lighthouse (mobil, Preview-Build): **Performance 95–97,

@@ -16,8 +16,9 @@
   --font-head: 'Fraunces Variable', Georgia, serif;
   --font-body: 'Inter Variable', system-ui, sans-serif;
 
-  /* Bewegung */
+  /* Bewegung — EIN Easing-System (Möbelscharnier: präzise, gedämpft) */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-curtain: cubic-bezier(0.76, 0, 0.24, 1);
 
   /* Raum */
   --section-gap: clamp(6rem, 14vh, 11rem);
@@ -34,8 +35,12 @@
 }
 
 html {
-  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+}
+
+/* Natives Smooth-Scroll nur ohne Lenis (Touch/reduced-motion) */
+html:not(.lenis) {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -60,6 +65,25 @@ video {
   max-width: 100%;
 }
 
+/* -------- Lenis Smooth-Scroll -------- */
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
 /* -------- Typografie -------- */
 
 h1,
@@ -67,8 +91,8 @@ h2,
 h3 {
   font-family: var(--font-head);
   font-weight: 340;
-  letter-spacing: -0.02em;
-  line-height: 1.08;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
   text-wrap: balance;
 }
 
@@ -91,8 +115,10 @@ a {
   margin-bottom: clamp(1.25rem, 3vh, 2rem);
 }
 
+/* Typo-Eskalation — Sektions-Headlines dürfen den Container fast berühren */
 .headline {
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(2.5rem, 6.5vw, 5rem);
+  letter-spacing: -0.03em;
 }
 
 /* Sektionsnummer hinter der Headline (8 % Deckkraft) */
@@ -104,11 +130,11 @@ a {
    Accessibility-Tree und nicht als DOM-Text (Kontrast-Audits). */
 .section-num {
   position: absolute;
-  top: -0.55em;
+  top: -0.5em;
   left: -0.06em;
   font-family: var(--font-head);
   font-weight: 340;
-  font-size: clamp(5rem, 12vw, 9rem);
+  font-size: clamp(6rem, 14vw, 11rem);
   line-height: 1;
   color: var(--ink);
   opacity: 0.08;
@@ -133,7 +159,7 @@ a {
 /* -------- Layout -------- */
 
 .wrap {
-  width: min(100% - 2 * var(--gutter), 72rem);
+  width: min(100% - 2 * var(--gutter), 74rem);
   margin-inline: auto;
 }
 
@@ -185,6 +211,12 @@ main > .section {
   color: var(--ink);
 }
 
+/* Warmer Akzent-Button (Benchmark: Bräutigam) — sparsam einsetzen */
+.btn--oak {
+  background: var(--oak);
+  color: var(--ink);
+}
+
 .link-line {
   position: relative;
   display: inline-block;
@@ -211,7 +243,6 @@ main > .section {
   transform: scaleX(1);
 }
 
-/* Statischer Unterstrich für Fließtext-Links */
 .link-static {
   text-decoration: underline;
   text-decoration-color: var(--oak);
@@ -224,7 +255,35 @@ main > .section {
   filter: var(--photo-filter);
 }
 
-/* -------- Scroll-Reveals (Astro-Teil, IntersectionObserver) -------- */
+/* ================================================================
+   Zeilen-Reveal-System (SplitText-artig, vanilla)
+   Zeilen in overflow-hidden-Masken, Inner fährt von 110 % hoch.
+   ================================================================ */
+
+.split .line-mask {
+  display: block;
+  overflow: hidden;
+  padding-block: 0.02em; /* Oberlängen von Fraunces nicht abschneiden */
+}
+
+.split .line-inner {
+  display: block;
+  transform: translateY(110%);
+  transition: transform 0.9s var(--ease-out);
+  transition-delay: var(--line-delay, 0s);
+  will-change: transform;
+}
+
+.split.is-visible .line-inner {
+  transform: none;
+}
+
+/* Solange nicht gesplittet: normaler Textfluss (kein FOUC / kein CLS) */
+.split:not(.is-split) {
+  /* nichts — Text steht sichtbar bis JS die Masken baut */
+}
+
+/* -------- Einfache Block-Reveals (IntersectionObserver) -------- */
 
 .reveal {
   opacity: 0;
@@ -240,10 +299,200 @@ main > .section {
   transform: none;
 }
 
-/* -------- Reduced Motion: alles aus, Inhalte sofort sichtbar -------- */
+/* ================================================================
+   Mikro-Textur: feines Noise-Overlay über der ganzen Seite
+   ================================================================ */
+
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 9;
+  pointer-events: none;
+  opacity: 0.025;
+  mix-blend-mode: multiply;
+  background-image: var(--grain-uri);
+  background-size: 180px 180px;
+}
+
+/* ================================================================
+   Preloader
+   ================================================================ */
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: var(--ink);
+  color: var(--paper);
+  display: grid;
+  place-items: center;
+  clip-path: inset(0 0 0 0);
+}
+
+.preloader[hidden] {
+  display: none;
+}
+
+.preloader__words {
+  position: relative;
+  font-family: var(--font-head);
+  font-weight: 340;
+  font-size: clamp(2.2rem, 6vw, 3.6rem);
+  letter-spacing: -0.03em;
+  height: 1.2em;
+  min-width: 8ch;
+  text-align: center;
+}
+
+.preloader__word {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  transform: translateY(0.35em);
+}
+
+.preloader__word.is-on {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.35s var(--ease-out),
+    transform 0.35s var(--ease-out);
+}
+
+.preloader__word.is-off {
+  opacity: 0;
+  transform: translateY(-0.35em);
+  transition:
+    opacity 0.3s var(--ease-out),
+    transform 0.3s var(--ease-out);
+}
+
+.preloader.is-leaving {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.8s var(--ease-curtain);
+}
+
+/* Body-Scroll während Preloader sperren */
+body.is-preloading {
+  overflow: hidden;
+  height: 100svh;
+}
+
+/* ================================================================
+   Custom Cursor (nur Desktop / pointer:fine)
+   ================================================================ */
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 150;
+  pointer-events: none;
+  display: none;
+}
+
+.cursor__dot {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--oak);
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.35s var(--ease-out),
+    height 0.35s var(--ease-out),
+    background 0.35s var(--ease-out);
+}
+
+.cursor__label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--paper);
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-out);
+  white-space: nowrap;
+}
+
+/* Über Galeriebildern: Punkt wird zum Kreis mit Label */
+.cursor.is-view .cursor__dot {
+  width: 84px;
+  height: 84px;
+  background: rgba(184, 137, 90, 0.92);
+}
+
+.cursor.is-view .cursor__label {
+  opacity: 1;
+}
+
+/* Über Links: dezent vergrößert */
+.cursor.is-link .cursor__dot {
+  width: 22px;
+  height: 22px;
+  background: rgba(184, 137, 90, 0.35);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html.has-cursor .cursor {
+    display: block;
+  }
+  html.has-cursor * {
+    cursor: none;
+  }
+}
+
+/* ================================================================
+   Zum Seitenanfang
+   ================================================================ */
+
+.totop {
+  position: fixed;
+  right: clamp(1rem, 3vw, 2rem);
+  bottom: clamp(1rem, 3vw, 2rem);
+  z-index: 90;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  background: var(--ink);
+  color: var(--paper);
+  border: 0;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.4s var(--ease-out),
+    transform 0.4s var(--ease-out),
+    background 0.3s var(--ease-out);
+}
+
+.totop[hidden] {
+  display: none;
+}
+
+.totop.is-on {
+  opacity: 1;
+  transform: none;
+}
+
+.totop:hover {
+  background: var(--oak);
+}
+
+/* ================================================================
+   Reduced Motion: alles aus, Inhalte sofort sichtbar
+   ================================================================ */
 
 @media (prefers-reduced-motion: reduce) {
-  html {
+  html:not(.lenis) {
     scroll-behavior: auto;
   }
 
@@ -256,8 +505,18 @@ main > .section {
     transition-delay: 0s !important;
   }
 
-  .reveal {
+  .reveal,
+  .split .line-inner {
     opacity: 1;
     transform: none;
+  }
+
+  .grain,
+  .cursor {
+    display: none !important;
+  }
+
+  .preloader {
+    display: none !important;
   }
 }

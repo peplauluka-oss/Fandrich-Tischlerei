@@ -1,17 +1,17 @@
 ---
 import { Image } from 'astro:assets';
 import { materialBilder, maxDisplayWidth } from '../data/images';
+const bild = materialBilder[0]!;
 ---
 
 <section class="section werkstatt on-ink" id="werkstatt" aria-label="Werkstatt und Material">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="section-num" data-num="05" aria-hidden="true"></span>
-      <p class="eyebrow reveal">Werkstatt</p>
-      <h2 class="headline reveal">Material, das man ernst nimmt.</h2>
-    </div>
-
-    <div class="werkstatt__grid">
+  <div class="wrap werkstatt__grid">
+    <div class="werkstatt__col">
+      <div class="section-head">
+        <span class="section-num" data-num="05" aria-hidden="true"></span>
+        <p class="eyebrow reveal">Werkstatt</p>
+        <h2 class="headline split">Material, das man ernst nimmt.</h2>
+      </div>
       <div class="werkstatt__text reveal">
         <p>
           Wir arbeiten mit Massivholz, das wir selbst aussuchen — Eiche, Esche, Kirschbaum — und
@@ -23,27 +23,20 @@ import { materialBilder, maxDisplayWidth } from '../data/images';
           es jeden Tag.
         </p>
       </div>
-
-      {
-        materialBilder.map((bild) => (
-          <figure
-            class="werkstatt__figure reveal"
-            style={`--reveal-delay: 0.15s; max-width: ${maxDisplayWidth(bild)}px`}
-          >
-            <div class="photo werkstatt__frame">
-              <Image
-                src={bild.src}
-                alt={bild.alt}
-                widths={[480, bild.src.width]}
-                sizes={`(min-width: 900px) ${maxDisplayWidth(bild)}px, 88vw`}
-                quality={80}
-              />
-            </div>
-            <figcaption>{bild.caption}</figcaption>
-          </figure>
-        ))
-      }
     </div>
+
+    <figure class="werkstatt__figure">
+      <div class="photo werkstatt__frame" style={`max-width: ${maxDisplayWidth(bild)}px`}>
+        <Image
+          src={bild.src}
+          alt={bild.alt}
+          widths={[480, bild.src.width]}
+          sizes="(min-width: 900px) 52vw, 92vw"
+          quality={80}
+        />
+      </div>
+      <figcaption>{bild.caption}</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -51,6 +44,7 @@ import { materialBilder, maxDisplayWidth } from '../data/images';
   .werkstatt {
     background: var(--ink);
     color: var(--paper);
+    overflow: visible;
   }
 
   .werkstatt .eyebrow {
@@ -59,23 +53,37 @@ import { materialBilder, maxDisplayWidth } from '../data/images';
 
   .werkstatt__grid {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    grid-template-columns: 5fr 7fr;
     gap: clamp(2.5rem, 6vw, 5rem);
     align-items: start;
-    margin-top: clamp(3rem, 7vh, 5rem);
+  }
+
+  .werkstatt__col {
+    padding-top: clamp(1rem, 4vh, 3rem);
+  }
+
+  .werkstatt__text {
+    margin-top: clamp(2rem, 5vh, 3.5rem);
   }
 
   .werkstatt__text p {
     color: rgba(250, 247, 242, 0.82);
-    max-width: 52ch;
+    max-width: 46ch;
   }
 
   .werkstatt__text p + p {
     margin-top: 1.25rem;
   }
 
+  /* Bild ragt über die obere Sektionsgrenze — Overlap statt Kachel */
+  .werkstatt__figure {
+    margin: 0;
+    margin-top: -8vh;
+  }
+
   .werkstatt__frame {
-    overflow: clip;
+    overflow: hidden;
+    margin-left: auto;
   }
 
   .werkstatt__frame :global(img) {
@@ -113,6 +121,9 @@ import { materialBilder, maxDisplayWidth } from '../data/images';
   @media (max-width: 899px) {
     .werkstatt__grid {
       grid-template-columns: 1fr;
+    }
+    .werkstatt__figure {
+      margin-top: clamp(2rem, 5vh, 3rem);
     }
   }
 </style>

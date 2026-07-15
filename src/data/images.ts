@@ -31,6 +31,7 @@ import loft from '../assets/images/IMG_2475.jpeg';
 import schrank from '../assets/images/IMG_2463.jpeg';
 import essplatz from '../assets/images/IMG_2472.jpeg';
 import fassade from '../assets/images/IMG_2467.jpeg';
+import steg from '../assets/images/IMG_2486.jpeg';
 import werkstatt from '../assets/images/IMG_2482.jpeg';
 
 /** Reserve für hochauflösende Displays: Anzeige = native Breite / 1.5 */
@@ -118,6 +119,15 @@ export const bilder: Bild[] = [
     hochformat: true,
     caption: 'Fassade & Terrasse, Lärche — Barnim', // TODO: Ort verifizieren
     alt: 'Holzfassade aus Lärchenleisten mit Terrassendeck, Herbstbäume im Gegenlicht',
+  },
+  {
+    id: 'IMG_2486',
+    src: steg,
+    rolle: 'walk',
+    reihenfolge: 7,
+    hochformat: false,
+    caption: 'Seesteg, Lärche geriffelt — Außenprojekt Brandenburg', // TODO: Ort verifizieren
+    alt: 'Holzsteg aus Lärchendielen führt in einen ruhigen See, warmes Abendlicht',
   },
   {
     id: 'IMG_2482',

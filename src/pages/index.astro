@@ -3,13 +3,13 @@ import { getImage } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav';
 import Hero from '../components/Hero.astro';
+import Marquee from '../components/Marquee.astro';
 import Manifest from '../components/Manifest.astro';
 import Leistungen from '../components/Leistungen.astro';
 import GalleryWalk from '../components/GalleryWalk';
 import Werkstatt from '../components/Werkstatt.astro';
 import Prozess from '../components/Prozess.astro';
 import Kontakt from '../components/Kontakt.astro';
-import Footer from '../components/Footer.astro';
 import { walkBilder, maxDisplayWidth } from '../data/images';
 
 const title = 'Tischlerei Berlin Pankow — Möbel nach Maß & Restaurierung | Fandrich GmbH';
@@ -17,7 +17,6 @@ const description =
   'Meistertischlerei in Berlin-Pankow: Einbaumöbel nach Maß, Möbelrestaurierung und Innenausbau — gefertigt in der eigenen Werkstatt.';
 
 // Bilder für den Gallery Walk (React-Island) über astro:assets optimieren.
-// displayWidth = native Breite / Retina-Faktor — die Station wird nie breiter.
 const walkImages = await Promise.all(
   walkBilder.map(async (b) => {
     const widths = [...new Set([Math.min(480, b.src.width), b.src.width])];
@@ -27,7 +26,7 @@ const walkImages = await Promise.all(
       id: b.id,
       src: img.src,
       srcSet: img.srcSet.attribute,
-      sizes: `(min-width: 768px) ${displayWidth}px, 88vw`,
+      sizes: '(min-width: 1025px) 55vw, (min-width: 768px) 82vw, 92vw',
       width: b.src.width,
       height: b.src.height,
       displayWidth,
@@ -38,39 +37,44 @@ const walkImages = await Promise.all(
   }),
 );
 
-const interlude =
-  'Ein Möbel ist gut, wenn man nach zwanzig Jahren nichts daran ändern möchte.';
+const interlude = 'Ein Möbel ist gut, wenn man nach zwanzig Jahren nichts daran ändern möchte.';
 ---
 
-<Base title={title} description={description}>
+<Base title={title} description={description} intro>
   <Nav client:load />
   <main>
     <Hero />
+    <Marquee />
     <Manifest />
     <Leistungen />
 
-    <section class="section" id="arbeiten" aria-label="Ausgewählte Arbeiten">
+    <section class="section walkhead" id="arbeiten" aria-label="Ausgewählte Arbeiten">
       <div class="wrap">
         <div class="section-head">
           <span class="section-num" data-num="04" aria-hidden="true"></span>
           <p class="eyebrow reveal">Ausgewählte Arbeiten</p>
-          <h2 class="headline reveal">Ein Gang durch unsere Projekte.</h2>
+          <h2 class="headline split">Ein Gang durch unsere Projekte.</h2>
         </div>
       </div>
-      <div class="walk-outer wrap">
-        <GalleryWalk client:visible images={walkImages} interlude={interlude} />
-      </div>
     </section>
+
+    <div class="walkhost">
+      <GalleryWalk client:visible images={walkImages} interlude={interlude} />
+    </div>
 
     <Werkstatt />
     <Prozess />
     <Kontakt />
   </main>
-  <Footer />
 </Base>
 
 <style>
-  .walk-outer {
-    margin-top: clamp(3rem, 7vh, 5rem);
+  .walkhead {
+    padding-bottom: clamp(1.5rem, 4vh, 3rem);
+    border-bottom: 0;
+  }
+  /* Vertikale Variante (Mobil) braucht Grundabstand nach unten */
+  .walkhost {
+    padding-bottom: clamp(2rem, 6vh, 4rem);
   }
 </style>

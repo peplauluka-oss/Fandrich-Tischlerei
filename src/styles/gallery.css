@@ -1,52 +1,68 @@
-.walk {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(4rem, 10vh, 7rem);
-}
+/* ================================================================
+   Gallery Walk — horizontal gepinnt (Desktop)
+   ================================================================ */
 
-/* Stationen: max-width kommt inline aus den nativen Bildmaßen
-   (native Breite / Retina-Faktor) — nichts wird über nativ skaliert. */
-.walk__station {
-  margin: 0;
-  width: 100%;
-}
-
-.walk__station--center {
-  margin-inline: auto;
-}
-
-.walk__station--right {
-  margin-left: auto;
-}
-
-.walk__frame {
+.walkpin {
   position: relative;
-  overflow: clip;
 }
 
-/* Innerer Container 115 % hoch für den Parallax-Spielraum */
-.walk__parallax {
-  position: absolute;
-  inset: -7.5% 0 auto 0;
-  height: 115%;
+.walkpin__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.walkpin__track {
+  display: flex;
+  align-items: center;
+  gap: clamp(2.5rem, 5vw, 5rem);
+  padding-inline: var(--gutter);
   will-change: transform;
 }
 
-.walk__frame img {
+.panel {
+  position: relative;
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+.panel--lg {
+  width: 55vw;
+  transform: translateY(-4vh);
+}
+
+.panel--sm {
+  width: 38vw;
+  transform: translateY(8vh);
+}
+
+.panel__frame {
+  position: relative;
+  overflow: hidden;
   width: 100%;
+}
+
+.panel--lg .panel__frame {
+  height: 75vh;
+}
+
+.panel--sm .panel__frame {
+  height: 55vh;
+}
+
+.panel__frame img {
+  position: absolute;
+  inset: 0;
+  width: 106%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s var(--ease-out);
+  will-change: transform;
 }
 
-@media (hover: hover) {
-  .walk__station:hover .walk__frame img {
-    transform: scale(1.03);
-  }
-}
-
-/* Caption: gesperrte Versalien mit 1px Oak-Linie davor */
-.walk__caption {
+.panel__caption {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -58,30 +74,141 @@
   color: var(--ink-soft);
 }
 
-.walk__caption::before {
+.panel__caption::before {
   content: '';
   flex: none;
   width: 2.5rem;
   height: 1px;
   background: var(--oak);
-  transition: width 0.5s var(--ease-out);
 }
 
-@media (hover: hover) {
-  .walk__station:hover .walk__caption::before {
-    width: 4rem;
-  }
-}
-
-/* Text-Zwischenstation */
-.walk__interlude {
-  margin: clamp(4rem, 10vh, 7rem) auto 0;
-  max-width: 34ch;
+/* Zwischen-Zitat als eigenes Panel */
+.panel--quote {
+  width: 40vw;
+  align-self: center;
   font-family: var(--font-head);
   font-weight: 340;
-  font-size: clamp(1.5rem, 3.4vw, 2.2rem);
+  font-size: clamp(1.7rem, 2.6vw, 2.6rem);
   letter-spacing: -0.02em;
-  line-height: 1.35;
+  line-height: 1.32;
+  text-wrap: balance;
+  color: var(--ink);
+}
+
+/* Schluss-Panel */
+.panel--end {
+  width: 44vw;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.75rem;
+}
+
+.panel__endLabel {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--oak);
+}
+
+.panel__endTitle {
+  font-family: var(--font-head);
+  font-weight: 340;
+  font-size: clamp(2rem, 3.4vw, 3.2rem);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  max-width: 18ch;
+}
+
+/* Fortschrittslinie unten */
+.walkpin__progress {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: clamp(1.5rem, 4vh, 2.5rem);
+  height: 1px;
+  background: var(--oak-line);
+}
+
+.walkpin__progress span {
+  display: block;
+  height: 100%;
+  background: var(--oak);
+  transform-origin: left;
+  will-change: transform;
+}
+
+/* ================================================================
+   Gallery Walk — vertikal (Mobil / reduced-motion)
+   ================================================================ */
+
+.vwalk {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3rem, 8vh, 5rem);
+  margin-top: clamp(2.5rem, 6vh, 4rem);
+}
+
+.vstation {
+  margin: 0;
+  width: 100%;
+}
+
+.vstation--full {
+  margin-inline: auto;
+}
+
+.vstation--left {
+  width: 82%;
+  margin-right: auto;
+}
+
+.vstation--right {
+  width: 82%;
+  margin-left: auto;
+}
+
+.vstation__frame {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.vstation__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.vstation__caption {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.vstation__caption::before {
+  content: '';
+  flex: none;
+  width: 2rem;
+  height: 1px;
+  background: var(--oak);
+}
+
+.vwalk__quote {
+  margin: clamp(2rem, 6vh, 4rem) auto;
+  max-width: 30ch;
+  font-family: var(--font-head);
+  font-weight: 340;
+  font-size: clamp(1.5rem, 6vw, 2rem);
+  letter-spacing: -0.02em;
+  line-height: 1.32;
   text-align: center;
   text-wrap: balance;
 }

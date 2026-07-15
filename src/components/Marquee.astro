@@ -1,0 +1,73 @@
+---
+const items = ['Einbaumöbel', 'Restaurierung', 'Innenausbau', 'Massivholz'];
+// Zweimal ausgeben für den nahtlosen Endlos-Loop
+const sequence = [...items, ...items];
+---
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    {
+      sequence.map((word) => (
+        <span class="marquee__item">
+          {word}
+          <span class="marquee__dot" />
+        </span>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .marquee {
+    overflow: hidden;
+    border-block: 1px solid var(--oak-line);
+    padding-block: clamp(1.1rem, 3vh, 2rem);
+    white-space: nowrap;
+  }
+
+  .marquee__track {
+    display: inline-flex;
+    align-items: center;
+    animation: marquee 24s linear infinite;
+    will-change: transform;
+  }
+
+  .marquee:hover .marquee__track {
+    animation-play-state: paused;
+  }
+
+  .marquee__item {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-head);
+    font-weight: 340;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    letter-spacing: -0.02em;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--ink);
+    text-stroke: 1px var(--ink);
+    padding-inline: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .marquee__dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-left: clamp(1.5rem, 3vw, 2.5rem);
+    border-radius: 50%;
+    background: var(--oak);
+    -webkit-text-stroke: 0;
+  }
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track {
+      animation: none;
+    }
+  }
+</style>

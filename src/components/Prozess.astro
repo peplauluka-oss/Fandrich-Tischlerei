@@ -8,17 +8,17 @@ const schritte = [
   {
     nr: '02',
     titel: 'Entwurf & Material',
-    text: 'Sie erhalten einen Entwurf mit Materialmustern zum Anfassen — Holz, Furnier, Oberfläche. Entschieden wird am Original, nicht am Bildschirm.',
+    text: 'Sie erhalten einen Entwurf mit Materialmustern zum Anfassen — Holz, Furnier, Oberfläche. Entschieden wird am Original.',
   },
   {
     nr: '03',
     titel: 'Fertigung in Pankow',
-    text: 'Ihr Möbel entsteht in unserer Werkstatt in der Treseburger Straße. Ein Ansprechpartner, kurze Wege, keine Zwischenhändler.',
+    text: 'Ihr Möbel entsteht in unserer Werkstatt in der Treseburger Straße. Ein Ansprechpartner, kurze Wege.',
   },
   {
     nr: '04',
     titel: 'Montage & Übergabe',
-    text: 'Wir montieren sauber, stellen ein und übergeben besenrein. Kleine Nacharbeiten gehören dazu, ohne Diskussion.',
+    text: 'Wir montieren sauber, stellen ein und übergeben besenrein. Kleine Nacharbeiten gehören dazu.',
   },
 ];
 ---
@@ -28,21 +28,24 @@ const schritte = [
     <div class="section-head">
       <span class="section-num" data-num="06" aria-hidden="true"></span>
       <p class="eyebrow reveal">So arbeiten wir</p>
-      <h2 class="headline reveal">Vier Schritte, ein Ergebnis.</h2>
+      <h2 class="headline split">Vier Schritte, ein Ergebnis.</h2>
     </div>
 
-    <div class="steps" data-process-track>
-      <div class="steps__rail" aria-hidden="true">
-        <div class="steps__fill" data-process-line></div>
+    <div class="prozess" data-process-track>
+      <div class="prozess__rail" aria-hidden="true">
+        <div class="prozess__fill" data-process-line></div>
       </div>
-      <ol class="steps__list">
+      <ol class="prozess__cols">
         {
           schritte.map((s, i) => (
-            <li class="step reveal" style={`--reveal-delay: ${i * 0.08}s`}>
-              <span class="step__nr" aria-hidden="true">
+            <li class="prozess__step reveal" style={`--reveal-delay: ${i * 0.08}s`}>
+              <span class="prozess__num" aria-hidden="true">
                 {s.nr}
               </span>
-              <div>
+              <div class="prozess__content">
+                <span class="prozess__nr" aria-hidden="true">
+                  {s.nr}
+                </span>
                 <h3>{s.titel}</h3>
                 <p>{s.text}</p>
               </div>
@@ -55,62 +58,125 @@ const schritte = [
 </section>
 
 <style>
-  .steps {
+  .prozess {
     position: relative;
     margin-top: clamp(3rem, 7vh, 5rem);
-    padding-left: clamp(2.5rem, 6vw, 4rem);
-    max-width: 46rem;
   }
 
-  .steps__list {
+  .prozess__cols {
     list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: clamp(2.5rem, 6vh, 4rem);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
   }
 
-  /* Vertikale 1px-Linie, füllt sich mit Scrollfortschritt in --oak */
-  .steps__rail {
+  .prozess__step {
+    position: relative;
+    padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.25rem, 2vw, 2rem);
+    border-left: 1px solid var(--oak-line);
+  }
+
+  .prozess__step:last-child {
+    border-right: 1px solid var(--oak-line);
+  }
+
+  /* Riesige Nummer hinter dem Titel (12 % Deckkraft) */
+  .prozess__num {
     position: absolute;
-    left: 0.35rem;
-    top: 0.4rem;
-    bottom: 0.4rem;
-    width: 1px;
-    background: var(--oak-line);
+    top: -0.35em;
+    left: 0.4rem;
+    font-family: var(--font-head);
+    font-weight: 340;
+    font-size: clamp(4rem, 9vw, 7rem);
+    line-height: 1;
+    color: var(--oak);
+    opacity: 0.12;
+    pointer-events: none;
+    user-select: none;
   }
 
-  .steps__fill {
-    width: 100%;
-    height: 100%;
-    background: var(--oak);
-    transform: scaleY(0);
-    transform-origin: top;
-    will-change: transform;
-  }
-
-  .step {
+  .prozess__content {
     position: relative;
   }
 
-  .step__nr {
-    position: absolute;
-    left: calc(-1 * clamp(2.5rem, 6vw, 4rem));
-    top: 0.45rem;
+  /* Kleine Nummer im Fluss (mobil sichtbar, Desktop entfällt zugunsten der großen) */
+  .prozess__nr {
+    display: none;
     font-size: 0.85rem;
     font-weight: 500;
     letter-spacing: 0.12em;
     color: var(--oak);
-    background: var(--paper);
-    padding-block: 0.2rem;
   }
 
-  h3 {
-    font-size: clamp(1.35rem, 2.6vw, 1.8rem);
+  .prozess__content h3 {
+    margin-top: 2.5rem;
+    font-size: clamp(1.25rem, 1.6vw, 1.6rem);
   }
 
-  .step p {
-    margin-top: 0.6rem;
+  .prozess__content p {
+    margin-top: 0.7rem;
     color: var(--ink-soft);
-    max-width: 52ch;
+    font-size: 0.98rem;
+  }
+
+  /* Fülllinie nur mobil */
+  .prozess__rail {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .prozess {
+      padding-left: clamp(2.5rem, 8vw, 4rem);
+    }
+
+    .prozess__cols {
+      grid-template-columns: 1fr;
+    }
+
+    .prozess__step {
+      border-left: 0;
+      padding: 0 0 clamp(2.5rem, 6vh, 4rem);
+    }
+
+    .prozess__step:last-child {
+      border-right: 0;
+      padding-bottom: 0;
+    }
+
+    .prozess__num {
+      display: none;
+    }
+
+    .prozess__nr {
+      display: block;
+      position: absolute;
+      left: calc(-1 * clamp(2.5rem, 8vw, 4rem));
+      top: 0.3rem;
+      background: var(--paper);
+      padding-block: 0.2rem;
+      z-index: 1;
+    }
+
+    .prozess__content h3 {
+      margin-top: 0;
+    }
+
+    .prozess__rail {
+      display: block;
+      position: absolute;
+      left: 0.35rem;
+      top: 0.4rem;
+      bottom: 0.4rem;
+      width: 1px;
+      background: var(--oak-line);
+    }
+
+    .prozess__fill {
+      width: 100%;
+      height: 100%;
+      background: var(--oak);
+      transform: scaleY(0);
+      transform-origin: top;
+      will-change: transform;
+    }
   }
 </style>
