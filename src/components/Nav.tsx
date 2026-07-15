@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import '../styles/nav.css';
 
+// Base-aware (Astro-`base` z. B. beim GitHub-Pages-Demo-Build)
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+
 const LINKS = [
-  { href: '/#arbeiten', label: 'Arbeiten' },
-  { href: '/#leistungen', label: 'Leistungen' },
-  { href: '/#werkstatt', label: 'Werkstatt' },
-  { href: '/#kontakt', label: 'Kontakt' },
+  { href: `${BASE}/#arbeiten`, label: 'Arbeiten' },
+  { href: `${BASE}/#leistungen`, label: 'Leistungen' },
+  { href: `${BASE}/#werkstatt`, label: 'Werkstatt' },
+  { href: `${BASE}/#kontakt`, label: 'Kontakt' },
 ];
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -49,7 +52,7 @@ export default function Nav({ solid = false }: Props) {
   return (
     <header className={`nav ${scrolled ? 'nav--solid' : ''} ${open ? 'nav--open' : ''}`}>
       <div className="nav__inner">
-        <a href="/#top" className="nav__logo" onClick={close}>
+        <a href={`${BASE}/#top`} className="nav__logo" onClick={close}>
           <span className="nav__brand">FANDRICH</span>
           <span className="nav__claim">Tischlerei &amp; Möbelrestaurierung, Berlin</span>
         </a>

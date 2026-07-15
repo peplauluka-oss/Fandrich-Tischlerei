@@ -1,6 +1,7 @@
 ---
 import { site } from '../data/site';
 const jahr = 2026;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <footer class="footer on-ink">
@@ -23,8 +24,8 @@ const jahr = 2026;
     </div>
 
     <div class="footer__legal">
-      <a href="/impressum" class="link-line">Impressum</a>
-      <a href="/datenschutz" class="link-line">Datenschutz</a>
+      <a href={`${base}/impressum`} class="link-line">Impressum</a>
+      <a href={`${base}/datenschutz`} class="link-line">Datenschutz</a>
       <p>© {site.name} {jahr}</p>
     </div>
   </div>

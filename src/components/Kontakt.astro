@@ -6,6 +6,7 @@ import { site } from '../data/site';
 const bbox = `${site.geo.lng - 0.008},${site.geo.lat - 0.004},${site.geo.lng + 0.008},${site.geo.lat + 0.004}`;
 const osmSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${site.geo.lat},${site.geo.lng}`;
 const osmLink = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lng}#map=16/${site.geo.lat}/${site.geo.lng}`;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <section class="section" id="kontakt" aria-label="Kontakt">
@@ -46,7 +47,7 @@ const osmLink = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site
         </button>
         <p class="map__hint">
           Beim Laden wird eine Verbindung zu OpenStreetMap hergestellt.
-          <a href="/datenschutz" class="link-static">Hinweise zum Datenschutz</a>
+          <a href={`${base}/datenschutz`} class="link-static">Hinweise zum Datenschutz</a>
         </p>
       </div>
     </div>
