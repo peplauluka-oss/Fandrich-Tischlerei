@@ -56,6 +56,13 @@ const leistungen = [
     gap: 1.5rem;
     padding-block: clamp(2rem, 4vh, 3rem);
     border-top: 1px solid var(--oak-line);
+    transition: border-color 0.5s var(--ease-out);
+  }
+
+  @media (hover: hover) {
+    .row:hover {
+      border-top-color: rgba(184, 137, 90, 0.6);
+    }
   }
 
   .row:last-child {
@@ -83,7 +90,7 @@ const leistungen = [
     }
 
     .row:hover .row__body {
-      transform: translateY(-3px);
+      transform: translateY(-4px);
     }
   }
 

@@ -17,8 +17,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         {site.zip} {site.city}
       </p>
       <p>
-        <a href={`tel:${site.phoneHref}`}>{site.phone}</a><br />
-        <a href={`mailto:${site.email}`}>{site.email}</a>
+        <a href={`tel:${site.phoneHref}`}>{site.phone}</a>
+        {
+          site.email && (
+            <>
+              <br />
+              <a href={`mailto:${site.email}`}>{site.email}</a>
+            </>
+          )
+        }
       </p>
       <p class="footer__hours">{site.openingHours}</p>
     </div>

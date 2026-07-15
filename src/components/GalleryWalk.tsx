@@ -9,6 +9,8 @@ export interface WalkImage {
   sizes: string;
   width: number;
   height: number;
+  /** Maximale CSS-Breite = native Breite / Retina-Faktor — nie über nativ skalieren */
+  displayWidth: number;
   alt: string;
   caption: string;
   hochformat: boolean;
@@ -16,8 +18,10 @@ export interface WalkImage {
 
 interface Props {
   images: WalkImage[];
-  /** Text der Zwischenstation (nach Station 4) */
+  /** Text der Zwischenstation */
   interlude: string;
+  /** Nach welcher Station (1-basiert) die Zwischenstation steht */
+  interludeAfter?: number;
 }
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -34,7 +38,7 @@ function useIsMobile() {
   return mobile;
 }
 
-function Station({ img, side }: { img: WalkImage; side: 'left' | 'right' | 'full' }) {
+function Station({ img, side }: { img: WalkImage; side: 'left' | 'right' | 'center' }) {
   const ref = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
   const mobile = useIsMobile();
@@ -46,17 +50,15 @@ function Station({ img, side }: { img: WalkImage; side: 'left' | 'right' | 'full
   // Innerer Container ist 115 % hoch (top −7.5 %) → ±6.5 % Spielraum ohne Lücken.
   // Mobil reduziert auf ±20 px.
   const range = mobile ? ['-20px', '20px'] : ['-6.5%', '6.5%'];
-  const desktop = useTransform(scrollYProgress, [0, 1], range);
-  const y = reduced ? '0%' : desktop;
-
-  const isFull = side === 'full';
+  const parallax = useTransform(scrollYProgress, [0, 1], range);
+  const y = reduced ? '0%' : parallax;
 
   return (
-    <figure className={`walk__station walk__station--${side}`}>
+    <figure className={`walk__station walk__station--${side}`} style={{ maxWidth: img.displayWidth }}>
       <motion.div
         ref={ref}
         className="walk__frame photo"
-        style={isFull ? undefined : { aspectRatio: `${img.width} / ${img.height}` }}
+        style={{ aspectRatio: `${img.width} / ${img.height}` }}
         initial={reduced ? { clipPath: 'inset(0 0 0 0)' } : { clipPath: 'inset(12% 0 12% 0)' }}
         whileInView={{ clipPath: 'inset(0% 0 0% 0)' }}
         viewport={{ once: true, amount: 0.25 }}
@@ -103,11 +105,11 @@ function Interlude({ text }: { text: string }) {
   );
 }
 
-export default function GalleryWalk({ images, interlude }: Props) {
-  // Hochformate versetzt (abwechselnd links/rechts), Querformate volle Breite.
+export default function GalleryWalk({ images, interlude, interludeAfter = 3 }: Props) {
+  // Hochformate versetzt (abwechselnd rechts/links), Querformate mittig.
   let portraitCount = 0;
   const stations = images.map((img) => {
-    let side: 'left' | 'right' | 'full' = 'full';
+    let side: 'left' | 'right' | 'center' = 'center';
     if (img.hochformat) {
       side = portraitCount % 2 === 0 ? 'right' : 'left';
       portraitCount += 1;
@@ -120,7 +122,7 @@ export default function GalleryWalk({ images, interlude }: Props) {
       {stations.map(({ img, side }, i) => (
         <div key={img.id}>
           <Station img={img} side={side} />
-          {i === 3 && <Interlude text={interlude} />}
+          {i === interludeAfter - 1 && <Interlude text={interlude} />}
         </div>
       ))}
     </div>

@@ -10,24 +10,27 @@ import Werkstatt from '../components/Werkstatt.astro';
 import Prozess from '../components/Prozess.astro';
 import Kontakt from '../components/Kontakt.astro';
 import Footer from '../components/Footer.astro';
-import { walkBilder } from '../data/images';
+import { walkBilder, maxDisplayWidth } from '../data/images';
 
 const title = 'Tischlerei Berlin Pankow — Möbel nach Maß & Restaurierung | Fandrich GmbH';
 const description =
-  'Meistertischlerei in Berlin-Pankow seit 1964: Einbaumöbel nach Maß, Möbelrestaurierung und Innenausbau — gefertigt in der eigenen Werkstatt.';
+  'Meistertischlerei in Berlin-Pankow: Einbaumöbel nach Maß, Möbelrestaurierung und Innenausbau — gefertigt in der eigenen Werkstatt.';
 
-// Bilder für den Gallery Walk (React-Island) über astro:assets optimieren
+// Bilder für den Gallery Walk (React-Island) über astro:assets optimieren.
+// displayWidth = native Breite / Retina-Faktor — die Station wird nie breiter.
 const walkImages = await Promise.all(
   walkBilder.map(async (b) => {
     const widths = [...new Set([Math.min(480, b.src.width), b.src.width])];
     const img = await getImage({ src: b.src, widths, quality: 80 });
+    const displayWidth = maxDisplayWidth(b);
     return {
       id: b.id,
       src: img.src,
       srcSet: img.srcSet.attribute,
-      sizes: b.hochformat ? '(min-width: 768px) 30rem, 100vw' : '100vw',
+      sizes: `(min-width: 768px) ${displayWidth}px, 88vw`,
       width: b.src.width,
       height: b.src.height,
+      displayWidth,
       alt: b.alt,
       caption: b.caption,
       hochformat: b.hochformat,

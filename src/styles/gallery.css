@@ -1,27 +1,18 @@
 .walk {
   display: flex;
   flex-direction: column;
-  gap: clamp(4rem, 10vh, 8rem);
+  gap: clamp(4rem, 10vh, 7rem);
 }
 
+/* Stationen: max-width kommt inline aus den nativen Bildmaßen
+   (native Breite / Retina-Faktor) — nichts wird über nativ skaliert. */
 .walk__station {
   margin: 0;
+  width: 100%;
 }
 
-/* Volle Breite: aus dem Container ausbrechen */
-.walk__station--full {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-}
-
-.walk__station--full .walk__frame {
-  height: min(80vh, 46rem);
-}
-
-/* Versetzte Stationen (Hochformate) */
-.walk__station--left,
-.walk__station--right {
-  width: min(70%, 30rem);
+.walk__station--center {
+  margin-inline: auto;
 }
 
 .walk__station--right {
@@ -45,6 +36,13 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.6s var(--ease-out);
+}
+
+@media (hover: hover) {
+  .walk__station:hover .walk__frame img {
+    transform: scale(1.03);
+  }
 }
 
 /* Caption: gesperrte Versalien mit 1px Oak-Linie davor */
@@ -60,21 +58,24 @@
   color: var(--ink-soft);
 }
 
-.walk__station--full .walk__caption {
-  padding-inline: var(--gutter);
-}
-
 .walk__caption::before {
   content: '';
   flex: none;
   width: 2.5rem;
   height: 1px;
   background: var(--oak);
+  transition: width 0.5s var(--ease-out);
+}
+
+@media (hover: hover) {
+  .walk__station:hover .walk__caption::before {
+    width: 4rem;
+  }
 }
 
 /* Text-Zwischenstation */
 .walk__interlude {
-  margin: clamp(4rem, 10vh, 8rem) auto 0;
+  margin: clamp(4rem, 10vh, 7rem) auto 0;
   max-width: 34ch;
   font-family: var(--font-head);
   font-weight: 340;
@@ -83,15 +84,4 @@
   line-height: 1.35;
   text-align: center;
   text-wrap: balance;
-}
-
-@media (max-width: 767px) {
-  .walk__station--left,
-  .walk__station--right {
-    width: 100%;
-  }
-
-  .walk__station--full .walk__frame {
-    height: 60vh;
-  }
 }

@@ -83,14 +83,14 @@ der Text in vollem `--ink`-Kontrast.
 | Stelle | Datei | Was fehlt |
 | --- | --- | --- |
 | Domain | `astro.config.mjs` | Finale Domain in `SITE` eintragen |
-| Gründungsjahr | `src/data/site.ts` | Fassadenschild sagt „Meisterbetrieb seit 1964“ — auf dem Foto schwer lesbar (evtl. 1984), verifizieren |
+| Gründungsjahr | `src/data/site.ts` | Nicht verifiziert (Fassadenschild „seit 19??“ unleserlich, 1964 oder 1984) — die Website nennt deshalb bewusst KEINE Jahreszahl. Nach Klärung: Manifest-Satz und JSON-LD `foundingDate` ergänzen |
 | Adresse & Telefon | `src/data/site.ts` | Treseburger Straße 30 / 030 36 44 57 60 verifizieren |
-| E-Mail-Adresse | `src/data/site.ts` | Echte E-Mail eintragen (aktuell Platzhalter) |
+| E-Mail-Adresse | `src/data/site.ts` | `email` ist leer — Kontakt, Footer und Formular-Fallback blenden E-Mail solange aus. Echte Adresse eintragen |
 | Geo-Koordinaten | `src/data/site.ts` | Exakte Koordinaten für Karte + JSON-LD prüfen |
 | Öffnungszeiten | `src/data/site.ts` | `openingHours` und `openingHoursSchema` ausfüllen |
-| Zahlenleiste | `src/components/Manifest.astro` | Jahre / Projekte / Gewerke: echte Werte eintragen |
+| Zahlenleiste | `src/components/Manifest.astro` | Ausgeblendet (`zahlen`-Array leer), bis echte Werte für Jahre/Projekte/Gewerke vorliegen — keine Platzhalter-Zahlen live |
 | Bild-Captions | `src/data/images.ts` | Alle Kiez- und Materialangaben sind plausible Platzhalter — vom Betrieb bestätigen lassen |
-| Formular-Backend | `src/components/KontaktForm.tsx` | `FORM_ENDPOINT` mit Formspree-URL füllen (kostenloses Konto auf formspree.io, Form anlegen, ID eintragen). Bis dahin zeigt das Formular beim Absenden eine ehrliche Fehlermeldung mit Ausweich-Kontakt |
+| Formular-Backend | `src/components/KontaktForm.tsx` | `FORM_ENDPOINT` mit Formspree-URL füllen (kostenloses Konto auf formspree.io, Form anlegen, ID eintragen). Bis dahin zeigt das Formular beim Absenden eine ehrliche Fehlermeldung mit Telefonnummer |
 | Impressum | `src/pages/impressum.astro` | Geschäftsführung, Registereintrag, USt-IdNr., Handwerksrolle, Verantwortliche:r |
 | Datenschutz | `src/pages/datenschutz.astro` | Hostinganbieter und ggf. Formular-Dienstleister benennen |
-| Bildmaterial | `src/assets/images/` | Originalauflösungen nachliefern (aktuell max. 800 px) — insbesondere Hero (IMG_2486) und die Werkstatt-Einzelbilder aus der Collage IMG_2489 |
+| Bildmaterial | `src/assets/images/` | Originalauflösungen nachliefern (aktuell max. 800 px). Danach in `src/data/images.ts` die Imports tauschen und `MIN_WALK_BREITE` auf 800 anheben — Layoutgrößen folgen automatisch den neuen Pixelmaßen |

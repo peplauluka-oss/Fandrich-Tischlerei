@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import { materialBilder } from '../data/images';
+import { materialBilder, maxDisplayWidth } from '../data/images';
 ---
 
 <section class="section werkstatt on-ink" id="werkstatt" aria-label="Werkstatt und Material">
@@ -26,13 +26,16 @@ import { materialBilder } from '../data/images';
 
       {
         materialBilder.map((bild) => (
-          <figure class="werkstatt__figure reveal" style="--reveal-delay: 0.15s">
+          <figure
+            class="werkstatt__figure reveal"
+            style={`--reveal-delay: 0.15s; max-width: ${maxDisplayWidth(bild)}px`}
+          >
             <div class="photo werkstatt__frame">
               <Image
                 src={bild.src}
                 alt={bild.alt}
-                widths={[480, 800]}
-                sizes="(min-width: 900px) 44vw, 100vw"
+                widths={[480, bild.src.width]}
+                sizes={`(min-width: 900px) ${maxDisplayWidth(bild)}px, 88vw`}
                 quality={80}
               />
             </div>

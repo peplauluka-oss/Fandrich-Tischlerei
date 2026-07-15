@@ -6,16 +6,20 @@ export const site = {
   name: 'Fandrich GmbH',
   brand: 'FANDRICH',
   claim: 'Tischlerei & Möbelrestaurierung, Berlin',
-  // TODO verifizieren: Gründungsjahr laut Fassadenschild "Meisterbetrieb seit 1964"
-  // (auf dem Foto schwer lesbar — könnte auch 1984 sein).
-  foundingYear: 1964,
+  // Hinweis: Das Fassadenschild zeigt "Meisterbetrieb seit 19??" (schwer
+  // lesbar, 1964 oder 1984). Solange unverifiziert, verwendet die Website
+  // KEINE Jahreszahl. TODO: Gründungsjahr beim Betrieb erfragen und dann
+  // gezielt wieder einsetzen (Manifest-Satz, JSON-LD foundingDate).
   street: 'Treseburger Straße 30', // TODO verifizieren
   zip: '13129',
   city: 'Berlin',
   district: 'Pankow',
   phone: '030 36 44 57 60', // TODO verifizieren
   phoneHref: '+493036445760',
-  email: 'kontakt@tischlerei-fandrich.de', // TODO: echte E-Mail-Adresse eintragen
+  // TODO: Echte E-Mail-Adresse eintragen. Solange leer, blenden Kontakt,
+  // Footer und Formular-Fallback die E-Mail komplett aus — keine erfundene
+  // Adresse auf der Live-Seite.
+  email: '',
   geo: { lat: 52.594, lng: 13.437 }, // TODO: exakte Koordinaten prüfen (Treseburger Str. 30)
   openingHours: 'Mo–Fr 7–16 Uhr', // TODO: Öffnungszeiten verifizieren
   openingHoursSchema: 'Mo-Fr 07:00-16:00', // TODO: an echte Zeiten anpassen

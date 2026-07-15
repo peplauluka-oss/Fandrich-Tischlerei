@@ -27,8 +27,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           </p>
           <p>
             <a href={`tel:${site.phoneHref}`} class="link-line">{site.phone}</a>
-            <br />
-            <a href={`mailto:${site.email}`} class="link-line">{site.email}</a>
+            {
+              site.email && (
+                <>
+                  <br />
+                  <a href={`mailto:${site.email}`} class="link-line">
+                    {site.email}
+                  </a>
+                </>
+              )
+            }
           </p>
           <p class="kontakt__hours">{site.openingHours}</p>
         </address>

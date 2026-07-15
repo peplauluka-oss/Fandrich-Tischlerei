@@ -102,11 +102,12 @@ export default function KontaktForm() {
 
       {status === 'error' && (
         <p className="form__result form__result--error" role="alert">
-          Das hat leider nicht geklappt. Schreiben Sie uns direkt an{' '}
-          <a href="mailto:kontakt@tischlerei-fandrich.de" className="link-static">
-            kontakt@tischlerei-fandrich.de
-          </a>{' '}
-          oder rufen Sie an: 030&nbsp;36&nbsp;44&nbsp;57&nbsp;60.
+          {/* TODO: E-Mail-Adresse ergänzen, sobald verifiziert (src/data/site.ts) */}
+          Das hat leider nicht geklappt. Rufen Sie uns an:{' '}
+          <a href="tel:+493036445760" className="link-static">
+            030&nbsp;36&nbsp;44&nbsp;57&nbsp;60
+          </a>
+          .
         </p>
       )}
     </form>

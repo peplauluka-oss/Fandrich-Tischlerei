@@ -32,8 +32,8 @@ const jsonLd = {
     'Meistertischlerei in Berlin-Pankow: Möbel nach Maß, Möbelrestaurierung und Innenausbau.',
   url: Astro.site?.href,
   telephone: site.phoneHref,
-  email: site.email,
-  foundingDate: String(site.foundingYear),
+  // TODO: email + foundingDate ergänzen, sobald verifiziert (src/data/site.ts)
+  ...(site.email ? { email: site.email } : {}),
   address: {
     '@type': 'PostalAddress',
     streetAddress: site.street,

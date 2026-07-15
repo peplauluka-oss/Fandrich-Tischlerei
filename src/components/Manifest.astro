@@ -1,15 +1,13 @@
 ---
-import { site } from '../data/site';
-
-const satz = `Seit ${site.foundingYear} fertigen wir Möbel und Innenausbauten, die Generationen überdauern — von Hand, in Pankow.`;
+// Bewusst ohne Jahreszahl — Gründungsjahr ist nicht verifiziert (siehe README).
+const satz =
+  'Wir fertigen Möbel und Innenausbauten, die Generationen überdauern — von Hand, in Pankow.';
 const worte = satz.split(' ');
 
-// TODO: Alle drei Werte vom Betrieb verifizieren (Platzhalter).
-const zahlen = [
-  { wert: 60, suffix: '+', label: 'Jahre Erfahrung' },
-  { wert: 1200, suffix: '+', label: 'Realisierte Projekte' },
-  { wert: 3, suffix: '', label: 'Gewerke aus einer Hand' },
-];
+// TODO: Zahlenleiste (Jahre Erfahrung / realisierte Projekte / Gewerke) erst
+// aktivieren, wenn echte, verifizierte Werte vorliegen. Bis dahin bleibt die
+// Sektion rein typografisch — keine Platzhalter-Zahlen auf der Live-Seite.
+const zahlen: { wert: number; suffix: string; label: string }[] = [];
 ---
 
 <section class="section" id="werkstatt-manifest" aria-label="Über die Werkstatt">
@@ -22,20 +20,22 @@ const zahlen = [
       {worte.map((wort) => <span class="manifest-word">{wort} </span>)}
     </p>
 
-    <dl class="zahlen">
-      {
-        zahlen.map((z, i) => (
-          <div class="zahl reveal" style={`--reveal-delay: ${i * 0.1}s`}>
-            <dt>{z.label}</dt>
-            <dd>
-              <span data-countup={z.wert} data-countup-suffix={z.suffix}>
-                0{z.suffix}
-              </span>
-            </dd>
-          </div>
-        ))
-      }
-    </dl>
+    {
+      zahlen.length > 0 && (
+        <dl class="zahlen">
+          {zahlen.map((z, i) => (
+            <div class="zahl reveal" style={`--reveal-delay: ${i * 0.1}s`}>
+              <dt>{z.label}</dt>
+              <dd>
+                <span data-countup={z.wert} data-countup-suffix={z.suffix}>
+                  0{z.suffix}
+                </span>
+              </dd>
+            </div>
+          ))}
+        </dl>
+      )
+    }
   </div>
 </section>
 

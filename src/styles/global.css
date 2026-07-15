@@ -145,6 +145,11 @@ section[id] {
   padding-block: var(--section-gap);
 }
 
+/* Konsequente 1px-Trennlinien zwischen den Sektionen */
+main > .section {
+  border-top: 1px solid var(--oak-line);
+}
+
 /* -------- Buttons & Links -------- */
 
 .btn {
