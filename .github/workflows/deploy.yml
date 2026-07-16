@@ -40,10 +40,6 @@ jobs:
 
   deploy:
     needs: build
-    # Nur vom Default-Branch (oder manuell) veröffentlichen — die
-    # github-pages-Umgebung lässt Deployments von Feature-Branches nicht zu.
-    # Feature-Pushes validieren so nur den Build (grün), ohne roten Deploy.
-    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
