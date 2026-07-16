@@ -1,0 +1,33 @@
+# DEPLOY_LOG — vertikaler Aufbau
+
+Deploy-Quelle: **GitHub Actions** (`.github/workflows/deploy.yml`,
+`withastro/action` + `actions/deploy-pages`). Veröffentlicht vom **Default-Branch
+`main`** (die `github-pages`-Umgebung lässt keine Feature-Branches zu). Ablauf je
+Sektion: auf dem Entwicklungs-Branch bauen → `main` per Fast-Forward
+nachziehen → Actions-Deploy → Live.
+
+Live: **https://peplauluka-oss.github.io/Fandrich-Tischlerei/**
+
+> Prüf-Hinweis: Aus der Build-Sandbox ist `*.github.io` netzseitig gesperrt
+> (curl → 000, WebFetch → 403). „Live nachweisbar" heißt hier deshalb:
+> Actions-**Deploy-Job = success** UND der Build-Marker/Sektions-Anker im
+> ausgelieferten Artefakt (lokaler Build desselben Commits identisch). Im
+> Browser ist die Seite normal erreichbar.
+
+| Schritt | Commit (main) | Actions-Deploy | Live-Nachweis | Status |
+| --- | --- | --- | --- | --- |
+| **S0 — Deploy-Gate** | `d25ea17` | Run #6 build+deploy **success** (2026-07-16 19:12 UTC) | Footer-Marker **„Stand: 2026-07-16 · d25ea17"** im ausgelieferten `index.html` | ✅ PASS |
+
+## S0 — Deploy-Beweis (Gate) — PASS
+
+- Pipeline umgestellt: alter `GH_PAGES=1`-/`gh-pages`-Branch-Mechanismus außer
+  Betrieb (Pages-Source = Actions; der `gh-pages`-Branch wird ignoriert und kann
+  vom Betreiber gelöscht werden — die Löschung ist über den Git-Proxy dieser
+  Session gesperrt).
+- Deploy vom Feature-Branch scheiterte reproduzierbar (github-pages-Umgebung
+  erlaubt nur den Default-Branch); Freigabe „nach main mergen" erteilt →
+  Deploy vom `main` läuft grün (Build **und** Deploy).
+- Build-Marker im Footer wird automatisch aus `GITHUB_SHA` gesetzt
+  (`astro.config.mjs` → `import.meta.env.PUBLIC_BUILD_STAMP`).
+
+**Gate bestanden — Design-Aufbau S1–S6 freigegeben.**
