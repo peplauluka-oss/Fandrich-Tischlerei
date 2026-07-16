@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://peplauluka-oss.github.io/Fandrich-Tischlerei/sitemap-index.xml
