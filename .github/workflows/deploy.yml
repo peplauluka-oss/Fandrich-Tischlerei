@@ -40,6 +40,9 @@ jobs:
 
   deploy:
     needs: build
+    # Veröffentlichung nur vom Default-Branch (die github-pages-Umgebung lässt
+    # keine Feature-Branches zu). Feature-Pushes validieren nur den Build.
+    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
