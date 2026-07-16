@@ -34,6 +34,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <a href={`${base}/impressum`} class="link-line">Impressum</a>
       <a href={`${base}/datenschutz`} class="link-line">Datenschutz</a>
       <p>© {site.name} {jahr}</p>
+      <p class="footer__stamp">Stand: {import.meta.env.PUBLIC_BUILD_STAMP}</p>
     </div>
   </div>
 </footer>
@@ -101,6 +102,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   .footer__legal p {
     opacity: 0.6;
     margin-top: 0.5rem;
+  }
+
+  .footer__stamp {
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    opacity: 0.4 !important;
+    margin-top: 0.25rem !important;
   }
 
   @media (max-width: 767px) {

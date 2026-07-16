@@ -1,0 +1,48 @@
+name: Deploy to GitHub Pages
+
+# Einzige Deploy-Quelle: offizielle Astro-Action baut, actions/deploy-pages
+# veröffentlicht. Voraussetzung einmalig: Repo-Settings → Pages → Source =
+# "GitHub Actions" (siehe README).
+on:
+  push:
+    branches:
+      - main
+      - claude/fandrich-website-relaunch-mdt6zy
+  workflow_dispatch:
+
+# Rechte, die deploy-pages / configure-pages benötigen
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Gleichzeitige Deploys serialisieren, laufende nicht abbrechen
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # voller Verlauf → Commit-Kurzhash für den Build-Marker
+      - name: Pages konfigurieren (Source auf Actions setzen)
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - name: Build (Astro)
+        uses: withastro/action@v3
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy auf GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

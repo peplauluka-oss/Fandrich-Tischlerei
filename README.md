@@ -56,15 +56,34 @@ Die kuratorische Bildauswahl mit Begründung für jedes Bild: [AUSWAHL.md](./AUS
 
 Die Reihenfolge im Gallery Walk steuert das Feld `reihenfolge`.
 
-## Deploy (Vercel oder Netlify)
+## Deploy (GitHub Pages — automatisch)
 
-Statischer Build ohne Server-Funktionen — beide Anbieter erkennen Astro automatisch:
+Es gibt **eine** Deploy-Quelle: den Workflow
+[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). Er baut mit der
+offiziellen Astro-Action (`withastro/action`) und veröffentlicht über
+`actions/deploy-pages`. Jeder Push auf `main` (oder den aktuellen
+Entwicklungs-Branch) deployt automatisch — kein manueller Build, kein
+`gh-pages`-Branch mehr.
 
-- **Vercel:** Repo importieren → Framework „Astro“ → Build `npm run build`, Output `dist/`.
-- **Netlify:** Repo verbinden → Build `npm run build`, Publish directory `dist/`.
+Live: **https://peplauluka-oss.github.io/Fandrich-Tischlerei/**
 
-Danach in `astro.config.mjs` die finale Domain in `SITE` eintragen
-(wichtig für Sitemap, Canonical-URLs und OG-Image).
+### Einmalig einzustellen (2 Klicks, nur der Betreiber kann das)
+
+Die Veröffentlichung über Actions muss einmal als Quelle gewählt werden:
+
+1. Im Repository auf **Settings → Pages**.
+2. Unter **Build and deployment → Source** den Punkt **„GitHub Actions“**
+   auswählen (statt „Deploy from a branch“).
+
+Danach genügt jeder Push; der Workflow erledigt Build und Deploy. Der Footer
+zeigt einen Marker **„Stand: JJJJ-MM-TT · <commit>“**, an dem man erkennt,
+welcher Stand gerade live ist (wird beim Build automatisch gesetzt).
+
+### Eigene Domain
+
+In `astro.config.mjs` `SITE` auf die Domain und `BASE` auf `'/'` setzen
+(wichtig für Sitemap, Canonical-URLs und OG-Image), dann eine `CNAME`-Datei
+im `public/`-Ordner anlegen.
 
 ## Bühne & Interaktion (Runde 3)
 

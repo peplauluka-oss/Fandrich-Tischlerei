@@ -59,7 +59,10 @@ const osmLink = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site
       <a href={`${base}/impressum`} class="link-line">Impressum</a>
       <a href={`${base}/datenschutz`} class="link-line">Datenschutz</a>
     </div>
-    <p class="closing__copy">© {site.name} {jahr}</p>
+    <p class="closing__copy">
+      © {site.name} {jahr}
+      <span class="closing__stamp">Stand: {import.meta.env.PUBLIC_BUILD_STAMP}</span>
+    </p>
   </div>
 </section>
 
@@ -173,6 +176,16 @@ const osmLink = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site
   .closing__copy {
     font-size: 0.9rem;
     color: rgba(250, 247, 242, 0.55);
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .closing__stamp {
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: rgba(250, 247, 242, 0.4);
   }
 
   @media (max-width: 899px) {

@@ -1,3 +1,9 @@
+> **Hinweis:** Dieses Dokument beschreibt den früheren manuellen
+> `gh-pages`-Mechanismus. Er ist **abgelöst** durch das automatische Deployment
+> über GitHub Actions — siehe [`DEPLOY_FIX.md`](./DEPLOY_FIX.md) und
+> [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). Nur noch als
+> Verlaufsbeleg aufbewahrt.
+
 # Deploy-Check — Runde 3
 
 Ziel: sicherstellen, dass der neue Stand auch **live** ankommt (der vorherige
