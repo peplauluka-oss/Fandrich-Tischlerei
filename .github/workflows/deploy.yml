@@ -35,6 +35,8 @@ jobs:
           enablement: true
       - name: Build (Astro)
         uses: withastro/action@v3
+        with:
+          node-version: 22 # Astro 7 benötigt Node >= 22.12
 
   deploy:
     needs: build
