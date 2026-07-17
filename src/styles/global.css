@@ -21,7 +21,8 @@
   --ease-curtain: cubic-bezier(0.76, 0, 0.24, 1);
 
   /* Raum */
-  --section-gap: clamp(6rem, 14vh, 11rem);
+  /* Dichte-Gesetz: Sektionsabstand 96–140px, nie mehr. */
+  --section-gap: clamp(6rem, 12vh, 8.5rem);
   --gutter: clamp(1.25rem, 4vw, 4rem);
 
   /* Einheitlicher warmer Look für alle Projektfotos */
@@ -113,6 +114,15 @@ a {
   text-transform: uppercase;
   color: var(--oak);
   margin-bottom: clamp(1.25rem, 3vh, 2rem);
+}
+
+/* Sektions-Kennung „(01) Über uns" — die kleine Nummer etwas kräftiger,
+   ersetzt die früheren dekorativen Riesen-Zahlen (Anti-Template). */
+.eyebrow__idx {
+  font-variant-numeric: tabular-nums;
+  color: var(--oak);
+  font-weight: 600;
+  margin-right: 0.5em;
 }
 
 /* Typo-Eskalation — Sektions-Headlines dürfen den Container fast berühren */
