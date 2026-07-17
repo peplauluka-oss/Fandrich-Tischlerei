@@ -17,6 +17,15 @@ Live: **https://peplauluka-oss.github.io/Fandrich-Tischlerei/**
 | Schritt | Commit (main) | Actions-Deploy | Live-Nachweis | Status |
 | --- | --- | --- | --- | --- |
 | **S0 — Deploy-Gate** | `d25ea17` | Run #6 build+deploy **success** (2026-07-16 19:12 UTC) | Footer-Marker **„Stand: 2026-07-16 · d25ea17"** im ausgelieferten `index.html` | ✅ PASS |
+| **S1 — Nav + Hero (`#hero-v3`)** | `010dfe6` | Run #8 build+deploy **success** (2026-07-17 11:07 UTC) | Sektion `id="hero-v3"` + Marker im Artefakt; lokal 390/1440 ohne H-Overflow | ✅ PASS |
+| **S2 — Über uns (`#ueber-uns-v3`)** | s. u. | build+deploy **success** | Sektion `id="ueber-uns-v3"`, versetztes Bildpaar + Clip-Reveal; lokal 390/1440 ok | ✅ PASS |
+
+**S2-Notiz (Bugfix):** `clip-path` auf einem vom IntersectionObserver
+beobachteten Element kollabiert dessen `intersectionRatio` auf 0 → Reveal und
+native Lazy-Load feuern nie. Lösung: Clip auf einen **inneren** Rahmen legen,
+die Figur selbst unbeschnitten beobachten; die zwei kleinen Über-uns-Bilder
+`loading="eager"`. Bildpaar nutzt KLEIN-Hochformate ≤ 284 px (Thumbnailgröße,
+G2-konform) — Original-Hochformate laut STATUS.md nachliefern.
 
 ## S0 — Deploy-Beweis (Gate) — PASS
 
