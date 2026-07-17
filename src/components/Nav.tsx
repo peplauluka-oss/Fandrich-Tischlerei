@@ -8,7 +8,7 @@ const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 const LINKS = [
   { href: `${BASE}/#arbeiten-v3`, label: 'Arbeiten' },
   { href: `${BASE}/#leistungen-v3`, label: 'Leistungen' },
-  { href: `${BASE}/#werkstatt`, label: 'Werkstatt' },
+  { href: `${BASE}/#werkstatt-v3`, label: 'Werkstatt' },
   { href: `${BASE}/#kontakt`, label: 'Kontakt' },
 ];
 

@@ -4,11 +4,11 @@ import { materialBilder, maxDisplayWidth } from '../data/images';
 const bild = materialBilder[0]!;
 ---
 
-<section class="section werkstatt on-ink" id="werkstatt" aria-label="Werkstatt und Material">
+<section class="section werkstatt on-ink" id="werkstatt-v3" aria-label="Werkstatt und Material">
   <div class="wrap werkstatt__grid">
     <div class="werkstatt__col">
       <div class="section-head">
-        <span class="section-num" data-num="05" aria-hidden="true"></span>
+        <span class="section-num" data-num="04" aria-hidden="true"></span>
         <p class="eyebrow reveal">Werkstatt</p>
         <h2 class="headline split">Material, das man ernst nimmt.</h2>
       </div>
@@ -75,10 +75,10 @@ const bild = materialBilder[0]!;
     margin-top: 1.25rem;
   }
 
-  /* Bild ragt über die obere Sektionsgrenze — Overlap statt Kachel */
+  /* Bild ragt 64px über die obere Sektionsgrenze — Overlap statt Kachel */
   .werkstatt__figure {
     margin: 0;
-    margin-top: -8vh;
+    margin-top: -64px;
   }
 
   .werkstatt__frame {

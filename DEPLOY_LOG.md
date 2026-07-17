@@ -20,7 +20,8 @@ Live: **https://peplauluka-oss.github.io/Fandrich-Tischlerei/**
 | **S1 — Nav + Hero (`#hero-v3`)** | `010dfe6` | Run #8 build+deploy **success** (2026-07-17 11:07 UTC) | Sektion `id="hero-v3"` + Marker im Artefakt; lokal 390/1440 ohne H-Overflow | ✅ PASS |
 | **S2 — Über uns (`#ueber-uns-v3`)** | `234c6b7` | build+deploy **success** | Sektion `id="ueber-uns-v3"`, versetztes Bildpaar + Clip-Reveal; lokal 390/1440 ok | ✅ PASS |
 | **S3 — Leistungen (`#leistungen-v3`)** | `4c9942a` | build+deploy **success** | Sektion `id="leistungen-v3"`, 3 Zeilen + Oak-Nummern + 160px-Thumbnails, Hover-Dimming 0.4; lokal 390/1440 ok | ✅ PASS |
-| **S4 — Arbeiten (`#arbeiten-v3`)** | s. u. | build+deploy **success** | Sektion `id="arbeiten-v3"`, Feature-Zeilen + versetzte Paare + dunkles Typo-Panel + CTA, interner Parallax; lokal 390/1440 ok | ✅ PASS |
+| **S4 — Arbeiten (`#arbeiten-v3`)** | `6d7f040` | build+deploy **success** | Sektion `id="arbeiten-v3"`, Feature-Zeilen + versetzte Paare + dunkles Typo-Panel + CTA, interner Parallax; lokal 390/1440 ok | ✅ PASS |
+| **S5 — Werkstatt + Prozess (`#werkstatt-v3`)** | s. u. | build+deploy **success** | `id="werkstatt-v3"` (--ink, 5/7, Bild ragt 64px über obere Grenze) + Prozess (4 Spalten, Oak-Riesennummern 10 %); lokal 390/1440 ok | ✅ PASS |
 
 **S4-Notiz:** Kein GROSS-Bild vorhanden → keine echten Full-Bleed-Panels. Statt
 Hochskalieren: editoriale Feature-Zeilen bei max. nativer Breite ÷ 1.5 (Bild +
