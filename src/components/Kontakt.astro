@@ -11,12 +11,12 @@ const osmSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&lay
 const osmLink = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lng}#map=16/${site.geo.lat}/${site.geo.lng}`;
 ---
 
-<section class="section closing on-ink" id="kontakt" aria-label="Kontakt">
+<section class="section closing on-ink" id="kontakt-v3" aria-label="Kontakt">
   <div class="wrap">
     <div class="closing__top">
       <div class="closing__info">
         <div class="section-head">
-          <span class="section-num" data-num="07" aria-hidden="true"></span>
+          <span class="section-num" data-num="06" aria-hidden="true"></span>
           <p class="eyebrow reveal">Kontakt</p>
           <h2 class="headline split">Erzählen Sie uns von Ihrem Projekt.</h2>
         </div>
@@ -26,10 +26,21 @@ const osmLink = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site
             {site.street}<br />
             {site.zip} {site.city}
           </p>
-          <p>
-            <a href={`tel:${site.phoneHref}`} class="link-line">{site.phone}</a>
-          </p>
           <p class="closing__hours">{site.openingHours}</p>
+          {
+            /* E-Mail nur, falls verifiziert — sonst Telefon-CTA */
+            site.email ? (
+              <p>
+                <a href={`mailto:${site.email}`} class="link-line">
+                  {site.email}
+                </a>
+              </p>
+            ) : (
+              <a href={`tel:${site.phoneHref}`} class="btn btn--oak closing__tel" data-cursor="link">
+                {site.phone} <span class="arrow" aria-hidden="true">→</span>
+              </a>
+            )
+          }
         </address>
       </div>
 
@@ -104,6 +115,10 @@ const osmLink = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site
     font-size: 0.95rem;
   }
 
+  .closing__tel {
+    margin-top: 0.5rem;
+  }
+
   /* Two-Click-Karte */
   .closing__map {
     margin-top: clamp(3.5rem, 8vh, 6rem);
@@ -152,7 +167,7 @@ const osmLink = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site
     line-height: 0.9;
     text-align: center;
     color: var(--paper);
-    opacity: 0.12;
+    opacity: 0.1;
     user-select: none;
     white-space: nowrap;
   }

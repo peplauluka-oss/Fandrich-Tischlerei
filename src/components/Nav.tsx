@@ -9,7 +9,7 @@ const LINKS = [
   { href: `${BASE}/#arbeiten-v3`, label: 'Arbeiten' },
   { href: `${BASE}/#leistungen-v3`, label: 'Leistungen' },
   { href: `${BASE}/#werkstatt-v3`, label: 'Werkstatt' },
-  { href: `${BASE}/#kontakt`, label: 'Kontakt' },
+  { href: `${BASE}/#kontakt-v3`, label: 'Kontakt' },
 ];
 
 const EASE = [0.22, 1, 0.36, 1] as const;
