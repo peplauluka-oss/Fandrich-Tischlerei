@@ -22,6 +22,7 @@ Live: **https://peplauluka-oss.github.io/Fandrich-Tischlerei/**
 | **S3 — Leistungen (`#leistungen-v3`)** | `4c9942a` | build+deploy **success** | Sektion `id="leistungen-v3"`, 3 Zeilen + Oak-Nummern + 160px-Thumbnails, Hover-Dimming 0.4; lokal 390/1440 ok | ✅ PASS |
 | **S4 — Arbeiten (`#arbeiten-v3`)** | `6d7f040` | build+deploy **success** | Sektion `id="arbeiten-v3"`, Feature-Zeilen + versetzte Paare + dunkles Typo-Panel + CTA, interner Parallax; lokal 390/1440 ok | ✅ PASS |
 | **S5 — Werkstatt + Prozess (`#werkstatt-v3`)** | s. u. | build+deploy **success** | `id="werkstatt-v3"` (--ink, 5/7, Bild ragt 64px über obere Grenze) + Prozess (4 Spalten, Oak-Riesennummern 10 %); lokal 390/1440 ok | ✅ PASS |
+| **S6 — Kontakt + Footer (`#kontakt-v3`)** | `9768410` | Run #18 build+deploy **success** (2026-07-17 11:44 UTC) | Sektion `id="kontakt-v3"`, Unterstrich-Formular (Fokus --oak), Two-Click-OSM-Karte, Telefon-CTA statt E-Mail (unverifiziert), FANDRICH-Schlusswortmarke Deckkraft 0.1, Footer NAP + Links + Build-Marker „Stand: 2026-07-17 · a16fc63"; lokal 390/1440 ohne H-Overflow, keine JS-Fehler | ✅ PASS |
 
 **S4-Notiz:** Kein GROSS-Bild vorhanden → keine echten Full-Bleed-Panels. Statt
 Hochskalieren: editoriale Feature-Zeilen bei max. nativer Breite ÷ 1.5 (Bild +
