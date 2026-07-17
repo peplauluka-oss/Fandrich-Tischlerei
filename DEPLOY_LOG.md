@@ -25,6 +25,19 @@ Live: **https://peplauluka-oss.github.io/Fandrich-Tischlerei/**
 | **S6 — Kontakt + Footer (`#kontakt-v3`)** | `9768410` | Run #18 build+deploy **success** (2026-07-17 11:44 UTC) | Sektion `id="kontakt-v3"`, Unterstrich-Formular (Fokus --oak), Two-Click-OSM-Karte, Telefon-CTA statt E-Mail (unverifiziert), FANDRICH-Schlusswortmarke Deckkraft 0.1, Footer NAP + Links + Build-Marker „Stand: 2026-07-17 · a16fc63"; lokal 390/1440 ohne H-Overflow, keine JS-Fehler | ✅ PASS |
 | **Abschluss — ABNAHME + Kontrastfix** | `5e88b39` | Run #20 build+deploy **success** (2026-07-17 11:49 UTC) | `ABNAHME.md` (Sektionsabnahme + Lighthouse Mobile Perf 95 / A11y 95 / BP 100 / SEO 100); Build-Marker-Kontrast 3.5→6:1 (WCAG AA) | ✅ PASS |
 
+## Runde „De-Duplizierung & Editorial-Dichte" (R1–R6)
+
+Oberstes Gesetz: **jedes Foto genau 1×** — abgesichert durch
+`scripts/check-images.mjs` (npm `prebuild`-Hook; Build failt bei Doppel-src).
+
+| Schritt | Commit (main) | Actions-Deploy | Live-Nachweis | Status |
+| --- | --- | --- | --- | --- |
+| **R1 — Bugfixes (Prozess/Hero)** | `6659ad1` | build+deploy **success** | Genau eine Oak-Nummer je Prozess-Schritt; Hero-h1 `aria-label` + Leerzeichen; lokal 390/1440 ok | ✅ PASS |
+| **De-Dup + R2 + R3** | `a551330` | build+deploy **success** | `images.ts` als einzige Quelle, Check grün (8 Assets à 1×); Leistungen bildlos (Editorial-Liste); Galerie 4 Panels + Pull-Quote + einheitliche Captions | ✅ PASS |
+| **R4 — Sektions-Rhythmus** | `54a9682` | build+deploy **success** | „(0X) Name"-Kennungen statt Riesen-Zahlen; Material-Index-Band (Marquee); Abstände 96–140px | ✅ PASS |
+| **R5 — Werkstatt Full-Bleed** | `5f14a24` | build+deploy **success** | `id="werkstatt-v3"` dunkel volle Breite, Bild rechts/mobil oben, Faktenzeile (nur Verifiziertes), VideoSlot vorbereitet | ✅ PASS |
+| **R6 — QA & Abschluss** | s. u. | build+deploy **success** | QA-Screenshots `/qa/` (1440+390, 0 H-Overflow), Bild-Check 0 Dubletten, Lighthouse Mobile **95 / 95 / 100 / 100**; DEPLOY_LOG + ABNAHME aktualisiert | ✅ PASS |
+
 **S4-Notiz:** Kein GROSS-Bild vorhanden → keine echten Full-Bleed-Panels. Statt
 Hochskalieren: editoriale Feature-Zeilen bei max. nativer Breite ÷ 1.5 (Bild +
 große Oak-Index/Caption für Dichte), versetzte KLEIN-Paare, dunkles Zitat-Panel,

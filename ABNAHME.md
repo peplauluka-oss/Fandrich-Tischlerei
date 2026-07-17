@@ -128,3 +128,75 @@ Alle Sektionen S1–S6 live deployt (Actions build+deploy = success), Bild-Geset
 eingehalten (kein Upscaling), Lighthouse Mobile in allen vier Kategorien ≥ 90.
 **Abnahme: bestanden** — mit den oben gelisteten inhaltlichen TODOs (Video, GROSS-Bilder,
 E-Mail), die reine Content-Nachlieferungen ohne Code-Umbau sind.
+
+---
+
+# Nachtrag — Runde „De-Duplizierung & Editorial-Dichte" (R1–R6)
+
+**Stand:** 2026-07-17 · Commits `6659ad1` → `5f14a24` (+ R6). Deploy-Historie
+in `DEPLOY_LOG.md`.
+
+## Oberstes Gesetz erfüllt: jedes Foto genau 1×
+- Alle Bildzuweisungen zentral in `src/data/images.ts`. Zuordnung (einzige
+  erlaubte Verwendung): **Hero** IMG_2479 · **Über uns** IMG_2480 + IMG_2470 ·
+  **Galerie** IMG_2475/2463/2467/2486 · **Werkstatt** IMG_2482. **Leistungen
+  und Prozess sind bildlos.** IMG_2472 entfernt.
+- Build-Check `scripts/check-images.mjs` (npm `prebuild`): bricht ab, wenn ein
+  Asset doppelt platziert oder außerhalb `images.ts` referenziert wird.
+  Ergebnis: **8 Assets, jedes genau 1× — 0 Dubletten.**
+
+## Runden
+| Runde | Ergebnis | Status |
+| --- | --- | --- |
+| **R1** | Prozess: genau eine Oak-Nummer je Schritt (Doppel-Knoten entfernt). Hero-h1 `aria-label="Handwerk, das bleibt."` + echtes Leerzeichen. Galerie-Captions vereinheitlicht (mit R3). | ✅ |
+| **R2** | Leistungen bildlos: Editorial-Liste, riesige Fraunces-Oak-Nummern, Titel, Text, Stichwort-Zeile, 1px-Trenner, Hover Nummer --ink/20→--oak. Texte unverändert. | ✅ |
+| **R3** | Galerie 4 Panels, kein Grid: 01 zentriert + Overlay-Caption (Scrim, Clip von unten) · 02 Bild rechts + sticky Caption · Pull-Quote auf --paper (Oak-Anführung) · 03 Bild links versetzt/überlappend · 04 sachlicher Abschluss + CTA. Einheitliche Caption (Oak-Laufnummer + Versalien, nicht kursiv). | ✅ |
+| **R4** | „(0X) Name"-Kennungen statt dekorativer Riesen-Zahlen (Anti-Template). Material-Index-Band zwischen Werkstatt und Prozess (Fraunces, --ink/--paper, sehr langsames Marquee, reduced-motion statisch). Abstände 96–140px. | ✅ |
+| **R5** | Werkstatt als dunkler Full-Bleed-Break: --ink volle Breite, Bild rechts (mobil oben), Faktenzeile nur Verifiziertes (Meisterbetrieb · Eigene Werkstatt in Pankow · Treseburger Straße 30), VideoSlot vorbereitet (`werkstattMedia.ts`). | ✅ |
+| **R6** | QA-Screenshots `/qa/` (1440 + 390, je 0 H-Overflow), Bild-Check grün, Lighthouse Mobile 95/95/100/100, Fakten-Regeln geprüft. | ✅ |
+
+## Stack & Motion
+- Astro + React-Islands (Nav) + Framer Motion **installiert und genutzt**;
+  Lenis-Smooth-Scroll (Desktop, lerp 0.1) in `src/scripts/stage.ts`.
+- Zentrale Motion-Tokens: `src/tokens/motion.ts` (ein Reveal-Ease
+  `cubic-bezier(0.22,1,0.36,1)`, ein Hover-Ease, Dauern 0.6–0.9 s / 0.25 s).
+- **Engineering-Entscheidung (dokumentiert):** Reveals/Clip-Path/Parallax der
+  Galerie und die Leistungen-/Werkstatt-Interaktion laufen als **CSS +
+  IntersectionObserver**, nicht als hydrierte Framer-Motion-Inseln. Grund:
+  identische Optik bei transform/opacity/clip-path, aber ohne React-Hydration
+  (bessere Performance, funktioniert ohne JS, `prefers-reduced-motion`
+  vollständig respektiert). Framer Motion bleibt für echte Orchestrierung
+  (Nav-Overlay) im Einsatz. GPU-only: nie width/height/top animiert.
+
+## Lighthouse (Mobile) — Anforderung ≥ 90
+| Kategorie | Score |
+| --- | --- |
+| Performance | **95** |
+| Accessibility | **95** |
+| Best Practices | **100** |
+| SEO | **100** |
+FCP 1,0 s · LCP 2,9 s · TBT 0 ms · CLS 0.
+
+**Accessibility 95 — Begründung:** zwei `color-contrast`-Hinweise, beide
+gestalterisch gewollt und spec-konform: (1) die **Oak-Laufnummern** der Galerie
+(R1.3 verlangt ausdrücklich `--oak`) und (2) die **dekorative FANDRICH-Wortmarke**
+(Deckkraft 0.1, `aria-hidden`). Der eigentliche Caption-Text ist `--ink-soft`
+und erfüllt AA. Score liegt über der Schwelle.
+
+## Fakten-Regeln (final gegengeprüft)
+- **Kein Gründungsjahr** sichtbar (1964/1984 nur in Quellcode-Kommentaren als
+  offener TODO, nicht im Markup).
+- **Keine erfundene E-Mail:** `site.email = ''`; Kontakt und Footer blenden
+  Mailto aus und zeigen stattdessen den Telefon-CTA (`site.email && …`).
+- **Sie-Ansprache** durchgängig; keine „0+"-Statistiken, keine Floskeln.
+
+## Offene TODOs (Betreiber, reine Content-Nachlieferung)
+1. Hero- und Werkstatt-Clips → `heroMedia.ts` / `werkstattMedia.ts`.
+2. Original-Fotos ≥ 1200 px (ideal ≥ 1600 px) → größere Darstellungen und echte
+   Vollbreite-Panels (nur `images.ts` tauschen).
+3. Verifizierte E-Mail → `src/data/site.ts` (`email`).
+4. Kiez-/Material-/Ortangaben der Captions vom Betrieb bestätigen lassen;
+   Gründungsjahr bei Klärung gezielt wieder einsetzen.
+
+**Runde bestanden:** oberstes Gesetz (jedes Foto 1×) technisch abgesichert,
+Editorial-Dichte umgesetzt, Lighthouse Mobile in allen Kategorien ≥ 90.
