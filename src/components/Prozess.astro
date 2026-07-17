@@ -39,13 +39,8 @@ const schritte = [
         {
           schritte.map((s, i) => (
             <li class="prozess__step reveal" style={`--reveal-delay: ${i * 0.08}s`}>
-              <span class="prozess__num" aria-hidden="true">
-                {s.nr}
-              </span>
+              <span class="prozess__num" aria-hidden="true">{s.nr}</span>
               <div class="prozess__content">
-                <span class="prozess__nr" aria-hidden="true">
-                  {s.nr}
-                </span>
                 <h3>{s.titel}</h3>
                 <p>{s.text}</p>
               </div>
@@ -98,15 +93,6 @@ const schritte = [
     position: relative;
   }
 
-  /* Kleine Nummer im Fluss (mobil sichtbar, Desktop entfällt zugunsten der großen) */
-  .prozess__nr {
-    display: none;
-    font-size: 0.85rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    color: var(--oak);
-  }
-
   .prozess__content h3 {
     margin-top: 2.5rem;
     font-size: clamp(1.25rem, 1.6vw, 1.6rem);
@@ -142,15 +128,15 @@ const schritte = [
       padding-bottom: 0;
     }
 
+    /* Dieselbe Nummer, mobil als solide Oak-Zahl an der Fülllinie */
     .prozess__num {
-      display: none;
-    }
-
-    .prozess__nr {
-      display: block;
       position: absolute;
       left: calc(-1 * clamp(2.5rem, 8vw, 4rem));
-      top: 0.3rem;
+      top: 0.15rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      opacity: 1;
       background: var(--paper);
       padding-block: 0.2rem;
       z-index: 1;
