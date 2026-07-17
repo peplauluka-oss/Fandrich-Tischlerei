@@ -1,10 +1,11 @@
 /**
- * Globale Bühne: Preloader, Lenis-Smooth-Scroll (nur Desktop), Zeilen-Reveal,
+ * Globale Bühne: Lenis-Smooth-Scroll (nur Desktop), Zeilen-Reveal,
  * Block-Reveals, Custom-Cursor, Prozess-Linie, Manifest-Wort-Reveal.
+ * KEIN Preloader — die Seite öffnet direkt im Hero.
  *
  * Animationsprinzipien (Emil Kowalski): jede Bewegung hat einen Zweck,
- * ein einziges Easing-System, Origin-aware (Zeilen von unten, Vorhang nach
- * oben), unterbrechbar (rAF-Lerp), bei reduced-motion vollständig deaktiviert.
+ * ein einziges Easing-System, Origin-aware (Zeilen von unten),
+ * unterbrechbar (rAF-Lerp), bei reduced-motion vollständig deaktiviert.
  */
 import Lenis from 'lenis';
 
@@ -13,67 +14,7 @@ const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matc
 const isDesktop = window.matchMedia('(min-width: 1025px)').matches;
 
 /* ------------------------------------------------------------------ *
- * 1 — Preloader: "Messen." → "Fügen." → "Bleiben." → Vorhang hoch
- * ------------------------------------------------------------------ */
-function initPreloader(onDone: () => void) {
-  const pre = document.querySelector<HTMLElement>('.preloader');
-  if (!pre) {
-    onDone();
-    return;
-  }
-
-  const finish = () => {
-    pre.classList.add('is-leaving');
-    document.body.classList.remove('is-preloading');
-    const cleanup = () => {
-      pre.setAttribute('hidden', '');
-      onDone();
-    };
-    pre.addEventListener('transitionend', cleanup, { once: true });
-    // Fallback, falls transitionend nicht feuert
-    window.setTimeout(cleanup, 1000);
-  };
-
-  // Einmal pro Session; reduced-motion → sofort weg
-  if (reduced || sessionStorage.getItem('fandrich_intro') === '1') {
-    pre.setAttribute('hidden', '');
-    document.body.classList.remove('is-preloading');
-    onDone();
-    return;
-  }
-  sessionStorage.setItem('fandrich_intro', '1');
-
-  const words = [...pre.querySelectorAll<HTMLElement>('.preloader__word')];
-  let i = 0;
-  let done = false;
-
-  const step = () => {
-    if (done) return;
-    if (i > 0) words[i - 1]?.classList.add('is-off');
-    if (i < words.length) {
-      words[i]?.classList.remove('is-off');
-      words[i]?.classList.add('is-on');
-      i += 1;
-      timer = window.setTimeout(step, 400);
-    } else {
-      finish();
-    }
-  };
-  let timer = window.setTimeout(step, 250);
-
-  // Skip bei Klick/Tap
-  const skip = () => {
-    if (done) return;
-    done = true;
-    window.clearTimeout(timer);
-    finish();
-  };
-  pre.addEventListener('click', skip);
-  pre.addEventListener('touchstart', skip, { passive: true });
-}
-
-/* ------------------------------------------------------------------ *
- * 2 — Lenis Smooth-Scroll (nur Desktop, kein Touch/reduced-motion)
+ * Lenis Smooth-Scroll (nur Desktop, kein Touch/reduced-motion)
  * ------------------------------------------------------------------ */
 function initLenis() {
   if (reduced || !isDesktop || !finePointer) return null;
@@ -342,12 +283,9 @@ function boot() {
   initToTop(lenis);
 }
 
-// Reveals erst nach Font-Load splitten (stabile Zeilenmessung)
+// Kein Preloader: Hero-Choreografie startet sofort beim Laden.
 const start = () => {
-  initPreloader(() => {
-    /* Hero-Choreografie startet über data-Attribut/CSS nach Vorhang */
-    document.documentElement.classList.add('intro-done');
-  });
+  document.documentElement.classList.add('intro-done');
   if ('fonts' in document) {
     document.fonts.ready.then(boot);
   } else {

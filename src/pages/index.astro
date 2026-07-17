@@ -2,8 +2,7 @@
 import { getImage } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav';
-import Hero from '../components/Hero.astro';
-import Marquee from '../components/Marquee.astro';
+import HeroV3 from '../components/HeroV3.astro';
 import Manifest from '../components/Manifest.astro';
 import Leistungen from '../components/Leistungen.astro';
 import GalleryWalk from '../components/GalleryWalk';
@@ -40,11 +39,10 @@ const walkImages = await Promise.all(
 const interlude = 'Ein Möbel ist gut, wenn man nach zwanzig Jahren nichts daran ändern möchte.';
 ---
 
-<Base title={title} description={description} intro>
+<Base title={title} description={description}>
   <Nav client:load />
   <main>
-    <Hero />
-    <Marquee />
+    <HeroV3 />
     <Manifest />
     <Leistungen />
 

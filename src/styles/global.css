@@ -315,72 +315,6 @@ main > .section {
 }
 
 /* ================================================================
-   Preloader
-   ================================================================ */
-
-.preloader {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  background: var(--ink);
-  color: var(--paper);
-  display: grid;
-  place-items: center;
-  clip-path: inset(0 0 0 0);
-}
-
-.preloader[hidden] {
-  display: none;
-}
-
-.preloader__words {
-  position: relative;
-  font-family: var(--font-head);
-  font-weight: 340;
-  font-size: clamp(2.2rem, 6vw, 3.6rem);
-  letter-spacing: -0.03em;
-  height: 1.2em;
-  min-width: 8ch;
-  text-align: center;
-}
-
-.preloader__word {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  opacity: 0;
-  transform: translateY(0.35em);
-}
-
-.preloader__word.is-on {
-  opacity: 1;
-  transform: none;
-  transition:
-    opacity 0.35s var(--ease-out),
-    transform 0.35s var(--ease-out);
-}
-
-.preloader__word.is-off {
-  opacity: 0;
-  transform: translateY(-0.35em);
-  transition:
-    opacity 0.3s var(--ease-out),
-    transform 0.3s var(--ease-out);
-}
-
-.preloader.is-leaving {
-  clip-path: inset(0 0 100% 0);
-  transition: clip-path 0.8s var(--ease-curtain);
-}
-
-/* Body-Scroll während Preloader sperren */
-body.is-preloading {
-  overflow: hidden;
-  height: 100svh;
-}
-
-/* ================================================================
    Custom Cursor (nur Desktop / pointer:fine)
    ================================================================ */
 
@@ -513,10 +447,6 @@ body.is-preloading {
 
   .grain,
   .cursor {
-    display: none !important;
-  }
-
-  .preloader {
     display: none !important;
   }
 }

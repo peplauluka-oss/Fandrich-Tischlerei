@@ -1,10 +1,10 @@
-/* Hero ist hell (--paper): Nav-Text von Anfang an --ink, transparent;
-   nach Scroll kommt nur die Papier-Blur-Fläche + feine Linie dazu. */
+/* Hero ist ein dunkles Bild: Nav-Text oben --paper, transparent;
+   nach Scroll Papier-Blur-Fläche + --ink + feine Linie. */
 .nav {
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 100;
-  color: var(--ink);
+  color: var(--paper);
   transition:
     background 0.5s var(--ease-out),
     color 0.5s var(--ease-out),

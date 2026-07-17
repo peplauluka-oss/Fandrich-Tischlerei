@@ -11,11 +11,9 @@ interface Props {
   description: string;
   /** Unterseiten (Impressum etc.) nicht in den Index */
   noindex?: boolean;
-  /** Preloader nur auf der Startseite */
-  intro?: boolean;
 }
 
-const { title, description, noindex = false, intro = false } = Astro.props;
+const { title, description, noindex = false } = Astro.props;
 
 // OG-Image: stärkstes Galeriebild (Station 1)
 const ogImage = await getImage({
@@ -85,19 +83,7 @@ const jsonLd = {
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
-  <body class={intro ? 'is-preloading' : undefined}>
-    {
-      intro && (
-        <div class="preloader" aria-hidden="true">
-          <div class="preloader__words">
-            <span class="preloader__word">Messen.</span>
-            <span class="preloader__word">Fügen.</span>
-            <span class="preloader__word">Bleiben.</span>
-          </div>
-        </div>
-      )
-    }
-
+  <body>
     <div class="grain" aria-hidden="true" style={`--grain-uri: ${grainUri}`}></div>
 
     <div class="cursor" aria-hidden="true">
