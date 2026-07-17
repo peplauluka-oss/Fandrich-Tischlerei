@@ -1,6 +1,13 @@
 ---
 import { Image } from 'astro:assets';
-import { werkstattImage as bild, maxDisplayWidth } from '../data/images';
+import { maxDisplayWidth } from '../data/images';
+import { werkstattVideos, werkstattPoster, werkstattAlt, werkstattCaption } from '../data/werkstattMedia';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const hasVideo = werkstattVideos.length > 0;
+
+// Fakten — ausschließlich Verifiziertes, keine Jahreszahl, keine „0+"-Statistik.
+const fakten = ['Meisterbetrieb', 'Eigene Werkstatt in Pankow', 'Treseburger Straße 30'];
 ---
 
 <section class="section werkstatt on-ink" id="werkstatt-v3" aria-label="Werkstatt und Material">
@@ -21,28 +28,55 @@ import { werkstattImage as bild, maxDisplayWidth } from '../data/images';
           es jeden Tag.
         </p>
       </div>
+
+      <ul class="werkstatt__fakten reveal" style="--reveal-delay: 0.1s">
+        {fakten.map((f) => <li>{f}</li>)}
+      </ul>
     </div>
 
     <figure class="werkstatt__figure">
-      <div class="photo werkstatt__frame" style={`max-width: ${maxDisplayWidth(bild.src)}px`}>
-        <Image
-          src={bild.src}
-          alt={bild.alt}
-          widths={[480, bild.src.width]}
-          sizes="(min-width: 900px) 52vw, 92vw"
-          quality={80}
-        />
+      <div class="photo werkstatt__frame" style={`max-width: ${maxDisplayWidth(werkstattPoster)}px`}>
+        {
+          hasVideo ? (
+            <video
+              class="werkstatt__video"
+              autoplay
+              muted
+              loop={werkstattVideos.length === 1}
+              playsinline
+              preload="none"
+              poster={werkstattPoster.src}
+            >
+              {werkstattVideos.map((v) => (
+                <Fragment>
+                  {v.webm && <source src={`${base}/${v.webm}`} type="video/webm" />}
+                  {v.mp4 && <source src={`${base}/${v.mp4}`} type="video/mp4" />}
+                </Fragment>
+              ))}
+            </video>
+          ) : (
+            <Image
+              src={werkstattPoster}
+              alt={werkstattAlt}
+              widths={[480, werkstattPoster.width]}
+              sizes="(min-width: 900px) 52vw, 92vw"
+              quality={80}
+            />
+          )
+        }
       </div>
-      <figcaption>{bild.caption}</figcaption>
+      <figcaption>{werkstattCaption}</figcaption>
     </figure>
   </div>
 </section>
 
 <style>
+  /* Dunkler Full-Bleed-Break: Sektion volle Breite, extra Luft (+40px) */
   .werkstatt {
     background: var(--ink);
     color: var(--paper);
-    overflow: visible;
+    overflow: hidden;
+    padding-block: calc(var(--section-gap) + 2.5rem);
   }
 
   .werkstatt .eyebrow {
@@ -53,11 +87,7 @@ import { werkstattImage as bild, maxDisplayWidth } from '../data/images';
     display: grid;
     grid-template-columns: 5fr 7fr;
     gap: clamp(2.5rem, 6vw, 5rem);
-    align-items: start;
-  }
-
-  .werkstatt__col {
-    padding-top: clamp(1rem, 4vh, 3rem);
+    align-items: center;
   }
 
   .werkstatt__text {
@@ -73,10 +103,37 @@ import { werkstattImage as bild, maxDisplayWidth } from '../data/images';
     margin-top: 1.25rem;
   }
 
-  /* Bild ragt 64px über die obere Sektionsgrenze — Overlap statt Kachel */
+  /* Faktenzeile — nur Verifiziertes, Oak-Trenner */
+  .werkstatt__fakten {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem 1.1rem;
+    margin-top: clamp(2rem, 5vh, 3rem);
+    font-size: 0.74rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(250, 247, 242, 0.7);
+  }
+
+  .werkstatt__fakten li {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+  }
+
+  .werkstatt__fakten li:not(:last-child)::after {
+    content: '';
+    width: 1px;
+    height: 0.9rem;
+    background: var(--oak);
+    opacity: 0.7;
+  }
+
   .werkstatt__figure {
     margin: 0;
-    margin-top: -64px;
   }
 
   .werkstatt__frame {
@@ -84,14 +141,17 @@ import { werkstattImage as bild, maxDisplayWidth } from '../data/images';
     margin-left: auto;
   }
 
-  .werkstatt__frame :global(img) {
+  .werkstatt__frame :global(img),
+  .werkstatt__video {
     width: 100%;
     height: auto;
+    display: block;
     transition: transform 0.6s var(--ease-out);
   }
 
   @media (hover: hover) {
-    .werkstatt__figure:hover :global(img) {
+    .werkstatt__figure:hover :global(img),
+    .werkstatt__figure:hover .werkstatt__video {
       transform: scale(1.03);
     }
   }
@@ -120,8 +180,10 @@ import { werkstattImage as bild, maxDisplayWidth } from '../data/images';
     .werkstatt__grid {
       grid-template-columns: 1fr;
     }
+    /* Mobil: Bild oben, Text darunter */
     .werkstatt__figure {
-      margin-top: clamp(2rem, 5vh, 3rem);
+      order: -1;
+      margin-bottom: clamp(2rem, 5vh, 3rem);
     }
   }
 </style>
