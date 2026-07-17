@@ -11,7 +11,7 @@
  * Full-Bleed-Fläche eigentlich zu klein. Original in ≥1600px nachliefern.
  */
 import type { ImageMetadata } from 'astro';
-import poster from '../assets/images/IMG_2479.jpeg';
+import { heroImage } from './images';
 
 export interface HeroVideo {
   /** Pfad relativ zu import.meta.env.BASE_URL, z. B. 'videos/werkstatt-1.webm' */
@@ -22,7 +22,7 @@ export interface HeroVideo {
 /** Leer = Ken-Burns-Poster. Sobald Clips vorliegen: hier eintragen. */
 export const heroVideos: HeroVideo[] = [];
 
-export const heroPoster: ImageMetadata = poster;
+/** Poster stammt aus der zentralen Bildzuordnung (images.ts) — Hero-Bild. */
+export const heroPoster: ImageMetadata = heroImage.src;
 
-export const heroAlt =
-  'Einbauküche mit freistehender Kochinsel — Neuanfertigung der Tischlerei Fandrich in Berlin-Pankow';
+export const heroAlt = heroImage.alt;

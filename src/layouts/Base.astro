@@ -4,7 +4,7 @@ import '@fontsource-variable/fraunces';
 import '../styles/global.css';
 import { getImage } from 'astro:assets';
 import { site } from '../data/site';
-import { walkBilder } from '../data/images';
+import { heroImage } from '../data/images';
 
 interface Props {
   title: string;
@@ -15,9 +15,9 @@ interface Props {
 
 const { title, description, noindex = false } = Astro.props;
 
-// OG-Image: stärkstes Galeriebild (Station 1)
+// OG-Image: Hero-Bild (stärkstes Motiv, zentrale Zuordnung)
 const ogImage = await getImage({
-  src: walkBilder[0]!.src,
+  src: heroImage.src,
   width: 1200,
   format: 'jpeg',
 });

@@ -1,18 +1,12 @@
 ---
 import { Image } from 'astro:assets';
-import kueche from '../assets/images/IMG_2479.jpeg';
-import bibliothek from '../assets/images/IMG_2480.jpeg';
-import fensterbank from '../assets/images/IMG_2470.jpeg';
-import steg from '../assets/images/IMG_2486.jpeg';
-import schrank from '../assets/images/IMG_2463.jpeg';
-import fassade from '../assets/images/IMG_2467.jpeg';
-import loft from '../assets/images/IMG_2475.jpeg';
+import { galerieImages, mx } from '../data/images';
 
-// Es gibt KEIN GROSS-Bild (STATUS.md). Statt hochskalierter Full-Bleed-Panels:
-// editoriale Feature-Zeilen bei max. nativer Breite ÷ 1.5, dichte Bildpaare,
-// dunkles Typo-Panel. TODO: Originale ≥1600px → echte Vollbreite-Panels.
-const mx = (w: number) => `${Math.round(w / 1.5)}px`;
-
+// Genau 4 Projekte (zentrale Zuordnung, jedes Foto genau 1×). Kein Grid, keine
+// zwei gleichen Panel-Layouts hintereinander. Es gibt KEIN GROSS-Bild
+// (STATUS.md) → „Full-Bleed" heißt hier: zentriert bei max. nativer Breite ÷ 1.5,
+// niemals hochskaliert. Reihenfolge: 01 loft · 02 schrank · [Zitat] · 03 fassade · 04 steg.
+const [p1, p2, p3, p4] = galerieImages;
 const zitat = 'Ein Möbel ist gut, wenn man nach zwanzig Jahren nichts daran ändern möchte.';
 ---
 
@@ -20,125 +14,105 @@ const zitat = 'Ein Möbel ist gut, wenn man nach zwanzig Jahren nichts daran än
   <div class="wrap">
     <div class="section-head">
       <span class="section-num" data-num="03" aria-hidden="true"></span>
-      <p class="eyebrow reveal">Ausgewählte Arbeiten</p>
-      <h2 class="headline split">Aus der Werkstatt.</h2>
+      <p class="eyebrow reveal">Aus der Werkstatt</p>
+      <h2 class="headline split">Vier Räume, ein Anspruch.</h2>
     </div>
   </div>
 
-  <!-- A — Feature (Bild links) -->
-  <div class="wrap arb__feature">
-    <figure class="arb__fig" data-clip>
-      <div class="photo arb__frame" data-parallax style={`max-width:${mx(kueche.width)}`}>
+  <!-- Panel 01 — zentriert, Caption über dem Bild (Scrim), Clip von unten -->
+  <div class="wrap arb__p1">
+    <figure class="arb__fig arb__overlay" data-clip>
+      <div class="photo arb__frame" data-parallax style={`max-width:${mx(p1.src)}`}>
         <Image
-          src={kueche}
-          alt="Helle Einbauküche mit freistehender Kochinsel und Gartenblick"
-          widths={[Math.round(kueche.width / 2), kueche.width]}
-          sizes="(min-width: 900px) 27rem, 88vw"
+          src={p1.src}
+          alt={p1.alt}
+          widths={[Math.round(p1.src.width / 2), p1.src.width]}
+          sizes="(min-width: 900px) 27rem, 90vw"
           quality={82}
         />
+        <figcaption class="arb__cap arb__cap--on">
+          <span class="arb__nr">{p1.nr}</span>
+          <span class="arb__captext">{p1.caption}</span>
+        </figcaption>
       </div>
-    </figure>
-    <div class="arb__meta">
-      <span class="arb__idx" aria-hidden="true">01</span>
-      <p class="arb__cap">Einbauküche mit Kochinsel, Lack matt — Weißensee</p>
-    </div>
-  </div>
-
-  <!-- B — Versetztes Paar -->
-  <div class="wrap arb__pair">
-    <figure class="arb__fig arb__pairfig" data-clip style="--d: 0s">
-      <div class="photo arb__frame" style={`max-width:${mx(bibliothek.width)}`}>
-        <Image src={bibliothek} alt="Raumhohe Einbaubibliothek aus Kirschbaumholz" widths={[bibliothek.width]} sizes="(min-width: 900px) 19rem, 44vw" quality={80} />
-      </div>
-      <figcaption>Einbaubibliothek, Kirschbaum — Prenzlauer Berg</figcaption>
-    </figure>
-    <figure class="arb__fig arb__pairfig arb__pairfig--low" data-clip style="--d: 0.12s">
-      <div class="photo arb__frame" style={`max-width:${mx(fensterbank.width)}`}>
-        <Image src={fensterbank} alt="Loft mit durchlaufender Fensterbank und Regalen" widths={[fensterbank.width]} sizes="(min-width: 900px) 19rem, 44vw" quality={80} />
-      </div>
-      <figcaption>Fensterbank mit Stauraum, seidenmatt — Pankow</figcaption>
     </figure>
   </div>
 
-  <!-- C — Feature (Bild rechts, breitestes Motiv) -->
-  <div class="wrap arb__feature arb__feature--right">
-    <div class="arb__meta">
-      <span class="arb__idx" aria-hidden="true">02</span>
-      <p class="arb__cap">Seesteg, Lärche geriffelt — Außenprojekt Brandenburg</p>
+  <!-- Panel 02 — Bild rechts, Caption links (Desktop sticky) -->
+  <div class="wrap arb__p2">
+    <div class="arb__side">
+      <div class="arb__sidecap">
+        <span class="arb__nr">{p2.nr}</span>
+        <p class="arb__captext">{p2.caption}</p>
+      </div>
     </div>
-    <figure class="arb__fig" data-clip>
-      <div class="photo arb__frame" data-parallax style={`max-width:${mx(steg.width)}`}>
+    <figure class="arb__fig arb__fig--right" data-clip>
+      <div class="photo arb__frame" style={`max-width:${mx(p2.src)}`}>
         <Image
-          src={steg}
-          alt="Holzsteg aus Lärchendielen führt in einen ruhigen See, Abendlicht"
-          widths={[Math.round(steg.width / 2), steg.width]}
-          sizes="(min-width: 900px) 33rem, 88vw"
-          quality={82}
+          src={p2.src}
+          alt={p2.alt}
+          widths={[p2.src.width]}
+          sizes="(min-width: 900px) 19rem, 60vw"
+          quality={80}
         />
       </div>
     </figure>
   </div>
 
-  <!-- D — Typo-Panel (dunkel) -->
-  <div class="arb__typo on-ink">
-    <blockquote class="arb__quote split">{zitat}</blockquote>
+  <!-- Zwischenspiel — Pull-Quote auf --paper -->
+  <div class="wrap arb__quote">
+    <blockquote class="arb__quotetext split">{zitat}</blockquote>
   </div>
 
-  <!-- E — Versetztes Paar -->
-  <div class="wrap arb__pair">
-    <figure class="arb__fig arb__pairfig" data-clip style="--d: 0s">
-      <div class="photo arb__frame" style={`max-width:${mx(schrank.width)}`}>
-        <Image src={schrank} alt="Begehbarer Einbauschrank unter einer Dachschräge" widths={[schrank.width]} sizes="(min-width: 900px) 19rem, 44vw" quality={80} />
-      </div>
-      <figcaption>Schrank in der Dachschräge, MDF lackiert — Prenzlauer Berg</figcaption>
-    </figure>
-    <figure class="arb__fig arb__pairfig arb__pairfig--low" data-clip style="--d: 0.12s">
-      <div class="photo arb__frame" style={`max-width:${mx(fassade.width)}`}>
-        <Image src={fassade} alt="Holzfassade aus Lärchenleisten mit Terrassendeck" widths={[fassade.width]} sizes="(min-width: 900px) 19rem, 44vw" quality={80} />
-      </div>
-      <figcaption>Fassade & Terrasse, Lärche — Barnim</figcaption>
-    </figure>
-  </div>
-
-  <!-- F — Feature + CTA -->
-  <div class="wrap arb__feature">
-    <figure class="arb__fig" data-clip>
-      <div class="photo arb__frame" data-parallax style={`max-width:${mx(loft.width)}`}>
+  <!-- Panel 03 — Bild links, nach oben versetzt (überlappt das Zitat leicht) -->
+  <div class="wrap arb__p3">
+    <figure class="arb__fig arb__fig--left" data-clip>
+      <div class="photo arb__frame" style={`max-width:${mx(p3.src)}`}>
         <Image
-          src={loft}
-          alt="Offenes Loft mit weißer Einbauküche unter einer Stahltreppe"
-          widths={[Math.round(loft.width / 2), loft.width]}
-          sizes="(min-width: 900px) 27rem, 88vw"
-          quality={82}
+          src={p3.src}
+          alt={p3.alt}
+          widths={[p3.src.width]}
+          sizes="(min-width: 900px) 19rem, 55vw"
+          quality={80}
         />
       </div>
     </figure>
-    <div class="arb__meta arb__meta--cta">
-      <span class="arb__idx" aria-hidden="true">03</span>
-      <p class="arb__cap">Küchenzeile & Galerie, Lack und Stahl — Mitte</p>
-      <a href="#kontakt-v3" class="btn btn--oak" data-cursor="link">
-        Projekt anfragen <span class="arrow" aria-hidden="true">→</span>
-      </a>
+    <div class="arb__side arb__side--right">
+      <div class="arb__sidecap">
+        <span class="arb__nr">{p3.nr}</span>
+        <p class="arb__captext">{p3.caption}</p>
+      </div>
     </div>
+  </div>
+
+  <!-- Panel 04 — normal breit, sachlicher Abschluss + CTA -->
+  <div class="wrap arb__p4">
+    <figure class="arb__fig" data-clip>
+      <div class="photo arb__frame" data-parallax style={`max-width:${mx(p4.src)}`}>
+        <Image
+          src={p4.src}
+          alt={p4.alt}
+          widths={[Math.round(p4.src.width / 2), p4.src.width]}
+          sizes="(min-width: 900px) 33rem, 90vw"
+          quality={82}
+        />
+      </div>
+      <figcaption class="arb__cap">
+        <span class="arb__nr">{p4.nr}</span>
+        <span class="arb__captext">{p4.caption}</span>
+      </figcaption>
+    </figure>
+    <a href="#kontakt-v3" class="btn btn--oak arb__cta" data-cursor="link">
+      Projekt anfragen <span class="arrow" aria-hidden="true">→</span>
+    </a>
   </div>
 </section>
 
 <style>
-  .arb__feature,
-  .arb__pair {
+  .arb__p1,
+  .arb__p2,
+  .arb__p4 {
     margin-top: clamp(4rem, 9vh, 7rem);
-  }
-
-  /* Feature-Zeile: Bild + große Meta füllen die Breite (Dichte statt Weißraum) */
-  .arb__feature {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: clamp(2rem, 5vw, 4.5rem);
-    align-items: center;
-  }
-
-  .arb__feature--right {
-    grid-template-columns: 1fr auto;
   }
 
   .arb__fig {
@@ -156,131 +130,159 @@ const zitat = 'Ein Möbel ist gut, wenn man nach zwanzig Jahren nichts daran än
     display: block;
   }
 
-  /* Interner Parallax auf Feature-Bildern */
-  [data-parallax] {
-    position: relative;
-  }
   [data-parallax] :global(img) {
     will-change: transform;
   }
 
-  .arb__meta {
+  /* Einheitliche Caption: Oak-Laufnummer + Text (Versalien, nicht kursiv) */
+  .arb__cap,
+  .arb__sidecap {
     display: flex;
-    flex-direction: column;
+    align-items: baseline;
     gap: 1rem;
   }
 
-  .arb__feature--right .arb__meta {
-    text-align: right;
-    align-items: flex-end;
-  }
-
-  .arb__idx {
-    font-family: var(--font-head);
-    font-weight: 340;
-    font-size: clamp(3rem, 7vw, 5.5rem);
-    line-height: 1;
+  .arb__nr {
+    flex: none;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
     color: var(--oak);
-    opacity: 0.5;
   }
 
-  .arb__cap {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+  .arb__captext {
     font-size: 0.72rem;
     font-weight: 500;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--ink-soft);
-    max-width: 30ch;
+    max-width: 34ch;
   }
 
-  .arb__cap::before {
-    content: '';
-    flex: none;
-    width: 24px;
-    height: 1px;
-    background: var(--oak);
-  }
-
-  .arb__meta--cta .btn {
-    margin-top: 0.75rem;
-  }
-
-  /* Versetztes Paar */
-  .arb__pair {
+  /* Panel 01 — zentriertes Bild, Caption über dem Bild mit Scrim */
+  .arb__p1 {
     display: flex;
     justify-content: center;
-    gap: clamp(1.5rem, 4vw, 3rem);
-    align-items: flex-start;
   }
-
-  .arb__pairfig {
-    width: 100%;
+  .arb__overlay .arb__frame {
+    position: relative;
   }
-
-  .arb__pairfig--low {
-    margin-top: 64px;
-  }
-
-  .arb__pairfig figcaption {
-    display: flex;
+  .arb__cap--on {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
     align-items: center;
+    padding: 2.5rem 1.25rem 1.1rem;
+    background: linear-gradient(to top, rgba(43, 37, 35, 0.72) 0%, rgba(43, 37, 35, 0) 100%);
+  }
+  .arb__cap--on .arb__nr {
+    color: var(--oak);
+  }
+  .arb__cap--on .arb__captext {
+    color: rgba(250, 247, 242, 0.92);
+  }
+
+  /* Panel 02 — Bild rechts, Caption-Spalte links (sticky auf Desktop) */
+  .arb__p2 {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: clamp(1.5rem, 5vw, 4rem);
+    align-items: start;
+  }
+  .arb__fig--right {
+    justify-self: end;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .arb__side {
+    padding-top: clamp(1rem, 6vh, 4rem);
+  }
+  .arb__sidecap {
+    flex-direction: column;
     gap: 0.75rem;
-    margin-top: 0.9rem;
-    font-size: 0.66rem;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
+  }
+  .arb__sidecap .arb__captext {
+    letter-spacing: 0.16em;
+  }
+  @media (min-width: 900px) {
+    .arb__side {
+      position: sticky;
+      top: 30vh;
+    }
   }
 
-  .arb__pairfig figcaption::before {
-    content: '';
-    flex: none;
-    width: 24px;
-    height: 1px;
-    background: var(--oak);
-  }
-
-  /* Typo-Panel dunkel, volle Breite */
-  .arb__typo {
-    margin-top: clamp(4rem, 9vh, 7rem);
-    background: var(--ink);
-    color: var(--paper);
-    padding-block: clamp(4rem, 12vh, 8rem);
-    padding-inline: var(--gutter);
-  }
-
+  /* Zwischenspiel — Pull-Quote auf --paper */
   .arb__quote {
-    width: min(100% - 2 * var(--gutter), 40rem);
+    margin-top: clamp(4rem, 10vh, 8rem);
+    position: relative;
+    z-index: 1;
+  }
+  .arb__quotetext {
+    position: relative;
+    z-index: 2;
+    max-width: 24ch;
     margin-inline: auto;
+    text-align: center;
     font-family: var(--font-head);
     font-weight: 340;
-    font-size: clamp(1.7rem, 3.6vw, 2.8rem);
+    font-size: clamp(1.9rem, 4.4vw, 3.4rem);
+    line-height: 1.24;
     letter-spacing: -0.02em;
-    line-height: 1.32;
-    text-align: center;
     text-wrap: balance;
   }
+  .arb__quotetext::before {
+    content: '\201C';
+    position: absolute;
+    top: -0.55em;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.4em;
+    line-height: 1;
+    color: var(--oak);
+    opacity: 0.6;
+  }
 
-  /* Clip-Reveal (Clip auf innerem Rahmen — IO beobachtet die unbeschnittene Figur) */
+  /* Panel 03 — Bild links, nach oben versetzt (überlappt Zitat leicht) */
+  .arb__p3 {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: clamp(1.5rem, 5vw, 4rem);
+    align-items: start;
+    margin-top: clamp(-2rem, -4vh, -3rem);
+  }
+  .arb__fig--left {
+    width: 100%;
+  }
+  .arb__side--right {
+    text-align: left;
+  }
+
+  /* Panel 04 — normal, Abschluss + CTA */
+  .arb__p4 .arb__cap {
+    margin-top: 1rem;
+  }
+  .arb__cta {
+    margin-top: 1.75rem;
+  }
+
+  /* Clip-Reveal (Clip auf innerem Rahmen; IO beobachtet die unbeschnittene Figur) */
   .arb__fig[data-clip] .arb__frame {
     clip-path: inset(0 0 100% 0);
     transition: clip-path 0.85s var(--ease-out);
-    transition-delay: var(--d, 0s);
   }
   .arb__fig[data-clip].is-in .arb__frame {
     clip-path: inset(0 0 0 0);
   }
-  .arb__fig[data-clip] figcaption {
+  /* Caption-Spalten starten verdeckt; das Skript blendet sie beim Eintritt ein. */
+  .arb__sidecap {
     opacity: 0;
-    transition: opacity 0.6s var(--ease-out);
-    transition-delay: calc(var(--d, 0s) + 0.15s);
-  }
-  .arb__fig[data-clip].is-in figcaption {
-    opacity: 1;
+    transform: translateY(14px);
+    transition:
+      opacity 0.6s var(--ease-out),
+      transform 0.6s var(--ease-out);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -288,34 +290,35 @@ const zitat = 'Ein Möbel ist gut, wenn man nach zwanzig Jahren nichts daran än
       clip-path: none;
       transition: none;
     }
-    .arb__fig[data-clip] figcaption {
+    .arb__sidecap {
       opacity: 1;
+      transform: none;
     }
   }
 
-  @media (max-width: 720px) {
-    .arb__feature,
-    .arb__feature--right {
+  @media (max-width: 899px) {
+    .arb__p2,
+    .arb__p3 {
       grid-template-columns: 1fr;
+      margin-top: clamp(3rem, 8vh, 5rem);
       gap: 1.25rem;
     }
-    .arb__feature--right {
-      grid-template-areas: none;
+    .arb__fig--right {
+      justify-content: flex-start;
     }
-    /* Meta auf Mobil immer unter dem Bild, linksbündig */
-    .arb__feature--right .arb__meta {
+    /* Panel 02: Caption unter dem Bild */
+    .arb__p2 .arb__side {
       order: 2;
-      text-align: left;
-      align-items: flex-start;
+      position: static;
+      padding-top: 0;
     }
-    .arb__frame {
-      max-width: 100% !important;
+    /* Panel 03: Bild zuerst, Caption darunter */
+    .arb__side--right {
+      order: 2;
     }
-    .arb__pair {
-      gap: 1rem;
-    }
-    .arb__pairfig--low {
-      margin-top: 40px;
+    .arb__sidecap {
+      flex-direction: row;
+      align-items: baseline;
     }
   }
 </style>
@@ -323,10 +326,12 @@ const zitat = 'Ein Möbel ist gut, wenn man nach zwanzig Jahren nichts daran än
 <script>
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Clip-Reveal via eigenem Observer (Clip liegt auf innerem Rahmen)
+  // Clip-Reveal + Caption-Einblendung via eigenem Observer
   const figs = document.querySelectorAll<HTMLElement>('#arbeiten-v3 [data-clip]');
+  const sidecaps = document.querySelectorAll<HTMLElement>('#arbeiten-v3 .arb__sidecap');
   if (reduced) {
     figs.forEach((f) => f.classList.add('is-in'));
+    sidecaps.forEach((c) => (c.style.opacity = '1'));
   } else {
     const io = new IntersectionObserver(
       (entries) => {
@@ -340,9 +345,24 @@ const zitat = 'Ein Möbel ist gut, wenn man nach zwanzig Jahren nichts daran än
       { threshold: 0.2 },
     );
     figs.forEach((f) => io.observe(f));
+
+    // Caption-Spalten separat einblenden (unabhängig von der Figur-Position)
+    const capIo = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            (e.target as HTMLElement).style.opacity = '1';
+            (e.target as HTMLElement).style.transform = 'none';
+            capIo.unobserve(e.target);
+          }
+        }
+      },
+      { threshold: 0.6 },
+    );
+    sidecaps.forEach((c) => capIo.observe(c));
   }
 
-  // Interner Parallax ±6 % auf Feature-Bildern (transform only)
+  // Interner Parallax ±6 % auf den Landscape-Feature-Bildern (transform only)
   if (!reduced) {
     const items = [...document.querySelectorAll<HTMLElement>('#arbeiten-v3 [data-parallax] img')];
     let ticking = false;

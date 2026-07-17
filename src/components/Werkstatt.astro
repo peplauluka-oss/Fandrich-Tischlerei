@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import { materialBilder, maxDisplayWidth } from '../data/images';
-const bild = materialBilder[0]!;
+import { werkstattImage as bild, maxDisplayWidth } from '../data/images';
 ---
 
 <section class="section werkstatt on-ink" id="werkstatt-v3" aria-label="Werkstatt und Material">
@@ -26,7 +25,7 @@ const bild = materialBilder[0]!;
     </div>
 
     <figure class="werkstatt__figure">
-      <div class="photo werkstatt__frame" style={`max-width: ${maxDisplayWidth(bild)}px`}>
+      <div class="photo werkstatt__frame" style={`max-width: ${maxDisplayWidth(bild.src)}px`}>
         <Image
           src={bild.src}
           alt={bild.alt}

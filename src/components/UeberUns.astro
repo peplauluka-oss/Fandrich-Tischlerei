@@ -1,14 +1,13 @@
 ---
 import { Image } from 'astro:assets';
-import bibliothek from '../assets/images/IMG_2480.jpeg';
-import fensterbank from '../assets/images/IMG_2470.jpeg';
+import { ueberUnsImages } from '../data/images';
 
-// Versetztes Bildpaar. Es existiert KEIN MITTEL/GROSS-Porträt (STATUS.md) —
-// deshalb die zwei stärksten KLEIN-Hochformate bei ≤ 284 px (native ÷ 1.5),
-// was dem Bild-Gesetz als Thumbnailgröße (≤ 320 px) entspricht.
-// TODO: durch Originale in hoher Auflösung ersetzen (nur Imports tauschen).
-const capA = 'Einbaubibliothek, Kirschbaum — Prenzlauer Berg';
-const capB = 'Fensterbank mit Stauraum, Lack seidenmatt — Pankow';
+// Versetztes Bildpaar aus der zentralen Zuordnung (jedes Foto genau 1×).
+// Es existiert KEIN MITTEL/GROSS-Porträt (STATUS.md) — deshalb die zwei
+// stärksten KLEIN-Hochformate bei ≤ 284 px (native ÷ 1.5), was dem Bild-Gesetz
+// als Thumbnailgröße (≤ 320 px) entspricht.
+// TODO: durch Originale in hoher Auflösung ersetzen (nur images.ts tauschen).
+const [a, b] = ueberUnsImages;
 ---
 
 <section class="section ueber" id="ueber-uns-v3" aria-label="Über uns">
@@ -34,29 +33,29 @@ const capB = 'Fensterbank mit Stauraum, Lack seidenmatt — Pankow';
       <figure class="ueber__fig ueber__fig--a" data-clip style="--d: 0s">
         <div class="photo ueber__frame ueber__frame--a">
           <Image
-            src={bibliothek}
-            alt="Raumhohe Einbaubibliothek aus Kirschbaumholz mit Glastüren"
-            widths={[284, bibliothek.width]}
+            src={a.src}
+            alt={a.alt}
+            widths={[284, a.src.width]}
             sizes="(min-width: 900px) 17rem, 42vw"
             loading="eager"
             quality={80}
           />
         </div>
-        <figcaption>{capA}</figcaption>
+        <figcaption>{a.caption}</figcaption>
       </figure>
 
       <figure class="ueber__fig ueber__fig--b" data-clip style="--d: 0.15s">
         <div class="photo ueber__frame ueber__frame--b">
           <Image
-            src={fensterbank}
-            alt="Loft mit durchlaufender Fensterbank und eingebauten Regalen, Sonne auf Dielen"
-            widths={[284, fensterbank.width]}
+            src={b.src}
+            alt={b.alt}
+            widths={[284, b.src.width]}
             sizes="(min-width: 900px) 17rem, 42vw"
             loading="eager"
             quality={80}
           />
         </div>
-        <figcaption>{capB}</figcaption>
+        <figcaption>{b.caption}</figcaption>
       </figure>
     </div>
   </div>

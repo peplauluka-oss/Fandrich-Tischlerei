@@ -1,30 +1,25 @@
 ---
-import { Image } from 'astro:assets';
-import kueche from '../assets/images/IMG_2479.jpeg';
-import bibliothek from '../assets/images/IMG_2480.jpeg';
-import loft from '../assets/images/IMG_2475.jpeg';
-
+// BILDLOS (Bild-Gesetz dieser Runde). Editorial-Liste im Stil einer
+// Manufaktur-Preisliste: riesige Fraunces-Nummer links, rechts Titel, Text
+// und eine Stichwort-Zeile. Texte unverändert, nichts dazuerfunden.
 const leistungen = [
   {
     nr: '01',
     titel: 'Neuanfertigung',
     text: 'Einbauschränke, Küchen und Bibliotheken, entworfen für Ihren Raum. Gefertigt aus Massivholz und ausgesuchten Furnieren — vom Aufmaß bis zur letzten Fuge.',
-    bild: kueche,
-    alt: 'Einbauküche mit Kochinsel als Beispiel für Neuanfertigung',
+    stichworte: ['Einbauschränke', 'Küchen', 'Bibliotheken', 'Massivholz'],
   },
   {
     nr: '02',
     titel: 'Restaurierung',
     text: 'Wir setzen Möbel mit Geschichte instand — mit Schellackpolitur, traditionellen Leimen und Respekt vor der Substanz. Was Ihre Familie geprägt hat, bleibt erhalten.',
-    bild: bibliothek,
-    alt: 'Restaurierte Einbaubibliothek aus Massivholz',
+    stichworte: ['Schellackpolitur', 'traditionelle Leime', 'Furnierbild'],
   },
   {
     nr: '03',
     titel: 'Innenausbau & Reparatur',
     text: 'Türen, Dielung, Fensterinstandsetzung und Balkonverglasung im Berliner Altbau. Präzise Reparaturen, die man am Ende nicht mehr sieht.',
-    bild: loft,
-    alt: 'Innenausbau mit Einbauküche unter einer Stahltreppe',
+    stichworte: ['Türen', 'Dielung', 'Fensterinstandsetzung', 'Balkonverglasung'],
   },
 ];
 ---
@@ -37,7 +32,7 @@ const leistungen = [
       <h2 class="headline split">Wie wir Ihnen helfen.</h2>
     </div>
 
-    <ul class="lst__rows">
+    <ul class="lst">
       {
         leistungen.map((l, i) => (
           <li class="lst__row reveal" style={`--reveal-delay: ${i * 0.08}s`}>
@@ -47,9 +42,14 @@ const leistungen = [
             <div class="lst__body">
               <h3 class="lst__titel">{l.titel}</h3>
               <p class="lst__text">{l.text}</p>
-            </div>
-            <div class="photo lst__thumb">
-              <Image src={l.bild} alt={l.alt} widths={[320]} sizes="160px" quality={78} />
+              <p class="lst__tags">
+                {l.stichworte.map((s, k) => (
+                  <>
+                    {k > 0 && <span class="lst__dot" aria-hidden="true">·</span>}
+                    <span>{s}</span>
+                  </>
+                ))}
+              </p>
             </div>
           </li>
         ))
@@ -59,97 +59,89 @@ const leistungen = [
 </section>
 
 <style>
-  .lst__rows {
+  .lst {
     list-style: none;
     margin-top: clamp(3rem, 7vh, 5rem);
   }
 
+  /* Asymmetrisch: riesige Nummer links, leicht aus dem Raster geschoben */
   .lst__row {
     display: grid;
-    grid-template-columns: 4rem 1fr auto;
-    gap: 1.5rem 2rem;
-    align-items: center;
-    padding-block: clamp(1.75rem, 4vh, 2.75rem);
-    border-top: 1px solid var(--oak-line);
-    transition:
-      opacity 0.5s var(--ease-out),
-      border-color 0.5s var(--ease-out);
+    grid-template-columns: minmax(5rem, 9rem) 1fr;
+    gap: clamp(1.5rem, 4vw, 4rem);
+    align-items: baseline;
+    padding-block: clamp(2.25rem, 5vh, 3.75rem);
+    border-top: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
   }
 
-  .lst__rows .lst__row:last-child {
-    border-bottom: 1px solid var(--oak-line);
-  }
-
-  /* Hover dimmt die nicht-gehoverten Zeilen auf 0.4 */
-  @media (hover: hover) {
-    .lst__rows:hover .lst__row:not(:hover) {
-      opacity: 0.4;
-    }
-    .lst__row:hover {
-      border-top-color: rgba(184, 137, 90, 0.55);
-    }
-    .lst__row:hover .lst__titel {
-      transform: translateX(0.5rem);
-    }
+  .lst__row:last-child {
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
   }
 
   .lst__nr {
-    font-family: var(--font-body);
-    font-size: 0.85rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    color: var(--oak);
-    align-self: start;
-    padding-top: 0.4rem;
+    font-family: var(--font-head);
+    font-weight: 340;
+    font-size: clamp(4.5rem, 11vw, 10rem);
+    line-height: 0.8;
+    letter-spacing: -0.04em;
+    color: color-mix(in srgb, var(--ink) 20%, transparent);
+    margin-left: clamp(-0.5rem, -1vw, -1.25rem);
+    transition: color 0.5s var(--ease-out);
+    -webkit-user-select: none;
+    user-select: none;
   }
 
   .lst__titel {
     font-family: var(--font-head);
     font-weight: 340;
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(2rem, 4.5vw, 3.25rem);
     letter-spacing: -0.03em;
     line-height: 1.02;
     transition: transform 0.5s var(--ease-out);
   }
 
   .lst__text {
-    margin-top: 0.75rem;
+    margin-top: 1rem;
     color: var(--ink-soft);
-    max-width: 52ch;
+    max-width: 54ch;
   }
 
-  .lst__thumb {
-    width: 160px;
-    aspect-ratio: 3 / 2;
-    overflow: hidden;
+  .lst__tags {
+    margin-top: 1.35rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.7rem;
+    font-size: 0.74rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
   }
 
-  .lst__thumb :global(img) {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  .lst__dot {
+    color: var(--oak);
+  }
+
+  /* Hover (Desktop): Nummer färbt von --ink/20 zu --oak, Titel wandert leicht */
+  @media (hover: hover) {
+    .lst__row:hover .lst__nr {
+      color: var(--oak);
+    }
+    .lst__row:hover .lst__titel {
+      transform: translateX(0.5rem);
+    }
   }
 
   @media (max-width: 720px) {
     .lst__row {
-      grid-template-columns: 2.5rem 1fr;
-      grid-template-areas:
-        'nr body'
-        'nr thumb';
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
       align-items: start;
-      gap: 0.5rem 1.25rem;
     }
     .lst__nr {
-      grid-area: nr;
-    }
-    .lst__body {
-      grid-area: body;
-    }
-    .lst__thumb {
-      grid-area: thumb;
-      width: 100%;
-      max-width: 12rem;
-      margin-top: 1rem;
+      font-size: clamp(3.5rem, 22vw, 6rem);
+      margin-left: 0;
     }
   }
 </style>
