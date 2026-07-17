@@ -1,42 +1,17 @@
 ---
-import { getImage } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav';
 import HeroV3 from '../components/HeroV3.astro';
 import UeberUns from '../components/UeberUns.astro';
 import Leistungen from '../components/Leistungen.astro';
-import GalleryWalk from '../components/GalleryWalk';
+import ArbeitenV3 from '../components/ArbeitenV3.astro';
 import Werkstatt from '../components/Werkstatt.astro';
 import Prozess from '../components/Prozess.astro';
 import Kontakt from '../components/Kontakt.astro';
-import { walkBilder, maxDisplayWidth } from '../data/images';
 
 const title = 'Tischlerei Berlin Pankow — Möbel nach Maß & Restaurierung | Fandrich GmbH';
 const description =
   'Meistertischlerei in Berlin-Pankow: Einbaumöbel nach Maß, Möbelrestaurierung und Innenausbau — gefertigt in der eigenen Werkstatt.';
-
-// Bilder für den Gallery Walk (React-Island) über astro:assets optimieren.
-const walkImages = await Promise.all(
-  walkBilder.map(async (b) => {
-    const widths = [...new Set([Math.min(480, b.src.width), b.src.width])];
-    const img = await getImage({ src: b.src, widths, quality: 80 });
-    const displayWidth = maxDisplayWidth(b);
-    return {
-      id: b.id,
-      src: img.src,
-      srcSet: img.srcSet.attribute,
-      sizes: '(min-width: 1025px) 55vw, (min-width: 768px) 82vw, 92vw',
-      width: b.src.width,
-      height: b.src.height,
-      displayWidth,
-      alt: b.alt,
-      caption: b.caption,
-      hochformat: b.hochformat,
-    };
-  }),
-);
-
-const interlude = 'Ein Möbel ist gut, wenn man nach zwanzig Jahren nichts daran ändern möchte.';
 ---
 
 <Base title={title} description={description}>
@@ -45,34 +20,9 @@ const interlude = 'Ein Möbel ist gut, wenn man nach zwanzig Jahren nichts daran
     <HeroV3 />
     <UeberUns />
     <Leistungen />
-
-    <section class="section walkhead" id="arbeiten" aria-label="Ausgewählte Arbeiten">
-      <div class="wrap">
-        <div class="section-head">
-          <span class="section-num" data-num="04" aria-hidden="true"></span>
-          <p class="eyebrow reveal">Ausgewählte Arbeiten</p>
-          <h2 class="headline split">Ein Gang durch unsere Projekte.</h2>
-        </div>
-      </div>
-    </section>
-
-    <div class="walkhost">
-      <GalleryWalk client:visible images={walkImages} interlude={interlude} />
-    </div>
-
+    <ArbeitenV3 />
     <Werkstatt />
     <Prozess />
     <Kontakt />
   </main>
 </Base>
-
-<style>
-  .walkhead {
-    padding-bottom: clamp(1.5rem, 4vh, 3rem);
-    border-bottom: 0;
-  }
-  /* Vertikale Variante (Mobil) braucht Grundabstand nach unten */
-  .walkhost {
-    padding-bottom: clamp(2rem, 6vh, 4rem);
-  }
-</style>

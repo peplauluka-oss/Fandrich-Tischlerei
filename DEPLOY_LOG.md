@@ -19,7 +19,14 @@ Live: **https://peplauluka-oss.github.io/Fandrich-Tischlerei/**
 | **S0 — Deploy-Gate** | `d25ea17` | Run #6 build+deploy **success** (2026-07-16 19:12 UTC) | Footer-Marker **„Stand: 2026-07-16 · d25ea17"** im ausgelieferten `index.html` | ✅ PASS |
 | **S1 — Nav + Hero (`#hero-v3`)** | `010dfe6` | Run #8 build+deploy **success** (2026-07-17 11:07 UTC) | Sektion `id="hero-v3"` + Marker im Artefakt; lokal 390/1440 ohne H-Overflow | ✅ PASS |
 | **S2 — Über uns (`#ueber-uns-v3`)** | `234c6b7` | build+deploy **success** | Sektion `id="ueber-uns-v3"`, versetztes Bildpaar + Clip-Reveal; lokal 390/1440 ok | ✅ PASS |
-| **S3 — Leistungen (`#leistungen-v3`)** | s. u. | build+deploy **success** | Sektion `id="leistungen-v3"`, 3 Zeilen + Oak-Nummern + 160px-Thumbnails, Hover-Dimming 0.4; lokal 390/1440 ok | ✅ PASS |
+| **S3 — Leistungen (`#leistungen-v3`)** | `4c9942a` | build+deploy **success** | Sektion `id="leistungen-v3"`, 3 Zeilen + Oak-Nummern + 160px-Thumbnails, Hover-Dimming 0.4; lokal 390/1440 ok | ✅ PASS |
+| **S4 — Arbeiten (`#arbeiten-v3`)** | s. u. | build+deploy **success** | Sektion `id="arbeiten-v3"`, Feature-Zeilen + versetzte Paare + dunkles Typo-Panel + CTA, interner Parallax; lokal 390/1440 ok | ✅ PASS |
+
+**S4-Notiz:** Kein GROSS-Bild vorhanden → keine echten Full-Bleed-Panels. Statt
+Hochskalieren: editoriale Feature-Zeilen bei max. nativer Breite ÷ 1.5 (Bild +
+große Oak-Index/Caption für Dichte), versetzte KLEIN-Paare, dunkles Zitat-Panel,
+Schluss-Feature + CTA. TODO: Originale ≥1600px → echte Vollbreite-Panels
+(nur Imports in ArbeitenV3.astro tauschen).
 
 **S2-Notiz (Bugfix):** `clip-path` auf einem vom IntersectionObserver
 beobachteten Element kollabiert dessen `intersectionRatio` auf 0 → Reveal und
