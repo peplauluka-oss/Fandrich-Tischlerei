@@ -200,3 +200,40 @@ und erfüllt AA. Score liegt über der Schwelle.
 
 **Runde bestanden:** oberstes Gesetz (jedes Foto 1×) technisch abgesichert,
 Editorial-Dichte umgesetzt, Lighthouse Mobile in allen Kategorien ≥ 90.
+
+---
+
+# Nachtrag — Redesign „BLUEPRINT v4 / Der Werkplan" (S1–S7)
+
+**Stand:** 2026-07-18 · Commit `ff78a13` (+ Kontrastfix `ecbb70f`).
+IDs `hero-v4` … `kontakt-v4`. Deploy-Historie in `DEPLOY_LOG.md`.
+
+**SCHRITT-0-Fix (Deploy-Gate):** Der eingefrorene Live-Stand kam vom doppelten
+Branch-Trigger (`main` + Feature-Branch) in derselben `pages`-Concurrency-Group.
+`deploy.yml` triggert jetzt nur noch `main`. Baseline `cecf59c` bestätigt.
+`/version.txt` als cache-armer Klartext-Nachweis ergänzt.
+
+| Bereich | Umsetzung | Status |
+| --- | --- | --- |
+| Sichtbares 12-Spalten-Raster | `GridLines.astro` (Desktop ≥1024px) in Hero/Leistungen/Prozess | ✅ |
+| Plan-Annotationen | `.wp-anno` (Mono „Abb. NN — …" + Oak-Markierungslinie) | ✅ |
+| Hintergrund-Rhythmus | ink → paper → warm → paper → ink → warm → ink | ✅ |
+| Typo-Skalierung | `.headline--v4` clamp(2.8rem,6vw,4.5rem), enge Zeilen | ✅ |
+| S1 Hero | dunkel, ohne Bild, Wort-Stagger (clip-path), Ghost-CTA, Anker-Hairline, VideoSlot vorbereitet | ✅ |
+| S2 Über uns | 7/5 asymmetrisch, Key-Terms --oak, Lead-Satz, versetztes Plattenpaar | ✅ |
+| S3 Leistungen | React-Island-Akkordeon (Framer-Motion height), --paper-warm | ✅ |
+| S4 Galerie | 4 Panels, Zeitleisten-Hairline + Stationspunkte, Riesennummer, Pull-Quote, CTA | ✅ |
+| S5 Werkstatt | dunkel, Faktenzeile, Outline-Marquee (--paper Stroke) | ✅ |
+| S6 Prozess | Desktop-Zeitachse (Karten über/unter), Mobil Scroll-Snap; eine Nummer/Schritt | ✅ |
+| S7 Kontakt | dunkles Split-Panel, Underline-Formular, Telefon-CTA, Two-Click-Karte | ✅ |
+
+**Verbote eingehalten:** kein Preloader, keine Stock-/KI-Bilder, keine erfundenen
+Fakten/Jahre, **IMG_2479 nirgends** (auch nicht als OG-Bild), kein Framework-Wechsel.
+
+**Lighthouse Mobile:** Performance **98** · Accessibility **95** · Best Practices
+**100** · SEO **100**. Verbleibender A11y-Punkt: dekorative FANDRICH-Wortmarke
+(Deckkraft 0.1, `aria-hidden`) — gewollt.
+
+**Verifikation:** deployt (Actions build+deploy = success, Run #36 `ff78a13`).
+Live-Marker-Bestätigung im Browser durch Betreiber ausstehend
+(`/version.txt` bzw. Footer „Stand: …").
