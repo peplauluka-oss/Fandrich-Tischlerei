@@ -25,6 +25,35 @@ Live: **https://peplauluka-oss.github.io/Fandrich-Tischlerei/**
 | **S6 — Kontakt + Footer (`#kontakt-v3`)** | `9768410` | Run #18 build+deploy **success** (2026-07-17 11:44 UTC) | Sektion `id="kontakt-v3"`, Unterstrich-Formular (Fokus --oak), Two-Click-OSM-Karte, Telefon-CTA statt E-Mail (unverifiziert), FANDRICH-Schlusswortmarke Deckkraft 0.1, Footer NAP + Links + Build-Marker „Stand: 2026-07-17 · a16fc63"; lokal 390/1440 ohne H-Overflow, keine JS-Fehler | ✅ PASS |
 | **Abschluss — ABNAHME + Kontrastfix** | `5e88b39` | Run #20 build+deploy **success** (2026-07-17 11:49 UTC) | `ABNAHME.md` (Sektionsabnahme + Lighthouse Mobile Perf 95 / A11y 95 / BP 100 / SEO 100); Build-Marker-Kontrast 3.5→6:1 (WCAG AA) | ✅ PASS |
 
+## ⚠️ Deploy-Diagnose (BLUEPRINT-v4 SCHRITT 0) — Split-Brain gh-pages
+
+**Symptom:** Nutzer meldet Live-Marker unverändert `Stand: 2026-07-17 · 631a7b6`
+trotz mehrerer grüner `deploy.yml`-Runs.
+
+**Befund (API-Daten, aus der Sandbox erhoben):**
+- `origin/main` = `d4eb4cd` (korrekt, aktuell). `deploy.yml`-Runs = **success**.
+- Es existiert ein **zweiter, aktiver Deploy-Weg**: Branch `gh-pages` (@ `1a48886`)
+  + der eingebaute Workflow **`pages-build-deployment`** (Astro-fremd). Dessen
+  letzter Lauf: **#4, Branch `gh-pages`, `1a48886`, 2026-07-16 18:12 UTC**, danach
+  keiner mehr.
+- GitHub baut/aktiviert `pages-build-deployment` **nur**, wenn Pages-Source =
+  „Deploy from a branch" ist. Das ist der klassische Split-Brain: die Live-Seite
+  wird u. U. vom **`gh-pages`-Branch** (alt) ausgeliefert, während die
+  Actions-Deploys ins `github-pages`-Environment laufen.
+
+**Sandbox-Grenze:** `*.github.io` und die Pages-Settings-API sind über den
+Agent-Proxy gesperrt (curl 000 / WebFetch 403 / „not permitted through this
+proxy"). Der Live-Marker kann aus der Sandbox **nicht** selbst zitiert werden.
+
+**Fix (wirkt unabhängig von der Source-Einstellung):**
+1. `/version.txt`-Endpunkt (Klartext, cache-arm) als eindeutiger Deploy-Beweis.
+2. Aktuellen Build **zusätzlich in den `gh-pages`-Branch** veröffentlicht — falls
+   Pages von dort ausliefert, ist die Seite sofort aktuell; falls Pages =
+   Actions, ist der Push inert (kein Schaden).
+3. **Betreiber-Aktion empfohlen:** Repo → Settings → Pages → Source =
+   „GitHub Actions" (einmalig), dann ist `deploy.yml` alleinige Quelle und der
+   `gh-pages`-Branch kann gelöscht werden.
+
 ## Runde „De-Duplizierung & Editorial-Dichte" (R1–R6)
 
 Oberstes Gesetz: **jedes Foto genau 1×** — abgesichert durch
