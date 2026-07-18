@@ -566,3 +566,23 @@ main > .section {
   background: var(--oak);
   color: var(--ink);
 }
+
+/* Scroll-Progress-Hairline (Orientierung) */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--oak);
+  transform: scaleX(0);
+  transform-origin: left;
+  z-index: 60;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress {
+    display: none;
+  }
+}

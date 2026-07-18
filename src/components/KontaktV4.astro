@@ -14,7 +14,7 @@ const osmLink = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site
   <div class="wrap kontakt4__split">
     <div class="kontakt4__left">
       <p class="eyebrow reveal"><span class="eyebrow__idx">(06)</span>Kontakt</p>
-      <h2 class="headline--v4 reveal">Erzählen Sie uns von Ihrem Projekt.</h2>
+      <h2 class="headline--v4 split">Erzählen Sie uns von Ihrem Projekt.</h2>
 
       <address class="kontakt4__nap reveal" style="--reveal-delay: 0.05s">
         <p>
@@ -86,6 +86,7 @@ const osmLink = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site
     font-size: 0.95rem;
   }
   .kontakt4__tel {
+    position: relative;
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
@@ -96,6 +97,30 @@ const osmLink = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site
     color: var(--oak);
     text-decoration: none;
     margin-top: 0.5rem;
+  }
+  /* Conversion-Fokus: Underline zeichnet sich beim Hover, Pfeil schiebt */
+  .kontakt4__tel::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    height: 1px;
+    width: 100%;
+    background: var(--oak);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s var(--ease-out);
+  }
+  .kontakt4__tel:hover::after,
+  .kontakt4__tel:focus-visible::after {
+    transform: scaleX(1);
+  }
+  .kontakt4__tel .arrow {
+    display: inline-block;
+    transition: transform 0.4s var(--ease-out);
+  }
+  .kontakt4__tel:hover .arrow {
+    transform: translateX(6px);
   }
 
   /* Formular auf dunklem Grund: Underline hell, Fokus --oak */

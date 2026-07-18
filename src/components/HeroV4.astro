@@ -34,7 +34,7 @@ const anker = ['Neuanfertigung', 'Restaurierung', 'Innenausbau'];
 
   <GridLines variant="ink" />
 
-  <div class="hero4__inner wrap">
+  <div class="hero4__inner wrap" data-hero-exit>
     <p class="hero4__mark">Meistertischlerei — Berlin Pankow</p>
 
     <h1 class="hero4__title" aria-label="Handwerk, das bleibt.">
@@ -232,11 +232,30 @@ const anker = ['Neuanfertigung', 'Restaurierung', 'Innenausbau'];
     }
   }
 
+  /* Werkplan-Effekt: Raster zeichnet sich beim Laden ein (nur im Hero) */
+  .hero4 :global(.wp-grid__col) {
+    transform: scaleY(0);
+    transform-origin: top;
+    animation: hero-grid 1.1s var(--ease-out) both;
+  }
+  .hero4 :global(.wp-grid__col:nth-child(2n)) {
+    animation-delay: 0.15s;
+  }
+  .hero4 :global(.wp-grid__col:nth-child(3n)) {
+    animation-delay: 0.3s;
+  }
+  @keyframes hero-grid {
+    to {
+      transform: scaleY(1);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .hero4__title .w,
     .hero4__sub,
     .hero4__cta,
-    .hero4__scroll {
+    .hero4__scroll,
+    .hero4 :global(.wp-grid__col) {
       animation: none;
       opacity: 1;
       transform: none;

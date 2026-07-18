@@ -13,7 +13,7 @@ const materialien = ['Eiche', 'Esche', 'Kirschbaum', 'Lärche', 'Schellack', 'Zi
   <div class="wrap werk4__grid">
     <div class="werk4__col">
       <p class="eyebrow reveal"><span class="eyebrow__idx">(04)</span>Werkstatt</p>
-      <h2 class="headline--v4 reveal">Material, das man ernst nimmt.</h2>
+      <h2 class="headline--v4 split">Material, das man ernst nimmt.</h2>
 
       <div class="werk4__text reveal" style="--reveal-delay: 0.05s">
         <p class="lead">Wir arbeiten mit Massivholz, das wir selbst aussuchen.</p>
@@ -31,7 +31,7 @@ const materialien = ['Eiche', 'Esche', 'Kirschbaum', 'Lärche', 'Schellack', 'Zi
     </div>
 
     <figure class="werk4__figure">
-      <div class="photo werk4__frame" style={`max-width:${maxDisplayWidth(werkstattPoster)}px`}>
+      <div class="photo werk4__frame" data-plx style={`max-width:${maxDisplayWidth(werkstattPoster)}px`}>
         {
           hasVideo ? (
             <video class="werk4__video" autoplay muted loop={werkstattVideos.length === 1} playsinline preload="none" poster={werkstattPoster.src}>

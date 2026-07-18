@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { REVEAL_EASE } from '../tokens/motion';
+import { REVEAL_EASE, DURATION, STAGGER } from '../tokens/motion';
 import '../styles/leistungen4.css';
 
 interface Item {
@@ -40,7 +40,14 @@ export default function LeistungenAccordion() {
       {LEISTUNGEN.map((l, i) => {
         const isOpen = open === i;
         return (
-          <li className={`lst4__row ${isOpen ? 'is-open' : ''}`} key={l.nr}>
+          <motion.li
+            className={`lst4__row ${isOpen ? 'is-open' : ''}`}
+            key={l.nr}
+            initial={reduced ? false : { opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: DURATION.reveal, ease: REVEAL_EASE, delay: i * STAGGER }}
+          >
             <button
               type="button"
               className="lst4__head"
@@ -51,9 +58,14 @@ export default function LeistungenAccordion() {
                 {l.nr}
               </span>
               <span className="lst4__titel">{l.titel}</span>
-              <span className="lst4__toggle" aria-hidden="true">
-                {isOpen ? '–' : '+'}
-              </span>
+              <motion.span
+                className="lst4__toggle"
+                aria-hidden="true"
+                animate={{ rotate: isOpen ? 45 : 0 }}
+                transition={{ duration: DURATION.hover, ease: REVEAL_EASE }}
+              >
+                +
+              </motion.span>
             </button>
 
             <AnimatePresence initial={false}>
@@ -84,7 +96,7 @@ export default function LeistungenAccordion() {
                 </motion.div>
               )}
             </AnimatePresence>
-          </li>
+          </motion.li>
         );
       })}
     </ul>

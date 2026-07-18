@@ -272,6 +272,163 @@ function initToTop(lenis: Lenis | null) {
 }
 
 /* ------------------------------------------------------------------ *
+ * 8 — Scroll-Progress-Hairline (Orientierung: wie weit bin ich?)
+ * ------------------------------------------------------------------ */
+function initProgress() {
+  const bar = document.querySelector<HTMLElement>('[data-scroll-progress]');
+  if (!bar || reduced) return;
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+  };
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    },
+    { passive: true },
+  );
+  update();
+}
+
+/* ------------------------------------------------------------------ *
+ * 9 — Nav reagiert auf Scrollrichtung: runter = weg, hoch = da
+ *     (mehr Sichtfläche fürs Werk, sofortiges Feedback)
+ * ------------------------------------------------------------------ */
+function initNavDirection() {
+  const nav = document.querySelector<HTMLElement>('.nav');
+  if (!nav || reduced) return;
+  let last = window.scrollY;
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const y = window.scrollY;
+    // Erst ab dem zweiten Viewport verstecken; nahe oben immer sichtbar
+    if (y > window.innerHeight && y > last + 4) nav.classList.add('nav--hidden');
+    else if (y < last - 4 || y < 80) nav.classList.remove('nav--hidden');
+    last = y;
+  };
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    },
+    { passive: true },
+  );
+}
+
+/* ------------------------------------------------------------------ *
+ * 10 — Hero-Exit: Inhalt fährt beim Scrollen leicht weg (Tiefe,
+ *      weicher Übergang statt hartem Schnitt)
+ * ------------------------------------------------------------------ */
+function initHeroExit() {
+  const inner = document.querySelector<HTMLElement>('[data-hero-exit]');
+  if (!inner || reduced) return;
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const y = window.scrollY;
+    const vh = window.innerHeight;
+    const p = Math.min(y / vh, 1);
+    inner.style.transform = `translateY(${(-p * 60).toFixed(1)}px)`;
+    inner.style.opacity = String(1 - p * 0.7);
+  };
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    },
+    { passive: true },
+  );
+  update();
+}
+
+/* ------------------------------------------------------------------ *
+ * 11 — Rails: Linien zeichnen sich mit dem Scrollfortschritt
+ *      ([data-rail] Container, [data-rail-fill] Linie, data-axis=x|y)
+ * ------------------------------------------------------------------ */
+function initRails() {
+  const rails = [...document.querySelectorAll<HTMLElement>('[data-rail]')];
+  if (!rails.length) return;
+  if (reduced) {
+    rails.forEach((r) => {
+      const fill = r.querySelector<HTMLElement>('[data-rail-fill]');
+      if (fill) fill.style.transform = 'none';
+    });
+    return;
+  }
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const vh = window.innerHeight;
+    for (const r of rails) {
+      const fill = r.querySelector<HTMLElement>('[data-rail-fill]');
+      if (!fill) continue;
+      const rect = r.getBoundingClientRect();
+      if (rect.bottom < -100 || rect.top > vh + 100) continue;
+      const p = Math.min(Math.max((vh * 0.8 - rect.top) / rect.height, 0), 1);
+      const axis = r.dataset.axis === 'x' ? 'scaleX' : 'scaleY';
+      fill.style.transform = `${axis}(${p.toFixed(4)})`;
+    }
+  };
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    },
+    { passive: true },
+  );
+  update();
+}
+
+/* ------------------------------------------------------------------ *
+ * 12 — Interner Bild-Parallax ±6 % ([data-plx] img, transform only)
+ * ------------------------------------------------------------------ */
+function initParallax() {
+  if (reduced) return;
+  const frames = [...document.querySelectorAll<HTMLElement>('[data-plx]')];
+  if (!frames.length) return;
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const vh = window.innerHeight;
+    for (const frame of frames) {
+      const img = frame.querySelector<HTMLElement>('img');
+      if (!img) continue;
+      const rect = frame.getBoundingClientRect();
+      if (rect.bottom < 0 || rect.top > vh) continue;
+      const p = (rect.top + rect.height / 2 - vh / 2) / vh; // -0.5..0.5
+      img.style.transform = `translateY(${(-p * 6).toFixed(2)}%) scale(1.13)`;
+    }
+  };
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    },
+    { passive: true },
+  );
+  update();
+}
+
+/* ------------------------------------------------------------------ *
  * Boot
  * ------------------------------------------------------------------ */
 function boot() {
@@ -281,6 +438,11 @@ function boot() {
   initProcessLine();
   initCursor();
   initToTop(lenis);
+  initProgress();
+  initNavDirection();
+  initHeroExit();
+  initRails();
+  initParallax();
 }
 
 // Kein Preloader: Hero-Choreografie startet sofort beim Laden.

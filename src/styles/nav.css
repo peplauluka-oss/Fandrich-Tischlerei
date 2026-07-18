@@ -149,3 +149,13 @@
     color: var(--paper);
   }
 }
+
+/* Richtungs-Reaktion: beim Runterscrollen weg, beim Hochscrollen sofort da */
+.nav {
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.35s ease;
+}
+.nav--hidden:not(.nav--open) {
+  transform: translateY(-100%);
+}

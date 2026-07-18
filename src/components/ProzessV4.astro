@@ -14,11 +14,11 @@ const schritte = [
   <div class="wrap">
     <div class="prozess4__head">
       <p class="eyebrow reveal"><span class="eyebrow__idx">(05)</span>So arbeiten wir</p>
-      <h2 class="headline--v4 reveal">Vier Schritte, ein Ergebnis.</h2>
+      <h2 class="headline--v4 split">Vier Schritte, ein Ergebnis.</h2>
     </div>
 
-    <ol class="prozess4__track">
-      <span class="prozess4__line" aria-hidden="true"></span>
+    <ol class="prozess4__track" data-rail data-axis="x">
+      <span class="prozess4__line" aria-hidden="true"><span class="prozess4__linefill" data-rail-fill></span></span>
       {
         schritte.map((s, i) => (
           <li class="prozess4__step reveal" style={`--reveal-delay: ${i * 0.08}s`} data-pos={i % 2 === 0 ? 'up' : 'down'}>
@@ -81,9 +81,19 @@ const schritte = [
       height: 1px;
       background: var(--oak-line);
     }
+    /* Die Achse zeichnet sich mit dem Scroll von links (führt durch die Schritte) */
+    .prozess4__linefill {
+      position: absolute;
+      inset: 0;
+      background: var(--oak);
+      transform: scaleX(0);
+      transform-origin: left;
+      will-change: transform;
+    }
     .prozess4__step {
       position: relative;
     }
+    /* Stationspunkte poppen gestaffelt, wenn der Schritt sichtbar wird */
     .prozess4__dot {
       position: absolute;
       top: 50%;
@@ -92,8 +102,24 @@ const schritte = [
       height: 9px;
       border-radius: 50%;
       background: var(--oak);
-      transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform 0.45s var(--ease-out);
+      transition-delay: calc(var(--reveal-delay, 0s) + 0.25s);
       z-index: 1;
+    }
+    .prozess4__step.is-visible .prozess4__dot {
+      transform: translate(-50%, -50%) scale(1);
+    }
+    /* Richtungs-codierter Eintritt: obere Karten von oben, untere von unten
+       (die Bewegung erklärt die Position an der Achse) */
+    .prozess4__step[data-pos='up'].reveal {
+      transform: translateY(-28px);
+    }
+    .prozess4__step[data-pos='down'].reveal {
+      transform: translateY(28px);
+    }
+    .prozess4__step.reveal.is-visible {
+      transform: none;
     }
     .prozess4__card {
       position: absolute;
@@ -120,6 +146,16 @@ const schritte = [
     }
     .prozess4__step[data-pos='down'] .prozess4__card::before {
       top: -1.6rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .prozess4__linefill {
+      transform: none;
+    }
+    .prozess4__dot {
+      transform: translate(-50%, -50%) scale(1);
+      transition: none;
     }
   }
 

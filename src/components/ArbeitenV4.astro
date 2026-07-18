@@ -11,17 +11,17 @@ const zitat = 'Ein Möbel ist gut, wenn man nach zwanzig Jahren nichts daran än
   <div class="wrap">
     <div class="arb4__head">
       <p class="eyebrow reveal"><span class="eyebrow__idx">(03)</span>Ausgewählte Arbeiten</p>
-      <h2 class="headline--v4 reveal">Vier Räume, ein Anspruch.</h2>
+      <h2 class="headline--v4 split">Vier Räume, ein Anspruch.</h2>
     </div>
   </div>
 
   <!-- Gruppe 1: P1 + P2, verbunden durch Zeitleisten-Hairline -->
-  <div class="wrap arb4__group">
-    <span class="arb4__rail" aria-hidden="true"></span>
+  <div class="wrap arb4__group" data-rail>
+    <span class="arb4__rail" aria-hidden="true"><span class="arb4__railfill" data-rail-fill></span></span>
 
     <div class="arb4__panel arb4__p1" data-clip>
-      <figure class="arb4__fig">
-        <div class="photo arb4__frame" style={`max-width:${mx(p1.src)}`}>
+      <figure class="arb4__fig" data-cursor="view">
+        <div class="photo arb4__frame" data-plx style={`max-width:${mx(p1.src)}`}>
           <Image src={p1.src} alt={p1.alt} widths={[Math.round(p1.src.width / 2), p1.src.width]} sizes="(min-width:900px) 26rem, 82vw" quality={82} />
         </div>
       </figure>
@@ -33,7 +33,7 @@ const zitat = 'Ein Möbel ist gut, wenn man nach zwanzig Jahren nichts daran än
 
     <div class="arb4__panel arb4__p2" data-clip>
       <span class="arb4__bignr" aria-hidden="true">{p2.nr}</span>
-      <figure class="arb4__fig">
+      <figure class="arb4__fig" data-cursor="view">
         <div class="photo arb4__frame" style={`max-width:${mx(p2.src)}`}>
           <Image src={p2.src} alt={p2.alt} widths={[p2.src.width]} sizes="(min-width:900px) 17rem, 52vw" quality={80} />
         </div>
@@ -47,15 +47,15 @@ const zitat = 'Ein Möbel ist gut, wenn man nach zwanzig Jahren nichts daran än
 
   <!-- Zwischenspiel: Pull-Quote auf warmem Streifen -->
   <div class="arb4__quote section--warm">
-    <blockquote class="arb4__quotetext">{zitat}</blockquote>
+    <blockquote class="arb4__quotetext reveal">{zitat}</blockquote>
   </div>
 
   <!-- Gruppe 2: P3 (überlappt Streifen) + P4 + CTA -->
-  <div class="wrap arb4__group arb4__group--2">
-    <span class="arb4__rail" aria-hidden="true"></span>
+  <div class="wrap arb4__group arb4__group--2" data-rail>
+    <span class="arb4__rail" aria-hidden="true"><span class="arb4__railfill" data-rail-fill></span></span>
 
     <div class="arb4__panel arb4__p3" data-clip>
-      <figure class="arb4__fig">
+      <figure class="arb4__fig" data-cursor="view">
         <div class="photo arb4__frame" style={`max-width:${mx(p3.src)}`}>
           <Image src={p3.src} alt={p3.alt} widths={[p3.src.width]} sizes="(min-width:900px) 18rem, 56vw" quality={80} />
         </div>
@@ -67,8 +67,8 @@ const zitat = 'Ein Möbel ist gut, wenn man nach zwanzig Jahren nichts daran än
     </div>
 
     <div class="arb4__panel arb4__p4" data-clip>
-      <figure class="arb4__fig">
-        <div class="photo arb4__frame" style={`max-width:${mx(p4.src)}`}>
+      <figure class="arb4__fig" data-cursor="view">
+        <div class="photo arb4__frame" data-plx style={`max-width:${mx(p4.src)}`}>
           <Image src={p4.src} alt={p4.alt} widths={[Math.round(p4.src.width / 2), p4.src.width]} sizes="(min-width:900px) 33rem, 88vw" quality={82} />
         </div>
         <figcaption class="arb4__cap wp-anno">
@@ -94,7 +94,8 @@ const zitat = 'Ein Möbel ist gut, wenn man nach zwanzig Jahren nichts daran än
     z-index: 1;
   }
 
-  /* Zeitleisten-Hairline mit Stationspunkten */
+  /* Zeitleisten-Hairline mit Stationspunkten — die Oak-Linie zeichnet
+     sich mit dem Scrollfortschritt (führt durch die Arbeiten) */
   .arb4__rail {
     position: absolute;
     left: 0;
@@ -103,12 +104,20 @@ const zitat = 'Ein Möbel ist gut, wenn man nach zwanzig Jahren nichts daran än
     width: 1px;
     background: var(--oak-line);
   }
+  .arb4__railfill {
+    position: absolute;
+    inset: 0;
+    background: var(--oak);
+    transform: scaleY(0);
+    transform-origin: top;
+    will-change: transform;
+  }
 
   .arb4__panel {
     position: relative;
     padding-block: clamp(2rem, 5vh, 3.5rem);
   }
-  /* Stationspunkt (Oak) auf der Hairline */
+  /* Stationspunkt (Oak): poppt, sobald das Panel sichtbar wird */
   .arb4__panel::before {
     content: '';
     position: absolute;
@@ -118,6 +127,11 @@ const zitat = 'Ein Möbel ist gut, wenn man nach zwanzig Jahren nichts daran än
     height: 7px;
     border-radius: 50%;
     background: var(--oak);
+    transform: scale(0);
+    transition: transform 0.45s var(--ease-out) 0.2s;
+  }
+  .arb4__panel.is-in::before {
+    transform: scale(1);
   }
 
   .arb4__fig {
@@ -132,6 +146,17 @@ const zitat = 'Ein Möbel ist gut, wenn man nach zwanzig Jahren nichts daran än
     width: 100%;
     height: auto;
     display: block;
+    transition: transform 0.6s var(--ease-out);
+  }
+  /* Parallax-Bilder brauchen die Scale-Reserve dauerhaft */
+  [data-plx] :global(img) {
+    will-change: transform;
+  }
+  /* Hover-Zoom auf Nicht-Parallax-Bildern (Feedback: „hier ist ein Werk") */
+  @media (hover: hover) {
+    .arb4__fig:hover .arb4__frame:not([data-plx]) :global(img) {
+      transform: scale(1.04);
+    }
   }
   .arb4__cap {
     margin-top: 0.8rem;
@@ -231,6 +256,13 @@ const zitat = 'Ein Möbel ist gut, wenn man nach zwanzig Jahren nichts daran än
     .arb4__panel[data-clip] .arb4__frame {
       clip-path: none;
       transition: none;
+    }
+    .arb4__panel::before {
+      transform: scale(1);
+      transition: none;
+    }
+    .arb4__railfill {
+      transform: none;
     }
   }
 
