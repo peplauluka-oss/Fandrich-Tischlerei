@@ -7,7 +7,6 @@ on:
   push:
     branches:
       - main
-      - claude/fandrich-website-relaunch-mdt6zy
   workflow_dispatch:
 
 # Rechte, die deploy-pages / configure-pages benötigen
