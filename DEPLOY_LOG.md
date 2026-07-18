@@ -93,3 +93,15 @@ G2-konform) — Original-Hochformate laut STATUS.md nachliefern.
   (`astro.config.mjs` → `import.meta.env.PUBLIC_BUILD_STAMP`).
 
 **Gate bestanden — Design-Aufbau S1–S6 freigegeben.**
+
+## Redesign „BLUEPRINT v4 / Der Werkplan"
+
+**Deploy-Gate (SCHRITT 0) bestanden:** Ursache des eingefrorenen Live-Standes
+war der doppelte Branch-Trigger (main + Feature-Branch) in derselben
+`pages`-Concurrency-Group; behoben — `deploy.yml` triggert nur noch `main`.
+Baseline live bestätigt: `Stand: 2026-07-18 · cecf59c`. Zusätzlich `/version.txt`
+als cache-armer Klartext-Nachweis.
+
+| Schritt | Commit (main) | Actions-Deploy | Nachweis | Status |
+| --- | --- | --- | --- | --- |
+| **v4 — S1–S7 „Der Werkplan"** | `ff78a13` (+ Kontrastfix) | build+deploy (Verifikation im Browser ausstehend) | IDs `hero-v4`…`kontakt-v4`; 12-Spalten-Raster, Plan-Annotationen, BG-Rhythmus; Bild-Check grün (8 Assets à 1×, IMG_2479 nirgends); Lighthouse mobil **Perf 98 / A11y 95 / BP 100 / SEO 100**; lokal 390/1440 ohne H-Overflow | ⏳ deployed, Browser-Verifikation ausstehend |

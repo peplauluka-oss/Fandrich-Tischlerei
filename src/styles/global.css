@@ -514,9 +514,14 @@ main > .section {
   height: 1px;
   background: var(--oak);
 }
+/* Nummer erbt die (AA-konforme) Caption-Farbe; der Oak-Akzent ist die
+   Markierungslinie (.wp-anno__mark), nicht die Zahl. */
 .wp-anno__nr {
-  color: var(--oak);
+  color: var(--ink);
   font-weight: 600;
+}
+.section--ink .wp-anno__nr {
+  color: var(--paper);
 }
 .section--ink .wp-anno {
   color: var(--paper-soft);
