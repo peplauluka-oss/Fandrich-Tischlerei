@@ -1,0 +1,257 @@
+---
+import GridLines from './GridLines.astro';
+import { heroVideos } from '../data/heroMedia';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const hasVideo = heroVideos.length > 0;
+
+// Anker/Teaser der Kernleistungen (Sprungmarken zur Leistungssektion)
+const anker = ['Neuanfertigung', 'Restaurierung', 'Innenausbau'];
+---
+
+<section class="hero4 section--ink has-grid" id="hero-v4" aria-label="Intro">
+  <!-- VideoSlot-Layer: leer bis Clips vorliegen (src/data/heroMedia.ts) -->
+  {
+    hasVideo && (
+      <div class="hero4__media" aria-hidden="true">
+        {heroVideos.map((v, i) => (
+          <video
+            class:list={['hero4__video', { 'is-first': i === 0 }]}
+            autoplay
+            muted
+            loop={heroVideos.length === 1}
+            playsinline
+            preload={i === 0 ? 'auto' : 'none'}
+          >
+            {v.webm && <source src={`${base}/${v.webm}`} type="video/webm" />}
+            {v.mp4 && <source src={`${base}/${v.mp4}`} type="video/mp4" />}
+          </video>
+        ))}
+        <div class="hero4__scrim" />
+      </div>
+    )
+  }
+
+  <GridLines variant="ink" />
+
+  <div class="hero4__inner wrap">
+    <p class="hero4__mark">Meistertischlerei — Berlin Pankow</p>
+
+    <h1 class="hero4__title" aria-label="Handwerk, das bleibt.">
+      <span class="hero4__line" aria-hidden="true">
+        <span class="w" style="--d: 0.05s">Handwerk,</span>
+      </span>
+      <span class="hero4__line" aria-hidden="true">
+        <span class="w" style="--d: 0.20s">das</span>
+        {' '}
+        <span class="w" style="--d: 0.30s">bleibt.</span>
+      </span>
+    </h1>
+
+    <p class="hero4__sub">
+      Möbel nach Maß, Restaurierung und Innenausbau — gefertigt in unserer Werkstatt in Pankow.
+    </p>
+
+    <a href="#kontakt-v4" class="btn btn--ghost hero4__cta" data-cursor="link">
+      Projekt anfragen <span class="arrow" aria-hidden="true">→</span>
+    </a>
+  </div>
+
+  <div class="hero4__foot wrap">
+    <ul class="hero4__anker">
+      {
+        anker.map((a) => (
+          <li>
+            <a href="#leistungen-v4" class="hero4__ankerlink">
+              {a}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <span class="hero4__scroll" aria-hidden="true"></span>
+  </div>
+</section>
+
+<style>
+  .hero4 {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    overflow: clip;
+    padding-top: clamp(6rem, 14vh, 9rem);
+  }
+
+  /* VideoSlot */
+  .hero4__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .hero4__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+  }
+  .hero4__video.is-first {
+    opacity: 1;
+  }
+  .hero4__scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(43, 37, 35, 0.85), rgba(43, 37, 35, 0.5));
+  }
+
+  .hero4__inner {
+    position: relative;
+    z-index: 1;
+    align-self: center;
+    padding-block: clamp(2rem, 6vh, 4rem);
+  }
+
+  .hero4__mark {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--oak);
+    margin-bottom: clamp(1.5rem, 4vh, 2.5rem);
+  }
+
+  .hero4__title {
+    font-family: var(--font-head);
+    font-weight: 340;
+    font-size: clamp(3.5rem, 11vw, 8.5rem);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    color: var(--paper);
+    margin: 0;
+  }
+  .hero4__line {
+    display: block;
+  }
+  /* Wort-für-Wort clip-path-Reveal, einmalig beim Laden (no-JS-sicher) */
+  .hero4__title .w {
+    display: inline-block;
+    animation: heroWord 0.7s var(--ease-out) both;
+    animation-delay: var(--d, 0s);
+  }
+  @keyframes heroWord {
+    from {
+      opacity: 0;
+      clip-path: inset(0 0 108% 0);
+      transform: translateY(0.18em);
+    }
+    to {
+      opacity: 1;
+      clip-path: inset(0 0 -12% 0);
+      transform: none;
+    }
+  }
+
+  .hero4__sub {
+    margin-top: clamp(1.5rem, 4vh, 2.25rem);
+    max-width: 44ch;
+    font-size: 1.1rem;
+    color: rgba(250, 247, 242, 0.9);
+    animation: heroFade 0.7s var(--ease-out) 0.42s both;
+  }
+  .hero4__cta {
+    margin-top: 2.25rem;
+    color: var(--paper);
+    animation: heroFade 0.7s var(--ease-out) 0.52s both;
+  }
+  @keyframes heroFade {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Untere Hairline mit Ankern + Scroll-Indikator */
+  .hero4__foot {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-bottom: clamp(1.5rem, 4vh, 2.5rem);
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--grid-line-ink);
+  }
+  .hero4__anker {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 2rem;
+  }
+  .hero4__ankerlink {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(250, 247, 242, 0.75);
+    text-decoration: none;
+    padding-block: 0.4rem;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.25s var(--ease-out);
+  }
+  .hero4__ankerlink:hover {
+    color: var(--oak);
+  }
+
+  .hero4__scroll {
+    flex: none;
+    width: 1px;
+    height: 42px;
+    background: var(--paper);
+    opacity: 0.5;
+    transform-origin: top;
+    animation: heroScroll 2.6s ease-in-out infinite;
+  }
+  @keyframes heroScroll {
+    0%,
+    100% {
+      transform: scaleY(0.3);
+      opacity: 0.25;
+    }
+    50% {
+      transform: scaleY(1);
+      opacity: 0.55;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero4__title .w,
+    .hero4__sub,
+    .hero4__cta,
+    .hero4__scroll {
+      animation: none;
+      opacity: 1;
+      transform: none;
+      clip-path: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero4__foot {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .hero4__scroll {
+      display: none;
+    }
+  }
+</style>

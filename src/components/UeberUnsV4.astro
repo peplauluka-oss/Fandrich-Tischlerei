@@ -1,0 +1,190 @@
+---
+import { Image } from 'astro:assets';
+import { ueberUnsImages } from '../data/images';
+
+const [a, b] = ueberUnsImages; // 2480 Bibliothek, 2470 Fensterbank
+---
+
+<section class="ueber4 section" id="ueber-uns-v4" aria-label="Über uns">
+  <div class="wrap ueber4__grid">
+    <div class="ueber4__text">
+      <p class="eyebrow reveal"><span class="eyebrow__idx">(01)</span>Über uns</p>
+      <h2 class="headline--v4 reveal">Vom Aufmaß bis zur Montage.</h2>
+
+      <p class="ueber4__lead lead reveal" style="--reveal-delay: 0.05s">
+        Wir sind eine <span class="key">Meistertischlerei</span> in Berlin-Pankow.
+      </p>
+      <p class="ueber4__body reveal" style="--reveal-delay: 0.1s">
+        Vom ersten Aufmaß bis zur Montage entsteht alles in unserer eigenen Werkstatt —
+        Einbaumöbel, Restaurierungen, Innenausbau. Wir arbeiten mit <span class="key">Massivholz</span>
+        und ausgesuchten Furnieren, und dort, wo es das Möbel verlangt, mit
+        <span class="key">handgeschnittenen Verbindungen</span>. Was wir bauen, soll bleiben.
+      </p>
+
+      <a href="#werkstatt-v4" class="link-line ueber4__more reveal" style="--reveal-delay: 0.15s">
+        Mehr über die Werkstatt
+      </a>
+    </div>
+
+    <div class="ueber4__plates">
+      <figure class="ueber4__fig ueber4__fig--a" data-clip>
+        <div class="photo ueber4__frame ueber4__frame--a">
+          <Image
+            src={a.src}
+            alt={a.alt}
+            widths={[284, a.src.width]}
+            sizes="(min-width: 900px) 17rem, 60vw"
+            loading="eager"
+            quality={80}
+          />
+        </div>
+        <figcaption class="wp-anno">
+          <span class="wp-anno__mark" aria-hidden="true"></span>
+          <span><span class="wp-anno__nr">Abb. 01</span> — Einbaubibliothek, Kirschbaum · Prenzlauer Berg</span>
+        </figcaption>
+      </figure>
+
+      <figure class="ueber4__fig ueber4__fig--b" data-clip style="--d: 0.12s">
+        <div class="photo ueber4__frame ueber4__frame--b">
+          <Image
+            src={b.src}
+            alt={b.alt}
+            widths={[240, b.src.width]}
+            sizes="(min-width: 900px) 13rem, 46vw"
+            loading="eager"
+            quality={80}
+          />
+        </div>
+        <figcaption class="wp-anno">
+          <span class="wp-anno__mark" aria-hidden="true"></span>
+          <span><span class="wp-anno__nr">Abb. 02</span> — Fensterbank mit Stauraum · Pankow</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ueber4__grid {
+    display: grid;
+    grid-template-columns: 7fr 5fr;
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: start;
+  }
+
+  .ueber4__lead {
+    margin-top: clamp(1.75rem, 4vh, 2.5rem);
+  }
+  .ueber4__body {
+    margin-top: 1rem;
+    color: var(--ink-soft);
+    max-width: 60ch;
+  }
+  .ueber4__more {
+    display: inline-block;
+    margin-top: 2rem;
+    font-weight: 500;
+  }
+
+  /* Zwei Platten, rechte um eine halbe Spalte versetzt + Overlap */
+  .ueber4__plates {
+    position: relative;
+    padding-bottom: 3rem;
+  }
+  .ueber4__fig {
+    margin: 0;
+  }
+  .ueber4__fig--a {
+    width: min(17rem, 60%);
+  }
+  .ueber4__fig--b {
+    width: min(13rem, 46%);
+    margin-left: auto;
+    margin-top: -40px; /* Overlap nach oben */
+    position: relative;
+    z-index: 1;
+  }
+  .ueber4__frame {
+    overflow: hidden;
+    background: var(--paper-dim);
+  }
+  .ueber4__frame--a {
+    aspect-ratio: 4 / 5;
+  }
+  .ueber4__frame--b {
+    aspect-ratio: 3 / 4;
+  }
+  .ueber4__frame :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .ueber4__fig figcaption {
+    margin-top: 0.7rem;
+  }
+
+  /* Clip-Reveal auf innerem Rahmen (IO beobachtet die Figur) */
+  .ueber4__fig[data-clip] .ueber4__frame {
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 0.8s var(--ease-out);
+    transition-delay: var(--d, 0s);
+  }
+  .ueber4__fig[data-clip].is-in .ueber4__frame {
+    clip-path: inset(0 0 0 0);
+  }
+  .ueber4__fig[data-clip] figcaption {
+    opacity: 0;
+    transition: opacity 0.6s var(--ease-out);
+    transition-delay: calc(var(--d, 0s) + 0.15s);
+  }
+  .ueber4__fig[data-clip].is-in figcaption {
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ueber4__fig[data-clip] .ueber4__frame {
+      clip-path: none;
+      transition: none;
+    }
+    .ueber4__fig[data-clip] figcaption {
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .ueber4__grid {
+      grid-template-columns: 1fr;
+      gap: clamp(2.5rem, 7vh, 3.5rem);
+    }
+    .ueber4__fig--a {
+      width: 60vw;
+      max-width: 17rem;
+    }
+    .ueber4__fig--b {
+      width: 46vw;
+      max-width: 13rem;
+      margin-top: -32px;
+      margin-right: 1rem;
+    }
+  }
+</style>
+
+<script>
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const figs = document.querySelectorAll<HTMLElement>('#ueber-uns-v4 [data-clip]');
+  if (reduced) {
+    figs.forEach((f) => f.classList.add('is-in'));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-in');
+            io.unobserve(e.target);
+          }
+        }
+      },
+      { threshold: 0.2 },
+    );
+    figs.forEach((f) => io.observe(f));
+  }
+</script>

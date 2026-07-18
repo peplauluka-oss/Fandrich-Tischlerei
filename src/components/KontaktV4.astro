@@ -5,98 +5,75 @@ import { site } from '../data/site';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const jahr = 2026;
 
-// OSM-Einbettung erst nach Klick (Two-Click, DSGVO-konform)
 const bbox = `${site.geo.lng - 0.008},${site.geo.lat - 0.004},${site.geo.lng + 0.008},${site.geo.lat + 0.004}`;
 const osmSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${site.geo.lat},${site.geo.lng}`;
 const osmLink = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site.geo.lng}#map=16/${site.geo.lat}/${site.geo.lng}`;
 ---
 
-<section class="section closing on-ink" id="kontakt-v3" aria-label="Kontakt">
-  <div class="wrap">
-    <div class="closing__top">
-      <div class="closing__info">
-        <div class="section-head">
-          <p class="eyebrow reveal"><span class="eyebrow__idx">(06)</span>Kontakt</p>
-          <h2 class="headline split">Erzählen Sie uns von Ihrem Projekt.</h2>
-        </div>
-        <address class="reveal">
-          <p>
-            Tischlerei {site.name}<br />
-            {site.street}<br />
-            {site.zip} {site.city}
-          </p>
-          <p class="closing__hours">{site.openingHours}</p>
-          {
-            /* E-Mail nur, falls verifiziert — sonst Telefon-CTA */
-            site.email ? (
-              <p>
-                <a href={`mailto:${site.email}`} class="link-line">
-                  {site.email}
-                </a>
-              </p>
-            ) : (
-              <a href={`tel:${site.phoneHref}`} class="btn btn--oak closing__tel" data-cursor="link">
-                {site.phone} <span class="arrow" aria-hidden="true">→</span>
-              </a>
-            )
-          }
-        </address>
-      </div>
+<section class="kontakt4 section--ink" id="kontakt-v4" aria-label="Kontakt">
+  <div class="wrap kontakt4__split">
+    <div class="kontakt4__left">
+      <p class="eyebrow reveal"><span class="eyebrow__idx">(06)</span>Kontakt</p>
+      <h2 class="headline--v4 reveal">Erzählen Sie uns von Ihrem Projekt.</h2>
 
-      <div class="closing__form reveal" style="--reveal-delay: 0.1s">
-        <KontaktForm client:visible />
-      </div>
+      <address class="kontakt4__nap reveal" style="--reveal-delay: 0.05s">
+        <p>
+          Tischlerei {site.name}<br />
+          {site.street}<br />
+          {site.zip} {site.city}
+        </p>
+        <p class="kontakt4__hours">{site.openingHours}</p>
+        <a href={`tel:${site.phoneHref}`} class="kontakt4__tel" data-cursor="link">
+          {site.phone} <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </address>
     </div>
 
-    <div class="closing__map reveal" data-map>
-      <div class="map__placeholder">
-        <p class="map__label">Treseburger Straße 30, 13129 Berlin-Pankow</p>
-        <button type="button" class="btn btn--paper" data-map-load>
-          Karte laden <span class="arrow" aria-hidden="true">→</span>
-        </button>
-        <p class="map__hint">
-          Beim Laden wird eine Verbindung zu OpenStreetMap hergestellt.
-          <a href={`${base}/datenschutz`} class="link-static">Hinweise zum Datenschutz</a>
-        </p>
-      </div>
+    <div class="kontakt4__right reveal" style="--reveal-delay: 0.1s">
+      <KontaktForm client:visible />
     </div>
   </div>
 
-  <div class="closing__wordmark" aria-hidden="true">FANDRICH</div>
+  <div class="wrap kontakt4__map reveal" data-map>
+    <div class="map__placeholder">
+      <p class="map__label">Treseburger Straße 30, 13129 Berlin-Pankow</p>
+      <button type="button" class="btn btn--paper" data-map-load>
+        Karte laden <span class="arrow" aria-hidden="true">→</span>
+      </button>
+      <p class="map__hint">
+        Beim Laden wird eine Verbindung zu OpenStreetMap hergestellt.
+        <a href={`${base}/datenschutz`} class="link-static">Hinweise zum Datenschutz</a>
+      </p>
+    </div>
+  </div>
 
-  <div class="wrap closing__foot">
-    <div class="closing__legal">
+  <div class="kontakt4__wordmark" aria-hidden="true">FANDRICH</div>
+
+  <div class="wrap kontakt4__foot">
+    <div class="kontakt4__legal">
       <a href={`${base}/impressum`} class="link-line">Impressum</a>
       <a href={`${base}/datenschutz`} class="link-line">Datenschutz</a>
     </div>
-    <p class="closing__copy">
+    <p class="kontakt4__copy">
       © {site.name} {jahr}
-      <span class="closing__stamp">Stand: {import.meta.env.PUBLIC_BUILD_STAMP}</span>
+      <span class="kontakt4__stamp">Stand: {import.meta.env.PUBLIC_BUILD_STAMP}</span>
     </p>
   </div>
 </section>
 
 <style>
-  .closing {
+  .kontakt4 {
     position: relative;
-    background: var(--ink);
-    color: var(--paper);
     overflow: hidden;
     padding-bottom: 0;
   }
-
-  .closing .eyebrow {
-    color: var(--oak);
-  }
-
-  .closing__top {
+  .kontakt4__split {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: 1fr 1fr;
     gap: clamp(3rem, 7vw, 6rem);
     align-items: start;
   }
-
-  address {
+  .kontakt4__nap {
     font-style: normal;
     margin-top: 2.5rem;
     display: flex;
@@ -104,32 +81,50 @@ const osmLink = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site
     gap: 1.25rem;
     color: rgba(250, 247, 242, 0.82);
   }
-
-  address a {
-    line-height: 2;
-  }
-
-  .closing__hours {
+  .kontakt4__hours {
     color: rgba(250, 247, 242, 0.55);
     font-size: 0.95rem;
   }
-
-  .closing__tel {
+  .kontakt4__tel {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    align-self: flex-start;
+    font-family: var(--font-head);
+    font-weight: 340;
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    color: var(--oak);
+    text-decoration: none;
     margin-top: 0.5rem;
   }
 
-  /* Two-Click-Karte */
-  .closing__map {
-    margin-top: clamp(3.5rem, 8vh, 6rem);
+  /* Formular auf dunklem Grund: Underline hell, Fokus --oak */
+  .kontakt4__right :global(.form input),
+  .kontakt4__right :global(.form textarea) {
+    color: var(--paper);
+    border-bottom-color: rgba(250, 247, 242, 0.4);
+  }
+  .kontakt4__right :global(.form label) {
+    color: rgba(250, 247, 242, 0.6);
+  }
+  .kontakt4__right :global(.form input:focus),
+  .kontakt4__right :global(.form textarea:focus) {
+    border-bottom-color: var(--oak);
+  }
+  .kontakt4__right :global(.btn) {
+    background: var(--oak);
+    color: var(--ink);
   }
 
+  .kontakt4__map {
+    margin-top: clamp(3.5rem, 8vh, 6rem);
+  }
   .map__placeholder,
-  .closing__map :global(iframe) {
+  .kontakt4__map :global(iframe) {
     width: 100%;
     height: clamp(16rem, 40vh, 22rem);
     border: 0;
   }
-
   .map__placeholder {
     background: rgba(250, 247, 242, 0.05);
     border: 1px solid var(--oak-line);
@@ -141,23 +136,20 @@ const osmLink = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site
     text-align: center;
     padding: var(--gutter);
   }
-
   .map__label {
-    font-size: 0.8rem;
-    font-weight: 500;
-    letter-spacing: 0.18em;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: rgba(250, 247, 242, 0.6);
   }
-
   .map__hint {
     font-size: 0.8rem;
     color: rgba(250, 247, 242, 0.55);
     max-width: 44ch;
   }
 
-  /* Riesiges Schlussbild: FANDRICH über die volle Breite */
-  .closing__wordmark {
+  .kontakt4__wordmark {
     margin-top: clamp(4rem, 10vh, 8rem);
     font-family: var(--font-head);
     font-weight: 340;
@@ -171,7 +163,7 @@ const osmLink = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site
     white-space: nowrap;
   }
 
-  .closing__foot {
+  .kontakt4__foot {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -180,14 +172,12 @@ const osmLink = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site
     padding-block: clamp(2rem, 5vh, 3rem);
     border-top: 1px solid var(--oak-line);
   }
-
-  .closing__legal {
+  .kontakt4__legal {
     display: flex;
     gap: 1.75rem;
     font-size: 0.95rem;
   }
-
-  .closing__copy {
+  .kontakt4__copy {
     font-size: 0.9rem;
     color: rgba(250, 247, 242, 0.55);
     display: flex;
@@ -195,24 +185,24 @@ const osmLink = `https://www.openstreetmap.org/?mlat=${site.geo.lat}&mlon=${site
     gap: 1rem;
     flex-wrap: wrap;
   }
-
-  .closing__stamp {
+  .kontakt4__stamp {
+    font-family: var(--font-mono);
     font-size: 0.72rem;
-    letter-spacing: 0.06em;
-    /* 0.6 statt 0.4 → Kontrast 6:1 auf --ink (WCAG AA erfüllt) */
+    letter-spacing: 0.04em;
     color: rgba(250, 247, 242, 0.6);
   }
 
   @media (max-width: 899px) {
-    .closing__top {
+    .kontakt4__split {
       grid-template-columns: 1fr;
+      gap: 2.5rem;
     }
   }
 </style>
 
 <script define:vars={{ osmSrc, osmLink }}>
-  const map = document.querySelector('[data-map]');
-  const btn = document.querySelector('[data-map-load]');
+  const map = document.querySelector('#kontakt-v4 [data-map]');
+  const btn = document.querySelector('#kontakt-v4 [data-map-load]');
   if (map && btn) {
     btn.addEventListener('click', () => {
       const iframe = document.createElement('iframe');

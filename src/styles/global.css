@@ -8,13 +8,19 @@
   --ink: #2b2523;
   --oak: #b8895a;
   --paper-dim: #f1ebe2;
+  --paper-warm: #f3eee6; /* v4 „Werkplan": warmer Zweitgrund für Rhythmuswechsel */
   --ink-soft: rgba(43, 37, 35, 0.65);
   --paper-soft: rgba(250, 247, 242, 0.72);
   --oak-line: rgba(184, 137, 90, 0.25);
+  /* Werkzeichnungs-Raster: dezente Hairlines (nur Desktop sichtbar) */
+  --grid-line: rgba(43, 37, 35, 0.07);
+  --grid-line-ink: rgba(250, 247, 242, 0.1); /* auf dunklem Grund */
 
   /* Typografie */
   --font-head: 'Fraunces Variable', Georgia, serif;
   --font-body: 'Inter Variable', system-ui, sans-serif;
+  /* Mono nur für Zeichnungslegenden („Abb. 03 — …"): System-Mono, kein Extra-Payload */
+  --font-mono: ui-monospace, 'SFMono-Regular', 'SF Mono', Menlo, Consolas, monospace;
 
   /* Bewegung — EIN Easing-System (Möbelscharnier: präzise, gedämpft) */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -459,4 +465,99 @@ main > .section {
   .cursor {
     display: none !important;
   }
+}
+
+/* ================================================================
+   BLUEPRINT v4 — „Der Werkplan" Utilities
+   ================================================================ */
+
+/* Hintergrund-Rhythmus */
+.section--warm {
+  background: var(--paper-warm);
+}
+.section--ink {
+  background: var(--ink);
+  color: var(--paper);
+}
+.section--ink .eyebrow,
+.section--ink .eyebrow__idx {
+  color: var(--oak);
+}
+
+/* Sektionen mit sichtbarem Raster brauchen einen Stacking-Kontext */
+.has-grid {
+  position: relative;
+}
+.has-grid > .wrap,
+.has-grid > * :not(.wp-grid) {
+  position: relative;
+}
+.has-grid > .wrap {
+  z-index: 1;
+}
+
+/* Zeichnungslegende „Abb. 03 — Einbaubibliothek, Kirschbaum · Prenzlauer Berg" */
+.wp-anno {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+.wp-anno__mark {
+  flex: none;
+  align-self: center;
+  width: 1.5rem;
+  height: 1px;
+  background: var(--oak);
+}
+.wp-anno__nr {
+  color: var(--oak);
+  font-weight: 600;
+}
+.section--ink .wp-anno {
+  color: var(--paper-soft);
+}
+
+/* Lead-Satz: erster Satz größer für Hierarchie im Absatz */
+.lead {
+  font-size: 1.25em;
+  line-height: 1.45;
+  color: var(--ink);
+}
+.section--ink .lead {
+  color: var(--paper);
+}
+
+/* Schlüsselbegriffe als Ankerpunkte fürs Auge */
+.key {
+  color: var(--oak);
+  font-weight: 500;
+}
+
+/* v4-Headline-Skalierung: größer, enge Zeilenhöhe */
+.headline--v4 {
+  font-family: var(--font-head);
+  font-weight: 340;
+  font-size: clamp(2.8rem, 6vw, 4.5rem);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+/* Ghost-Button: Oak-Border, Hover Füllung --oak */
+.btn--ghost {
+  background: transparent;
+  color: currentColor;
+  border: 1px solid var(--oak);
+  transition:
+    background 0.25s var(--ease-out),
+    color 0.25s var(--ease-out);
+}
+.btn--ghost:hover {
+  background: var(--oak);
+  color: var(--ink);
 }

@@ -6,10 +6,10 @@ import '../styles/nav.css';
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const LINKS = [
-  { href: `${BASE}/#arbeiten-v3`, label: 'Arbeiten' },
-  { href: `${BASE}/#leistungen-v3`, label: 'Leistungen' },
-  { href: `${BASE}/#werkstatt-v3`, label: 'Werkstatt' },
-  { href: `${BASE}/#kontakt-v3`, label: 'Kontakt' },
+  { href: `${BASE}/#arbeiten-v4`, label: 'Arbeiten' },
+  { href: `${BASE}/#leistungen-v4`, label: 'Leistungen' },
+  { href: `${BASE}/#werkstatt-v4`, label: 'Werkstatt' },
+  { href: `${BASE}/#kontakt-v4`, label: 'Kontakt' },
 ];
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -52,7 +52,7 @@ export default function Nav({ solid = false }: Props) {
   return (
     <header className={`nav ${scrolled ? 'nav--solid' : ''} ${open ? 'nav--open' : ''}`}>
       <div className="nav__inner">
-        <a href={`${BASE}/#top`} className="nav__logo" onClick={close}>
+        <a href={`${BASE}/#hero-v4`} className="nav__logo" onClick={close}>
           <span className="nav__brand">FANDRICH</span>
           <span className="nav__claim">Tischlerei &amp; Möbelrestaurierung, Berlin</span>
         </a>

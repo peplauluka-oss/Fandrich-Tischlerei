@@ -1,0 +1,24 @@
+---
+import GridLines from './GridLines.astro';
+import LeistungenAccordion from './LeistungenAccordion';
+---
+
+<section class="section section--warm has-grid" id="leistungen-v4" aria-label="Leistungen">
+  <GridLines variant="paper" />
+  <div class="wrap">
+    <div class="leist4__head">
+      <p class="eyebrow reveal"><span class="eyebrow__idx">(02)</span>Unsere Leistungen</p>
+      <h2 class="headline--v4 reveal">Wie wir Ihnen helfen.</h2>
+    </div>
+
+    <div class="leist4__list reveal" style="--reveal-delay: 0.05s">
+      <LeistungenAccordion client:visible />
+    </div>
+  </div>
+</section>
+
+<style>
+  .leist4__list {
+    margin-top: clamp(3rem, 7vh, 5rem);
+  }
+</style>

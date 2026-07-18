@@ -1,0 +1,52 @@
+---
+// Werkzeichnungs-Raster: 12 dezente vertikale Hairlines, an der Container-
+// breite (.wrap) ausgerichtet. Nur Desktop (≥1024px), rein dekorativ.
+// variant="ink" für dunkle Sektionen (--paper-Hairlines), sonst --ink-Hairlines.
+interface Props {
+  variant?: 'paper' | 'ink';
+}
+const { variant = 'paper' } = Astro.props;
+---
+
+<div class:list={['wp-grid', { 'wp-grid--ink': variant === 'ink' }]} aria-hidden="true">
+  <div class="wp-grid__inner">
+    {Array.from({ length: 12 }).map(() => <span class="wp-grid__col" />)}
+  </div>
+</div>
+
+<style>
+  .wp-grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    display: none;
+  }
+
+  .wp-grid__inner {
+    width: min(100% - 2 * var(--gutter), 74rem);
+    height: 100%;
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    border-right: 1px solid var(--grid-line);
+  }
+
+  .wp-grid__col {
+    border-left: 1px solid var(--grid-line);
+  }
+
+  .wp-grid--ink .wp-grid__inner {
+    border-right-color: var(--grid-line-ink);
+  }
+  .wp-grid--ink .wp-grid__col {
+    border-left-color: var(--grid-line-ink);
+  }
+
+  /* Raster nur auf Desktop (Anti-Textwand-Regel: mobil aus) */
+  @media (min-width: 1024px) {
+    .wp-grid {
+      display: block;
+    }
+  }
+</style>

@@ -1,0 +1,214 @@
+---
+import { Image } from 'astro:assets';
+import { maxDisplayWidth } from '../data/images';
+import { werkstattVideos, werkstattPoster, werkstattAlt, werkstattCaption } from '../data/werkstattMedia';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const hasVideo = werkstattVideos.length > 0;
+const fakten = ['Meisterbetrieb', 'Eigene Werkstatt', 'Treseburger Straße 30, Pankow'];
+const materialien = ['Eiche', 'Esche', 'Kirschbaum', 'Lärche', 'Schellack', 'Zinken', 'Schlitz und Zapfen', 'Gratleisten'];
+---
+
+<section class="werk4 section--ink" id="werkstatt-v4" aria-label="Werkstatt und Material">
+  <div class="wrap werk4__grid">
+    <div class="werk4__col">
+      <p class="eyebrow reveal"><span class="eyebrow__idx">(04)</span>Werkstatt</p>
+      <h2 class="headline--v4 reveal">Material, das man ernst nimmt.</h2>
+
+      <div class="werk4__text reveal" style="--reveal-delay: 0.05s">
+        <p class="lead">Wir arbeiten mit Massivholz, das wir selbst aussuchen.</p>
+        <p>
+          Eiche, Esche, Kirschbaum — und Furniere, deren Bild wir am Werkstück abstimmen.
+          Verbindungen schneiden wir, wo es das Möbel verlangt, von Hand: Zinken, Schlitz und
+          Zapfen, Gratleisten. Das dauert länger als ein Beschlag aus dem Katalog. Aber es hält
+          länger — und man sieht es jeden Tag.
+        </p>
+      </div>
+
+      <ul class="werk4__fakten reveal" style="--reveal-delay: 0.1s">
+        {fakten.map((f) => <li>{f}</li>)}
+      </ul>
+    </div>
+
+    <figure class="werk4__figure">
+      <div class="photo werk4__frame" style={`max-width:${maxDisplayWidth(werkstattPoster)}px`}>
+        {
+          hasVideo ? (
+            <video class="werk4__video" autoplay muted loop={werkstattVideos.length === 1} playsinline preload="none" poster={werkstattPoster.src}>
+              {werkstattVideos.map((v) => (
+                <Fragment>
+                  {v.webm && <source src={`${base}/${v.webm}`} type="video/webm" />}
+                  {v.mp4 && <source src={`${base}/${v.mp4}`} type="video/mp4" />}
+                </Fragment>
+              ))}
+            </video>
+          ) : (
+            <Image src={werkstattPoster} alt={werkstattAlt} widths={[480, werkstattPoster.width]} sizes="(min-width:900px) 48vw, 92vw" quality={80} />
+          )
+        }
+      </div>
+      <figcaption class="wp-anno">
+        <span class="wp-anno__mark" aria-hidden="true"></span>
+        <span><span class="wp-anno__nr">Abb. 05</span> — {werkstattCaption}</span>
+      </figcaption>
+    </figure>
+  </div>
+
+  <!-- Marquee-Band (Outline) als Übergang -->
+  <div class="werk4__marquee" aria-hidden="true">
+    <div class="werk4__track">
+      {
+        [0, 1].map(() => (
+          <div class="werk4__row">
+            {materialien.map((m) => (
+              <span class="werk4__word">
+                {m}
+                <span class="werk4__sep">·</span>
+              </span>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+  <p class="visually-hidden">Materialien und Verbindungen: {materialien.join(', ')}.</p>
+</section>
+
+<style>
+  .werk4 {
+    overflow: hidden;
+    padding-top: calc(var(--section-gap) + 2.5rem);
+  }
+  .werk4__grid {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: center;
+  }
+  .werk4__text {
+    margin-top: clamp(1.75rem, 4vh, 2.5rem);
+  }
+  .werk4__text .lead {
+    margin-bottom: 1rem;
+  }
+  .werk4__text p:not(.lead) {
+    color: rgba(250, 247, 242, 0.82);
+    max-width: 52ch;
+  }
+  .werk4__fakten {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.1rem;
+    margin-top: clamp(1.75rem, 4vh, 2.5rem);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(250, 247, 242, 0.7);
+  }
+  .werk4__fakten li {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+  }
+  .werk4__fakten li:not(:last-child)::after {
+    content: '';
+    width: 1px;
+    height: 0.9rem;
+    background: var(--oak);
+  }
+
+  .werk4__figure {
+    margin: 0;
+  }
+  .werk4__frame {
+    overflow: hidden;
+    margin-left: auto;
+  }
+  .werk4__frame :global(img),
+  .werk4__video {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .werk4__figure figcaption {
+    margin-top: 1rem;
+    justify-content: flex-end;
+  }
+
+  /* Marquee mit Outline-Typo */
+  .werk4__marquee {
+    margin-top: clamp(3.5rem, 9vh, 6rem);
+    overflow: hidden;
+  }
+  .werk4__track {
+    display: flex;
+    width: max-content;
+    animation: werk4-scroll 40s linear infinite;
+  }
+  .werk4__row {
+    display: flex;
+    flex: none;
+  }
+  .werk4__word {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-head);
+    font-weight: 340;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    letter-spacing: -0.01em;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(250, 247, 242, 0.6);
+    padding-inline: clamp(0.6rem, 1.5vw, 1.4rem);
+  }
+  .werk4__sep {
+    margin-left: clamp(0.8rem, 2vw, 1.8rem);
+    -webkit-text-stroke: 1px var(--oak);
+    color: transparent;
+  }
+  @keyframes werk4-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .werk4__track {
+      animation: none;
+      flex-wrap: wrap;
+      width: auto;
+    }
+    .werk4__row:nth-child(2) {
+      display: none;
+    }
+    .werk4__row {
+      flex-wrap: wrap;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .werk4__grid {
+      grid-template-columns: 1fr;
+    }
+    .werk4__figure {
+      order: -1;
+      margin-bottom: clamp(2rem, 5vh, 3rem);
+    }
+    .werk4__figure figcaption {
+      justify-content: flex-start;
+    }
+  }
+</style>

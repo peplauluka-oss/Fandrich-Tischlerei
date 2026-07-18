@@ -1,0 +1,108 @@
+/* Leistungen v4 — Akkordeon-Editorial (React-Island) */
+.lst4 {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lst4__row {
+  border-top: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+}
+.lst4__row:last-child {
+  border-bottom: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+}
+
+.lst4__head {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(4.5rem, 8rem) 1fr auto;
+  align-items: center;
+  gap: clamp(1rem, 3vw, 3rem);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  padding-block: clamp(1.5rem, 3.5vh, 2.5rem);
+  color: var(--ink);
+  transition: transform 0.25s var(--ease-out);
+}
+
+.lst4__nr {
+  font-family: var(--font-head);
+  font-weight: 340;
+  font-size: clamp(3rem, 7vw, 6rem);
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  color: color-mix(in srgb, var(--ink) 22%, transparent);
+  transition: color 0.3s var(--ease-out);
+}
+
+.lst4__titel {
+  font-family: var(--font-head);
+  font-weight: 340;
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  letter-spacing: -0.03em;
+  line-height: 1.04;
+}
+
+.lst4__toggle {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  color: var(--oak);
+  justify-self: end;
+}
+
+@media (hover: hover) {
+  .lst4__head:hover {
+    transform: translateX(8px);
+  }
+  .lst4__head:hover .lst4__nr {
+    color: var(--oak);
+  }
+}
+.lst4__row.is-open .lst4__nr {
+  color: var(--oak);
+}
+
+.lst4__panel {
+  display: grid;
+  grid-template-columns: minmax(4.5rem, 8rem) 1fr;
+  gap: clamp(1rem, 3vw, 3rem);
+  padding-bottom: clamp(1.75rem, 4vh, 2.75rem);
+}
+.lst4__panel > * {
+  grid-column: 2;
+}
+.lst4__text {
+  color: var(--ink-soft);
+  max-width: 54ch;
+}
+.lst4__tags {
+  margin-top: 1.1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.lst4__dot {
+  color: var(--oak);
+  margin-right: 0.7rem;
+}
+
+@media (max-width: 640px) {
+  .lst4__head {
+    grid-template-columns: 3rem 1fr auto;
+    gap: 1rem;
+  }
+  .lst4__panel {
+    grid-template-columns: 1fr;
+  }
+  .lst4__panel > * {
+    grid-column: 1;
+  }
+}

@@ -4,7 +4,7 @@ import '@fontsource-variable/fraunces';
 import '../styles/global.css';
 import { getImage } from 'astro:assets';
 import { site } from '../data/site';
-import { heroImage } from '../data/images';
+import { galerieImages } from '../data/images';
 
 interface Props {
   title: string;
@@ -15,9 +15,9 @@ interface Props {
 
 const { title, description, noindex = false } = Astro.props;
 
-// OG-Image: Hero-Bild (stärkstes Motiv, zentrale Zuordnung)
+// OG-Image: stärkstes Galerie-Motiv (IMG_2479 wird in v4 nirgends verwendet)
 const ogImage = await getImage({
-  src: heroImage.src,
+  src: galerieImages[0]!.src,
   width: 1200,
   format: 'jpeg',
 });

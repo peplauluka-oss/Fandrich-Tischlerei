@@ -1,14 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav';
-import HeroV3 from '../components/HeroV3.astro';
-import UeberUns from '../components/UeberUns.astro';
-import Leistungen from '../components/Leistungen.astro';
-import ArbeitenV3 from '../components/ArbeitenV3.astro';
-import Werkstatt from '../components/Werkstatt.astro';
-import MaterialIndex from '../components/MaterialIndex.astro';
-import Prozess from '../components/Prozess.astro';
-import Kontakt from '../components/Kontakt.astro';
+import HeroV4 from '../components/HeroV4.astro';
+import UeberUnsV4 from '../components/UeberUnsV4.astro';
+import LeistungenV4 from '../components/LeistungenV4.astro';
+import ArbeitenV4 from '../components/ArbeitenV4.astro';
+import WerkstattV4 from '../components/WerkstattV4.astro';
+import ProzessV4 from '../components/ProzessV4.astro';
+import KontaktV4 from '../components/KontaktV4.astro';
 
 const title = 'Tischlerei Berlin Pankow — Möbel nach Maß & Restaurierung | Fandrich GmbH';
 const description =
@@ -18,13 +17,12 @@ const description =
 <Base title={title} description={description}>
   <Nav client:load />
   <main>
-    <HeroV3 />
-    <UeberUns />
-    <Leistungen />
-    <ArbeitenV3 />
-    <Werkstatt />
-    <MaterialIndex />
-    <Prozess />
-    <Kontakt />
+    <HeroV4 />
+    <UeberUnsV4 />
+    <LeistungenV4 />
+    <ArbeitenV4 />
+    <WerkstattV4 />
+    <ProzessV4 />
+    <KontaktV4 />
   </main>
 </Base>
