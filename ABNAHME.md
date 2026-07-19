@@ -274,3 +274,53 @@ Deckkraft erreicht (vorher blieb der Schlusssatz dauerhaft gedimmt).
 
 **Verifikation:** Build + Bild-Check grün; Screenshot-QA 1440/390 px inkl.
 Hover-Zustand (`qa/ueber-manifest-1440.png`, `qa/ueber-manifest-390.png`).
+
+---
+
+# Korrektur — Über uns v6 „Zwei Werke, ein Anspruch"
+
+**Stand:** 2026-07-19 (Fortsetzung) · Branch `claude/fandrich-ueber-uns-redesign-em36ha`.
+
+**Warum diese Korrektur:** v5 „Das Manifest" hat das Problem verfehlt. Befund
+des Betreibers: ein durchgehender Fließsatz mit glyphgroßen Inline-Bildern
+(~2.3em, faktisch Mini-Thumbnails) und einer kaum wahrnehmbaren
+Wort-für-Wort-Opacity liest sich weiterhin wie ein Fließtext-Dokument, nicht
+wie eine agenturreife, moderne Tischlerei-Seite. Zusätzlich wurde eine
+Zwischenversion versehentlich mit Systemschrift und nochmals verkleinerten
+Bildern ausgeliefert (Hosting-Payload-Kompromiss) — eine echte Verschlechterung
+gegenüber dem bereits gezeigten Stand.
+
+**Technische Realität, die beide Anläufe verkannt hatten:** Beide Fotos
+(IMG_2480, IMG_2470) sind nativ nur 426×640 px → nach Bild-Gesetz G2 hart
+begrenzt auf **284 px Anzeigebreite**. Das lässt sich nicht wegdesignen —
+also nicht kaschieren (glyphgroß verstecken), sondern **bewusst als
+Exponate inszenieren**: Passepartout (Papierton-Mat + weicher Schatten),
+großzügiger Weißraum, echte Bewegung.
+
+**Neues Konzept:** Klare Hierarchie zurück (Headline `.headline--v4` +
+Lead-Satz + zwei kurze Absätze statt eines Manifest-Blocks), Bilder als
+gerahmte Diptychon-Komposition (versetzt, Mat + Schatten, große Oak-Ordnungs-
+zahlen 01/02 statt Mono-„Abb."-Legende). Bewegung, die man tatsächlich sieht:
+
+| Element | Wirkung |
+| --- | --- |
+| Duoton→Farb-Enthüllung (`grayscale(1)` → `--photo-filter`, 1.1s) | Das Foto „kommt in Farbe an" beim Scroll-Eintritt — klar sichtbar, nicht nur Opacity |
+| Curtain-Clip (`clip-path inset`, gestaffelt 0s/0.18s) | zusätzliche Eintritts-Dramatik |
+| Scale 1.1→1 beim Reveal + Hover-Scale 1.045 | Tiefe, taktiles Feedback |
+| Je Bild eigener Parallax-Faktor (`data-drift` 22 / −30) | sichtbarer Versatz beim Scrollen, echte Kontinuität statt Einmal-Trigger |
+| Fortschritts-Spindel zwischen den Spalten (`data-rail axis=y`) | funktional (zeigt Lesefortschritt), zugleich starkes grafisches Element |
+| Keyword-Unterstriche zeichnen sich mit dem Absatz-Reveal ein | Premium-Detail, an bestehendes `.reveal`-System gekoppelt, kein Zusatz-Observer nötig |
+
+**Bewusst entfernt:** die Mono-„Abb. NN"-Legende und der Riesen-Ghost-
+Wasserzeichen („01") dieser Sektion — genau diese Elemente erzeugten den
+„technische Zeichnung/PDF"-Eindruck. Ersetzt durch fette Oak-Ordnungszahlen
+im Bildunterschriften-Stil einer Galerie-Wandbeschriftung.
+
+**initManifest entfernt** (`stage.ts`): totes Coderad, da v6 keine
+Wort-Opacity mehr nutzt.
+
+**Verifikation:** Build + Bild-Check grün (weiterhin 8 Assets à 1×, keine
+Größenüberschreitung). QA-Screenshots 1440 px (Ruhezustand + weiter
+gescrollt, zeigt Parallax-Versatz + gefüllte Spindel) und 390 px mit den
+echten Fonts (Fraunces/Inter) aus dem tatsächlichen Build — keine
+Ersatzschrift, kein verkleinertes Hosting-Artefakt diesmal.

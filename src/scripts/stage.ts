@@ -122,43 +122,6 @@ function initReveals() {
 }
 
 /* ------------------------------------------------------------------ *
- * 4 — Manifest: Wort-für-Wort-Opacity an Scrollprogress (kein Pinning)
- * ------------------------------------------------------------------ */
-function initManifest() {
-  const container = document.querySelector<HTMLElement>('[data-manifest]');
-  if (!container) return;
-  const words = container.querySelectorAll<HTMLElement>('.manifest-word');
-  if (reduced) {
-    words.forEach((w) => (w.style.opacity = '1'));
-    return;
-  }
-
-  let ticking = false;
-  const update = () => {
-    ticking = false;
-    const rect = container.getBoundingClientRect();
-    const vh = window.innerHeight;
-    const progress = Math.min(Math.max((vh * 0.85 - rect.top) / (vh * 0.5), 0), 1);
-    const perWord = 1 / words.length;
-    // Überschuss, damit auch das letzte Wort (Stagger-Fenster 2.5×perWord)
-    // bei progress = 1 volle Deckkraft erreicht.
-    const eff = progress * (1 + 1.5 * perWord);
-    words.forEach((w, i) => {
-      const local = Math.min(Math.max((eff - i * perWord) / (perWord * 2.5), 0), 1);
-      w.style.opacity = String(0.15 + 0.85 * local);
-    });
-  };
-  const onScroll = () => {
-    if (!ticking) {
-      ticking = true;
-      requestAnimationFrame(update);
-    }
-  };
-  window.addEventListener('scroll', onScroll, { passive: true });
-  update();
-}
-
-/* ------------------------------------------------------------------ *
  * 5 — Prozess-Linie füllt sich mit Scrollfortschritt (transform only)
  * ------------------------------------------------------------------ */
 function initProcessLine() {
@@ -470,7 +433,6 @@ function initDrift() {
 function boot() {
   const lenis = initLenis();
   initReveals();
-  initManifest();
   initProcessLine();
   initCursor();
   initToTop(lenis);
