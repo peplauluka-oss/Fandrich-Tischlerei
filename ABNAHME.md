@@ -237,3 +237,40 @@ Fakten/Jahre, **IMG_2479 nirgends** (auch nicht als OG-Bild), kein Framework-Wec
 **Verifikation:** deployt (Actions build+deploy = success, Run #36 `ff78a13`).
 Live-Marker-Bestätigung im Browser durch Betreiber ausstehend
 (`/version.txt` bzw. Footer „Stand: …").
+
+---
+
+# Nachtrag — Über uns v5 „Das Manifest"
+
+**Stand:** 2026-07-19 · Branch `claude/fandrich-ueber-uns-redesign-em36ha`.
+
+**Befund (Betreiber-Feedback):** zu viel Fließtext auf Weiß, Bildplatzierung
+schwach, und das versetzte Plattenpaar doppelte funktional die inzwischen
+vorhandene Referenz-Sektion „Aus der Werkstatt".
+
+**Konzept:** Die Sektion ist kein Zwei-Spalter mehr, sondern eine typografische
+Selbstauskunft — ein großer Fraunces-Satzblock, der sich **Wort für Wort mit dem
+Scroll aufhellt** (reaktiviert `initManifest` aus `stage.ts`, bisher ungenutzt).
+Die beiden Fotos (IMG_2480, IMG_2470) sind als kleine **Inline-Fenster direkt in
+den Satz eingewoben**: Sie falten sich beim Eintritt in den Viewport von Breite 0
+auf (Curtain-Easing, gestaffelt), der Text gleitet auseinander; Hover zoomt das
+Motiv im Fenster. Oak-Schlüsselwörter: „Meistertischlerei", „eigenen Werkstatt",
+„bleiben." (Echo auf den Hero-Claim). Darunter eine Werkplan-Legende mit
+selbstzeichnender Hairline (`initRails`) und den Annotationen Abb. 01/02 sowie
+dem Link zur Werkstatt-Sektion.
+
+| Punkt | Umsetzung | Status |
+| --- | --- | --- |
+| Text-auf-Weiß entschärft | Typo ist das Gestaltungselement; `GridLines` (Werkzeichnungs-Raster) als Textur | ✅ |
+| Bilder mit Text verwoben | Inline-Fenster 2.3em (mobil 2.7em) im Satzfluss, Nummern-Tags 01/02 in Oak | ✅ |
+| Keine Galerie-Doppelung | Plattenpaar entfernt; Referenzen bleiben allein bei „Aus der Werkstatt" | ✅ |
+| Motion | Wort-Aufhellung (Scroll-gelinkt), Auffalten der Fenster (IO, 1s Curtain), Rail-Hairline, Wasserzeichen-Drift | ✅ |
+| Bild-Gesetze | De-Dup-Check grün (8 Assets je 1×); Anzeige ~136px « 284px-Grenze (÷1.5) | ✅ |
+| Reduced Motion / a11y | alle Effekte deaktiviert, Inhalte sofort sichtbar; sichtbare `h2` durch versteckte ersetzt, Alt-Texte erhalten | ✅ |
+
+**Fix in `stage.ts` (initManifest):** Stagger-Überschuss `eff = progress ×
+(1 + 1.5·perWord)`, damit auch das letzte Wort bei `progress = 1` volle
+Deckkraft erreicht (vorher blieb der Schlusssatz dauerhaft gedimmt).
+
+**Verifikation:** Build + Bild-Check grün; Screenshot-QA 1440/390 px inkl.
+Hover-Zustand (`qa/ueber-manifest-1440.png`, `qa/ueber-manifest-390.png`).

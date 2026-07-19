@@ -140,8 +140,11 @@ function initManifest() {
     const vh = window.innerHeight;
     const progress = Math.min(Math.max((vh * 0.85 - rect.top) / (vh * 0.5), 0), 1);
     const perWord = 1 / words.length;
+    // Überschuss, damit auch das letzte Wort (Stagger-Fenster 2.5×perWord)
+    // bei progress = 1 volle Deckkraft erreicht.
+    const eff = progress * (1 + 1.5 * perWord);
     words.forEach((w, i) => {
-      const local = Math.min(Math.max((progress - i * perWord) / (perWord * 2.5), 0), 1);
+      const local = Math.min(Math.max((eff - i * perWord) / (perWord * 2.5), 0), 1);
       w.style.opacity = String(0.15 + 0.85 * local);
     });
   };
