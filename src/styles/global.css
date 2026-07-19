@@ -28,7 +28,7 @@
 
   /* Raum */
   /* Dichte-Gesetz: Sektionsabstand 96–140px, nie mehr. */
-  --section-gap: clamp(6rem, 12vh, 8.5rem);
+  --section-gap: clamp(5rem, 11vh, 8rem);
   --gutter: clamp(1.25rem, 4vw, 4rem);
 
   /* Einheitlicher warmer Look für alle Projektfotos */
@@ -585,4 +585,18 @@ main > .section {
   .scroll-progress {
     display: none;
   }
+}
+
+/* Riesige Outline-Wasserzeichen-Nummern (Werkplan-Tiefe, driften mit Scroll) */
+.wm {
+  position: absolute;
+  z-index: 0;
+  font-family: var(--font-head);
+  font-weight: 340;
+  line-height: 0.8;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(184, 137, 90, 0.3);
+  pointer-events: none;
+  user-select: none;
+  will-change: transform;
 }

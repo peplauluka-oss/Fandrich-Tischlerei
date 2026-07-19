@@ -57,6 +57,14 @@ const schritte = [
     font-size: clamp(1.35rem, 2vw, 1.7rem);
     letter-spacing: -0.02em;
   }
+  .prozess4__card {
+    transition: transform 0.25s var(--ease-out);
+  }
+  @media (hover: hover) {
+    .prozess4__step:hover .prozess4__card {
+      transform: translateY(-4px);
+    }
+  }
   .prozess4__text {
     margin-top: 0.6rem;
     color: var(--ink-soft);

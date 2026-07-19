@@ -6,6 +6,7 @@
 }
 
 .lst4__row {
+  position: relative;
   border-top: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
 }
 .lst4__row:last-child {
@@ -105,4 +106,28 @@
   .lst4__panel > * {
     grid-column: 1;
   }
+}
+
+/* Oak-Sweep: Zeile antwortet auf Hover/Öffnen mit warmer Füllung */
+.lst4__row::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--oak) 12%, transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease-out);
+  pointer-events: none;
+}
+@media (hover: hover) {
+  .lst4__row:hover::before {
+    transform: scaleX(1);
+  }
+}
+.lst4__row.is-open::before {
+  transform: scaleX(1);
+}
+.lst4__head,
+.lst4__panelwrap {
+  position: relative;
 }

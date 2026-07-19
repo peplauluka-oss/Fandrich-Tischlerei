@@ -429,6 +429,39 @@ function initParallax() {
 }
 
 /* ------------------------------------------------------------------ *
+ * 13 — Drift: Elemente wandern mit dem Scroll in eigenem Tempo
+ *      ([data-drift="±px"] → Parallax-Ebenen, transform only)
+ * ------------------------------------------------------------------ */
+function initDrift() {
+  if (reduced) return;
+  const els = [...document.querySelectorAll<HTMLElement>('[data-drift]')];
+  if (!els.length) return;
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const vh = window.innerHeight;
+    for (const el of els) {
+      const rect = el.getBoundingClientRect();
+      if (rect.bottom < -150 || rect.top > vh + 150) continue;
+      const p = (rect.top + rect.height / 2 - vh / 2) / vh; // -0.5..0.5
+      const f = parseFloat(el.dataset.drift || '20');
+      el.style.translate = `0 ${(-p * f).toFixed(1)}px`;
+    }
+  };
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    },
+    { passive: true },
+  );
+  update();
+}
+
+/* ------------------------------------------------------------------ *
  * Boot
  * ------------------------------------------------------------------ */
 function boot() {
@@ -443,6 +476,7 @@ function boot() {
   initHeroExit();
   initRails();
   initParallax();
+  initDrift();
 }
 
 // Kein Preloader: Hero-Choreografie startet sofort beim Laden.

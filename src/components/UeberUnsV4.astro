@@ -6,6 +6,7 @@ const [a, b] = ueberUnsImages; // 2480 Bibliothek, 2470 Fensterbank
 ---
 
 <section class="ueber4 section" id="ueber-uns-v4" aria-label="Über uns">
+  <span class="wm ueber4__wm" aria-hidden="true" data-drift="46">01</span>
   <div class="wrap ueber4__grid">
     <div class="ueber4__text">
       <p class="eyebrow reveal"><span class="eyebrow__idx">(01)</span>Über uns</p>
@@ -16,9 +17,9 @@ const [a, b] = ueberUnsImages; // 2480 Bibliothek, 2470 Fensterbank
       </p>
       <p class="ueber4__body reveal" style="--reveal-delay: 0.1s">
         Vom ersten Aufmaß bis zur Montage entsteht alles in unserer eigenen Werkstatt —
-        Einbaumöbel, Restaurierungen, Innenausbau. Wir arbeiten mit <span class="key">Massivholz</span>
-        und ausgesuchten Furnieren, und dort, wo es das Möbel verlangt, mit
-        <span class="key">handgeschnittenen Verbindungen</span>. Was wir bauen, soll bleiben.
+        Einbaumöbel, Restaurierungen, Innenausbau. Wir arbeiten mit{' '}
+        <span class="key">Massivholz</span>{' '}und ausgesuchten Furnieren, und dort, wo es das
+        Möbel verlangt, mit{' '}<span class="key">handgeschnittenen Verbindungen</span>. Was wir bauen, soll bleiben.
       </p>
 
       <a href="#werkstatt-v4" class="link-line ueber4__more reveal" style="--reveal-delay: 0.15s">
@@ -27,7 +28,7 @@ const [a, b] = ueberUnsImages; // 2480 Bibliothek, 2470 Fensterbank
     </div>
 
     <div class="ueber4__plates">
-      <figure class="ueber4__fig ueber4__fig--a" data-clip>
+      <figure class="ueber4__fig ueber4__fig--a" data-clip data-drift="16">
         <div class="photo ueber4__frame ueber4__frame--a">
           <Image
             src={a.src}
@@ -44,7 +45,7 @@ const [a, b] = ueberUnsImages; // 2480 Bibliothek, 2470 Fensterbank
         </figcaption>
       </figure>
 
-      <figure class="ueber4__fig ueber4__fig--b" data-clip style="--d: 0.12s">
+      <figure class="ueber4__fig ueber4__fig--b" data-clip data-drift="-24" style="--d: 0.12s">
         <div class="photo ueber4__frame ueber4__frame--b">
           <Image
             src={b.src}
@@ -65,6 +66,15 @@ const [a, b] = ueberUnsImages; // 2480 Bibliothek, 2470 Fensterbank
 </section>
 
 <style>
+  .ueber4 {
+    position: relative;
+    overflow: hidden;
+  }
+  .ueber4__wm {
+    top: -0.05em;
+    right: -0.04em;
+    font-size: clamp(11rem, 26vw, 20rem);
+  }
   .ueber4__grid {
     display: grid;
     grid-template-columns: 7fr 5fr;
@@ -77,7 +87,7 @@ const [a, b] = ueberUnsImages; // 2480 Bibliothek, 2470 Fensterbank
   }
   .ueber4__body {
     margin-top: 1rem;
-    color: var(--ink-soft);
+    color: var(--ink);
     max-width: 60ch;
   }
   .ueber4__more {

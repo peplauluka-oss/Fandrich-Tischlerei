@@ -1,0 +1,85 @@
+---
+// Conversion-Band: einziger Oak-Vollflächen-Block der Seite — maximaler
+// Kontrast direkt vor dem Kontakt. Nur verifizierte Angaben (Telefon).
+import { site } from '../data/site';
+---
+
+<section class="ctab" aria-label="Projekt anfragen">
+  <span class="wm ctab__wm" aria-hidden="true" data-drift="36">F</span>
+  <div class="wrap ctab__grid">
+    <h2 class="ctab__title split">Lassen Sie uns über Ihr Projekt sprechen.</h2>
+    <div class="ctab__actions reveal">
+      <a href="#kontakt-v4" class="btn ctab__btn" data-cursor="link">
+        Projekt anfragen <span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <a href={`tel:${site.phoneHref}`} class="ctab__tel" data-cursor="link">
+        oder direkt anrufen: <strong>{site.phone}</strong>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ctab {
+    position: relative;
+    overflow: hidden;
+    background: var(--oak);
+    color: var(--ink);
+    padding-block: clamp(4.5rem, 11vh, 7rem);
+  }
+
+  .ctab__wm {
+    top: 50%;
+    right: -0.05em;
+    transform: translateY(-50%);
+    font-size: clamp(16rem, 42vw, 34rem);
+    -webkit-text-stroke: 1px rgba(43, 37, 35, 0.18);
+  }
+
+  .ctab__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+
+  .ctab__title {
+    font-family: var(--font-head);
+    font-weight: 340;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  .ctab__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .ctab__btn {
+    font-size: 1.05rem;
+    padding: 1.15rem 2rem;
+  }
+
+  .ctab__tel {
+    text-decoration: none;
+    font-size: 1rem;
+    border-bottom: 1px solid rgba(43, 37, 35, 0.4);
+    padding-bottom: 2px;
+    transition: border-color 0.25s var(--ease-out);
+  }
+  .ctab__tel:hover {
+    border-color: var(--ink);
+  }
+
+  @media (max-width: 899px) {
+    .ctab__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

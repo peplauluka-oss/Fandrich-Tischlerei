@@ -1,0 +1,153 @@
+/* Galerie-Showcase: Full-Bleed-Bildfelder + Parallax-Ebenen */
+.shc {
+  overflow: clip;
+}
+
+.shc__panel {
+  position: relative;
+  min-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: hidden;
+  padding: clamp(4rem, 10vh, 7rem) var(--gutter);
+}
+.shc__panel--flip {
+  align-items: flex-end;
+}
+
+/* Unscharfes Bildfeld: kaschiert kleine Originale, füllt die Bühne */
+.shc__bg {
+  position: absolute;
+  inset: -6%;
+  z-index: 0;
+}
+.shc__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(46px) saturate(1.12) brightness(0.62);
+  transform: scale(1.18);
+}
+.shc__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(43, 37, 35, 0.55), rgba(43, 37, 35, 0.25) 45%, rgba(43, 37, 35, 0.6));
+}
+
+/* Riesige Outline-Nummer, wandert gegenläufig */
+.shc__nr {
+  position: absolute;
+  z-index: 1;
+  top: 8%;
+  right: 4%;
+  font-family: var(--font-head);
+  font-weight: 340;
+  font-size: clamp(9rem, 30vw, 24rem);
+  line-height: 0.8;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(250, 247, 242, 0.32);
+  pointer-events: none;
+  user-select: none;
+}
+.shc__panel--flip .shc__nr {
+  right: auto;
+  left: 4%;
+}
+
+/* Scharfes Werk-Bild */
+.shc__fig {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+}
+@media (min-width: 900px) {
+  .shc__panel .shc__fig {
+    margin-inline-start: 7vw;
+  }
+  .shc__panel--flip .shc__fig {
+    margin-inline-start: 0;
+    margin-inline-end: 7vw;
+  }
+}
+.shc__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  box-shadow: 0 32px 80px rgba(20, 15, 12, 0.55);
+}
+
+.shc__cap {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: rgba(250, 247, 242, 0.85);
+  max-width: 44ch;
+}
+.shc__capmark {
+  flex: none;
+  align-self: center;
+  width: 1.5rem;
+  height: 1px;
+  background: var(--oak);
+}
+.shc__capnr {
+  color: var(--paper);
+  font-weight: 600;
+}
+
+/* Zitat-Streifen */
+.shc__quote {
+  background: var(--paper-warm);
+  padding: clamp(4rem, 12vh, 7rem) var(--gutter);
+}
+.shc__quotetext {
+  position: relative;
+  width: min(100%, 26ch);
+  margin-inline: auto;
+  text-align: center;
+  font-family: var(--font-head);
+  font-weight: 340;
+  font-size: clamp(1.9rem, 4.6vw, 3.6rem);
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  color: var(--ink);
+}
+.shc__quotetext::before {
+  content: '\201C';
+  position: absolute;
+  top: -0.62em;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.4em;
+  line-height: 1;
+  color: var(--oak);
+  opacity: 0.65;
+}
+
+.shc__cta {
+  display: flex;
+  justify-content: center;
+  padding: clamp(3rem, 7vh, 5rem) var(--gutter) 0;
+}
+
+@media (max-width: 899px) {
+  .shc__panel {
+    min-height: 76vh;
+    align-items: center;
+  }
+  .shc__panel--flip {
+    align-items: center;
+  }
+  .shc__nr {
+    font-size: clamp(7rem, 34vw, 12rem);
+    top: 5%;
+  }
+}
