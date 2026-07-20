@@ -1,21 +1,21 @@
 ---
 /**
- * Über uns v7 — kuratierte Synthese aus Referenz-Screenshots (Betreiber-
- * Input: moderne Construction-/Möbelhersteller-/Service-Sites). Übernommen
- * NICHT 1:1, sondern gefiltert auf das, was zu Handwerk + unseren echten
- * Bild-/Fakten-Grenzen passt:
- *  - Große, weich gerundete Foto-Karten statt schmalem Passepartout.
- *  - Schwebende Fakten-Tags direkt auf den Fotos (Referenz: "High Quality
- *    Materials"-Badges) — aber nur mit Aussagen, die anderswo auf der Seite
- *    bereits belegt sind (Massivholz, Maßanfertigung), keine erfundenen
- *    Trust-Stats (keine Sterne/Kundenzahlen — die Referenzen zeigen genau
- *    das, aber das Projekt verbietet erfundene Fakten).
- *  - CTA als satter Oak-Button (.btn--oak) statt Outline — Referenzen setzen
- *    durchgehend auf volle Farbflächen, nicht auf Ghost-Buttons.
- *  - Kleine, ehrliche Vertrauens-Chips (Meisterbetrieb, Eigene Werkstatt)
- *    als Pendant zu den Bewertungs-/Kundenzahl-Badges der Referenzen.
- * Layout/Bewegung aus v6 bleibt (Duoton-Enthüllung, Parallax, Fortschritts-
- * Spindel, Keyword-Unterstriche) — das war nicht der Kritikpunkt.
+ * Über uns v13 — kuratiert aus 5 echten Tischler-/Zimmerer-Referenzseiten
+ * (Archi Carpenter, Young & Son Woodworks, Woodworks-Template, Jake Thompson
+ * Woodworks, Zonce Woodworking). Kernbeobachtung über alle fünf hinweg:
+ *  - Durchgehend fette, klare Sans-Serif-Headlines — keine zurückhaltende
+ *    Editorial-Serife. Deshalb hier Inter statt Fraunces/Lora.
+ *  - Keine eingefärbten "Keyword"-Wörter im Fließtext — Farbe wird sparsam
+ *    für Buttons/Karten eingesetzt, nicht zum Hervorheben einzelner Begriffe.
+ *  - „Holz" kommt bei allen fünf ausschließlich aus echter Fotografie (Hero-
+ *    Foto, Material-Nahaufnahme) — NIE aus einer Flächen-Textur hinter Text.
+ *    Genau das hatte den vorherigen Anlauf ruiniert: eine synthetische
+ *    Maserung sieht neben echten Fotos billig aus und untergräbt den
+ *    hochwertigen Eindruck. Hintergrund deshalb wieder schlicht/hell.
+ *  - Kurze Beleg-Fakten als eigenständige, solide Karten (nicht dünne
+ *    Outline-Pins) — Referenz: Archi Carpenters vierteiliges Feature-Grid.
+ * Bild-Seite (Foto-Karten, Fakten-Tags, Duoton-Enthüllung) bleibt
+ * unverändert — die war laut Betreiber bereits gut.
  */
 import { Image } from 'astro:assets';
 import { ueberUnsImages } from '../data/images';
@@ -35,16 +35,15 @@ const fakten = ['Meisterbetrieb', 'Eigene Werkstatt'];
       <h2 class="headline--v4 ueber7__head-alt split">Vom Aufmaß bis zur Montage.</h2>
 
       <p class="ueber7__lead lead reveal" style="--reveal-delay: 0.05s">
-        Wir sind eine <span class="key">Meistertischlerei</span> in Berlin-Pankow.
+        Wir sind eine Meistertischlerei in Berlin-Pankow.
       </p>
       <p class="ueber7__body reveal" style="--reveal-delay: 0.1s">
-        Vom ersten Aufmaß bis zur Montage entsteht jedes Stück in unserer{' '}
-        <span class="key">eigenen Werkstatt</span> — Einbaumöbel, Restaurierungen, Innenausbau.
+        Vom ersten Aufmaß bis zur Montage entsteht jedes Stück in unserer eigenen Werkstatt —
+        Einbaumöbel, Restaurierungen, Innenausbau.
       </p>
       <p class="ueber7__body reveal" style="--reveal-delay: 0.15s">
-        Wir arbeiten mit <span class="key">Massivholz</span> und ausgesuchten Furnieren, und dort,
-        wo es das Möbel verlangt, mit <span class="key">handgeschnittenen Verbindungen</span>. Was
-        wir bauen, soll bleiben.
+        Wir arbeiten mit Massivholz und ausgesuchten Furnieren, und dort, wo es das Möbel
+        verlangt, mit handgeschnittenen Verbindungen. Was wir bauen, soll bleiben.
       </p>
 
       <div class="ueber7__actions reveal" style="--reveal-delay: 0.2s">
@@ -96,17 +95,14 @@ const fakten = ['Meisterbetrieb', 'Eigene Werkstatt'];
 </section>
 
 <style>
-  /* Hölzerner Hintergrund-Akzent: prozedurale Maserung (SVG feTurbulence),
-     diesmal als volldeckende Farbfläche (nicht als sparsame Alpha-Maske) —
-     das Rauschen selbst wird direkt in einen Hell-Kiefer-bis-Tan-Verlauf
-     übersetzt, damit die Maserung tatsächlich sichtbar ist, nicht nur
-     angedeutet. Kein Stockfoto (Projektregel), Referenzfoto als Vorbild
-     für Wellenform/Tonalität. */
+  /* Kein Textur-Hintergrund mehr — keine der fünf Referenzseiten legt Holz
+     als Fläche hinter Text, nur als echtes Foto. Ein synthetisches Muster
+     wirkt neben unseren echten Fotos billig statt hochwertig. Schlichter,
+     warmer Ton bleibt (getestet, für sich genommen nie kritisiert). */
   .ueber7 {
     position: relative;
     overflow: hidden;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='500'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.010 0.045' numOctaves='5' seed='11' stitchTiles='stitch' result='n'/%3E%3CfeColorMatrix in='n' type='matrix' values='-0.183 -0.183 -0.184 0 0.97 -0.207 -0.207 -0.206 0 0.90 -0.227 -0.227 -0.226 0 0.78 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23w)'/%3E%3C/svg%3E");
-    background-size: 500px 500px;
+    background: #f2e6d1;
   }
   .ueber7__grid {
     position: relative;
@@ -143,12 +139,13 @@ const fakten = ['Meisterbetrieb', 'Eigene Werkstatt'];
     }
   }
 
-  /* Test: Lora statt Fraunces (Betreiber empfindet Fraunces als "langweilig",
-     zu editorial/fashion — Lora ist wärmer, ruhiger, weniger kontrastreich) */
+  /* Fette Sans-Headline statt Fraunces/Lora — durchgehendes Muster aller
+     fünf Referenzseiten. Kein neuer Font: Inter (Body) ist schon geladen. */
   .ueber7__head-alt {
-    font-family: 'Lora', var(--font-head);
-    font-weight: 600;
-    letter-spacing: -0.015em;
+    font-family: var(--font-body);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
   }
 
   .ueber7__lead {
@@ -168,26 +165,38 @@ const fakten = ['Meisterbetrieb', 'Eigene Werkstatt'];
     gap: 1.5rem 2rem;
   }
 
-  /* Ehrliche Vertrauens-Chips: kein Fake-Rating, nur belegte Fakten,
-     als leichte Outline-Pills — eine Gewichtsstufe unter dem CTA-Button
-     und den satten Foto-Tags. */
+  /* Ehrliche Fakten-Karten: kein Fake-Rating, nur belegte Aussagen — als
+     solide Karten mit Schatten statt dünner Outline-Pins (Referenz: Archi
+     Carpenters Feature-Grid), damit die Textspalte nicht "leblos" wirkt. */
   .ueber7__fakten {
     list-style: none;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.6rem;
+    gap: 0.7rem;
   }
   .ueber7__fakten li {
-    font-size: 0.74rem;
-    font-weight: 600;
-    letter-spacing: 0.03em;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
     color: var(--ink);
-    border: 1px solid var(--oak-line);
-    border-radius: 999px;
-    padding: 0.4rem 0.9rem;
+    background: var(--paper);
+    border-radius: 0.6rem;
+    padding: 0.6rem 1.05rem;
+    box-shadow:
+      0 1px 2px rgba(43, 37, 35, 0.05),
+      0 10px 18px -12px rgba(43, 37, 35, 0.3);
   }
-
-  /* Keyword-Farbe ohne Unterstrich-Animation — ruhiger, weniger "zeigefingerig" */
+  .ueber7__fakten li::before {
+    content: '';
+    flex: none;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--oak);
+  }
 
   /* Bühne: zwei große, weich gerundete Foto-Karten, versetzt */
   .ueber7__stage {
@@ -312,10 +321,6 @@ const fakten = ['Meisterbetrieb', 'Eigene Werkstatt'];
     .ueber7__tag {
       opacity: 1;
       transform: none;
-      transition: none;
-    }
-    .ueber7__copy .key::after {
-      transform: scaleX(1);
       transition: none;
     }
   }
