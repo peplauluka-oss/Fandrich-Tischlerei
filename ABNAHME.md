@@ -324,3 +324,43 @@ Größenüberschreitung). QA-Screenshots 1440 px (Ruhezustand + weiter
 gescrollt, zeigt Parallax-Versatz + gefüllte Spindel) und 390 px mit den
 echten Fonts (Fraunces/Inter) aus dem tatsächlichen Build — keine
 Ersatzschrift, kein verkleinertes Hosting-Artefakt diesmal.
+
+---
+
+# Über uns v7 — kuratierte Synthese aus Referenz-Screenshots
+
+**Stand:** 2026-07-20 · Branch `claude/fandrich-ueber-uns-redesign-em36ha`.
+
+**Input:** Betreiber lieferte 9 Screenshots moderner Construction-/
+Möbelhersteller-/Service-Websites als Stil-Inspiration (kein 1:1-Nachbau
+verlangt — ausdrücklich als Muster-Fundus zum Filtern gemeint). Umfang
+bewusst auf Über-uns begrenzt: Hero bleibt unverändert (wartet auf
+4–8s-Video-Clip für transparenten Hintergrund lt. Betreiber).
+
+**Übernommen (gefiltert, nicht kopiert):**
+- Große, weich gerundete Foto-Karten (1.75rem Radius) statt schmalem
+  Passepartout.
+- Schwebende Fakten-Tags direkt auf den Fotos, an der unteren Kartenkante
+  überlappend (Referenz-Pattern: Material-/Service-Badges auf dem Bild) —
+  Inhalt ausschließlich bereits belegte Aussagen (Massivholz, Handarbeit,
+  Maßanfertigung), keine neuen Behauptungen.
+- CTA „Mehr über die Werkstatt" von Ghost- auf satten `.btn--oak` umgestellt
+  (Referenzen setzen durchgehend auf volle Farbflächen).
+- Neue Vertrauens-Chip-Reihe (Meisterbetrieb, Eigene Werkstatt) als
+  Outline-Pills — bewusstes Pendant zu den Bewertungs-/Kundenzahl-Badges
+  der Referenzen, aber **ohne erfundene Zahlen/Sterne** (Projektverbot).
+
+**Bewusst nicht übernommen:** Video-Hero, Social-Icon-Rail, Testimonial-
+Karte, Bewertungssterne/Kundenzahlen (nicht verifizierbar).
+
+**Bugfix während QA:** Frame B überlappte bei 1440px die Caption von
+Frame A (Bounding-Box-Kollision zweier absolut positionierter Elemente,
+sichtbar per Screenshot). Behoben durch kürzere Caption (Material steht
+jetzt im Foto-Tag, nicht mehr doppelt) + `max-width`-Sicherheitsabstand.
+
+**Verifikation:** Build grün, QA-Screenshots 1440/390 px (echter Build,
+echte Fonts). Motion (Duoton-Enthüllung, Parallax, Fortschritts-Spindel)
+unverändert aus v6 übernommen.
+
+**Noch nicht gemergt** — liegt auf dem Feature-Branch, Merge nach `main`
+erst nach Freigabe.
