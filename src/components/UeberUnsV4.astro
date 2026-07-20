@@ -205,11 +205,29 @@ const fakten = ['Meisterbetrieb', 'Eigene Werkstatt'];
     z-index: 2;
   }
 
+  /* Hölzerner Rahmenakzent: ein schmales, gestreiftes Maserungs-Mat um
+     das Foto — bewusst nur hier eingesetzt (nicht als Flächentextur, das
+     hat sich als zu unruhig/schmutzig erwiesen), weil ein Bilderrahmen aus
+     Holz für eine Tischlerei der naheliegendste, unaufdringlichste Ort ist. */
   .ueber7__card {
     position: relative;
     display: block;
+    padding: 0.6rem;
     border-radius: 1.75rem;
     overflow: visible;
+    background: repeating-linear-gradient(
+      179deg,
+      #b8895a 0px,
+      #b8895a 3px,
+      #a3754a 3px,
+      #a3754a 5px,
+      #c49a6c 5px,
+      #c49a6c 9px,
+      #8f6540 9px,
+      #8f6540 11px,
+      #b8895a 11px,
+      #b8895a 16px
+    );
     box-shadow:
       0 1px 2px rgba(43, 37, 35, 0.07),
       0 22px 40px -18px rgba(43, 37, 35, 0.34);
@@ -217,7 +235,7 @@ const fakten = ['Meisterbetrieb', 'Eigene Werkstatt'];
   .ueber7__photo {
     display: block;
     overflow: hidden;
-    border-radius: 1.75rem;
+    border-radius: 1.25rem;
     aspect-ratio: 2 / 3;
     background: var(--paper-dim);
   }
