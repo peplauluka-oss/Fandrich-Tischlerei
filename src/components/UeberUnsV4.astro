@@ -96,17 +96,16 @@ const fakten = ['Meisterbetrieb', 'Eigene Werkstatt'];
 </section>
 
 <style>
-  /* Hölzerner Hintergrund-Akzent: prozedurale Maserung (SVG feTurbulence,
-     anisotrop + Alpha-Schwellwert) statt geometrischer Linien — echtes Holz
-     ist unregelmäßig/wellig, keine perfekt wiederkehrenden Streifen. Kein
-     Stockfoto (Projektregel), stattdessen generiert: horizontaler Faserfluss,
-     sparsame Streifen (nur Rausch-Spitzen werden sichtbar), warmer Kiefernton. */
+  /* Hölzerner Hintergrund-Akzent: prozedurale Maserung (SVG feTurbulence),
+     diesmal als volldeckende Farbfläche (nicht als sparsame Alpha-Maske) —
+     das Rauschen selbst wird direkt in einen Hell-Kiefer-bis-Tan-Verlauf
+     übersetzt, damit die Maserung tatsächlich sichtbar ist, nicht nur
+     angedeutet. Kein Stockfoto (Projektregel), Referenzfoto als Vorbild
+     für Wellenform/Tonalität. */
   .ueber7 {
     position: relative;
     overflow: hidden;
-    background:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='500'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.010 0.09' numOctaves='5' seed='11' stitchTiles='stitch' result='n'/%3E%3CfeColorMatrix in='n' type='matrix' values='0 0 0 0 0.47 0 0 0 0 0.33 0 0 0 0 0.19 0.3 0.59 0.11 0 -0.62'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23w)'/%3E%3C/svg%3E"),
-      #f2e6d1;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='500'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.010 0.045' numOctaves='5' seed='11' stitchTiles='stitch' result='n'/%3E%3CfeColorMatrix in='n' type='matrix' values='-0.183 -0.183 -0.184 0 0.97 -0.207 -0.207 -0.206 0 0.90 -0.227 -0.227 -0.226 0 0.78 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23w)'/%3E%3C/svg%3E");
     background-size: 500px 500px;
   }
   .ueber7__grid {
