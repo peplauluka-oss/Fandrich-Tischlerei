@@ -23,11 +23,25 @@ import { ueberUnsImages } from '../data/images';
 
 const [bib, bank] = ueberUnsImages; // 2480 Bibliothek, 2470 Fensterbank
 
-const features = [
-  { t: 'Meisterbetrieb', d: 'Geführt von einem Tischlermeister.' },
-  { t: 'Eigene Werkstatt', d: 'Vom Aufmaß bis zur Montage aus einer Hand.' },
-  { t: 'Massivholz & Furniere', d: 'Materialien, die wir selbst aussuchen.' },
-  { t: 'Handarbeit', d: 'Verbindungen, wo nötig von Hand geschnitten.' },
+// Vier Grundwerte — komprimiert aus der Firmenphilosophie (16 Punkte → 4
+// Kacheln), je ein prägnanter Satz für das Kachel-Format.
+const werte = [
+  {
+    t: 'Kompromisslose Qualität',
+    d: 'Präzision und Sorgfalt in jedem Detail — ausgeführt, als schaute uns ein Meister über die Schulter.',
+  },
+  {
+    t: 'Ehrliche Verbindlichkeit',
+    d: 'Ein Wort ist ein Wort. Wir versprechen nur, was wir halten — pünktlich und zuverlässig, bei jedem Auftrag.',
+  },
+  {
+    t: 'Beratung & fairer Wert',
+    d: 'Nicht die Billigsten, sondern die Besten: transparente Preise, ehrliche Beratung, ein Ergebnis, das seinen Wert behält.',
+  },
+  {
+    t: 'Respekt & Fortschritt',
+    d: 'Wir begegnen jedem mit Respekt, fokussieren uns auf Lösungen und lassen unsere Arbeit für uns sprechen.',
+  },
 ];
 ---
 
@@ -92,12 +106,23 @@ const features = [
       </div>
     </div>
 
+    <div class="ueber8__philo">
+      <p class="eyebrow reveal">Unsere Philosophie</p>
+      <h3 class="ueber8__philo-t reveal" style="--reveal-delay: 0.05s">
+        Der Kreislauf guter Arbeit
+      </h3>
+      <p class="ueber8__philo-lead reveal" style="--reveal-delay: 0.1s">
+        Dienstleistung ist ein Kreislauf: Wer heute leistet, ist morgen selbst Kunde. Unser Antrieb
+        ist es, diesen Kreislauf zu perfektionieren — mit absoluter Zufriedenheit auf beiden Seiten.
+      </p>
+    </div>
+
     <ul class="ueber8__features">
       {
-        features.map((f, i) => (
+        werte.map((f, i) => (
           <li class="ueber8__feature reveal" style={`--reveal-delay: ${0.05 + i * 0.07}s`}>
             <span class="ueber8__feature-mark" aria-hidden="true" />
-            <h3 class="ueber8__feature-t">{f.t}</h3>
+            <h4 class="ueber8__feature-t">{f.t}</h4>
             <p class="ueber8__feature-d">{f.d}</p>
           </li>
         ))
@@ -286,10 +311,37 @@ const features = [
     margin-top: 1.9rem;
   }
 
-  /* Feature-Karten-Reihe (Referenz: Archis 4er-Grid) */
+  /* Philosophie-Vorspann — zentriert (Rhythmuswechsel wie die zentrierten
+     Section-Header des Templates „Our Services / Our Projects"). */
+  .ueber8__philo {
+    margin-top: clamp(3rem, 7vw, 5rem);
+    text-align: center;
+    max-width: 62ch;
+    margin-inline: auto;
+  }
+  .ueber8__philo .eyebrow {
+    margin-bottom: 0.9rem;
+  }
+  .ueber8__philo-t {
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: clamp(1.65rem, 3.2vw, 2.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.022em;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .ueber8__philo-lead {
+    margin: 1.1rem auto 0;
+    font-size: clamp(1.02rem, 1.4vw, 1.15rem);
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+
+  /* Werte-Karten-Reihe (Referenz: Archis 4er-Grid) */
   .ueber8__features {
     list-style: none;
-    margin-top: clamp(1.5rem, 3vw, 2.25rem);
+    margin-top: clamp(1.75rem, 3.5vw, 2.75rem);
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: clamp(0.75rem, 1.5vw, 1.1rem);
