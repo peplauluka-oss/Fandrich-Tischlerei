@@ -32,7 +32,7 @@ const fakten = ['Meisterbetrieb', 'Eigene Werkstatt'];
 
     <div class="ueber7__copy">
       <p class="eyebrow reveal"><span class="eyebrow__idx">(01)</span>Über uns</p>
-      <h2 class="headline--v4 split">Vom Aufmaß bis zur Montage.</h2>
+      <h2 class="headline--v4 ueber7__head-alt split">Vom Aufmaß bis zur Montage.</h2>
 
       <p class="ueber7__lead lead reveal" style="--reveal-delay: 0.05s">
         Wir sind eine <span class="key">Meistertischlerei</span> in Berlin-Pankow.
@@ -99,6 +99,7 @@ const fakten = ['Meisterbetrieb', 'Eigene Werkstatt'];
   .ueber7 {
     position: relative;
     overflow: hidden;
+    background: #f2e6d1;
   }
   .ueber7__grid {
     position: relative;
@@ -133,6 +134,14 @@ const fakten = ['Meisterbetrieb', 'Eigene Werkstatt'];
     .ueber7__spine {
       display: block;
     }
+  }
+
+  /* Test: Lora statt Fraunces (Betreiber empfindet Fraunces als "langweilig",
+     zu editorial/fashion — Lora ist wärmer, ruhiger, weniger kontrastreich) */
+  .ueber7__head-alt {
+    font-family: 'Lora', var(--font-head);
+    font-weight: 600;
+    letter-spacing: -0.015em;
   }
 
   .ueber7__lead {
@@ -171,27 +180,7 @@ const fakten = ['Meisterbetrieb', 'Eigene Werkstatt'];
     padding: 0.4rem 0.9rem;
   }
 
-  /* Keyword-Unterstriche zeichnen sich mit dem Absatz-Reveal ein —
-     an .reveal.is-visible gekoppelt, keine eigene Beobachtung nötig. */
-  .ueber7__copy .key {
-    position: relative;
-  }
-  .ueber7__copy .key::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -0.05em;
-    height: 1px;
-    background: var(--oak);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.7s var(--ease-out);
-    transition-delay: 0.35s;
-  }
-  .ueber7__copy .reveal.is-visible .key::after {
-    transform: scaleX(1);
-  }
+  /* Keyword-Farbe ohne Unterstrich-Animation — ruhiger, weniger "zeigefingerig" */
 
   /* Bühne: zwei große, weich gerundete Foto-Karten, versetzt */
   .ueber7__stage {
