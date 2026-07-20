@@ -364,3 +364,37 @@ unverändert aus v6 übernommen.
 
 **Noch nicht gemergt** — liegt auf dem Feature-Branch, Merge nach `main`
 erst nach Freigabe.
+
+---
+
+# Über uns v14 — Umbau nach Archi-Carpenter-Template
+
+**Stand:** 2026-07-20 · Branch `claude/fandrich-ueber-uns-redesign-em36ha`.
+
+**Feedback:** Der bisherige Aufbau war strukturell tot; Betreiber wünscht
+Umsetzung im Stil des Archi-Carpenter-Templates (echte Tischler-Referenz):
+dunkles Holz-Band, klare Foto-Komposition, Feature-Karten, kräftiger
+Kontrast, „das Maximum aus der Conversion".
+
+**Umgesetzt (aus dem Template extrahiert, nicht 1:1 kopiert):**
+- Kopf hell: Eyebrow + fette Sans-Headline (Inter 800, Template-Duktus).
+- **Dunkles Walnuss-Panel** als Herzstück (Referenz: „Custom Woodwork"-Band):
+  prozedurale Maserung bei DUNKLEM Ton — dort wirkt Holz premium, die hellen
+  Kiefer-Versuche (v10–v12) zeigten jeden Fehler und wurden verworfen.
+  Dielenfugen + weiches Oberlicht für Tiefe. Kein Stockfoto (Projektregel).
+- Foto-Diptychon links (beide ueber-uns-Fotos, de-dup-konform je 1×) +
+  Fließtext/CTA rechts (hell auf dunkel).
+- Ehrlicher „Meisterbetrieb"-Badge, überlappt das Foto unten links (Pendant
+  zum „20 Years"-Badge — ohne erfundenes Gründungsjahr).
+- **Feature-Karten-Reihe** (Referenz: Archis 4er-Grid) mit belegten Fandrich-
+  Fakten: Meisterbetrieb · Eigene Werkstatt · Massivholz & Furniere · Handarbeit.
+
+**Verworfen aus v7–v13:** Fraunces/Lora-Headline, Keyword-Einfärbung, helle
+Textur-Flächen, dünne Outline-Chips.
+
+**Motion:** .reveal/.split, Duoton→Farb-Enthüllung + Curtain-Clip pro Foto,
+Badge-Pop, Karten-Stagger, data-drift-Parallax. Reduced-Motion vollständig
+abgefangen (verifiziert).
+
+**Verifiziert:** Build + Bild-Check grün, Screenshots 1440/390 + reduced-motion.
+Noch nicht gemergt — Merge nach `main` erst nach Freigabe.

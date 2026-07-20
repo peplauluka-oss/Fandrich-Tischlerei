@@ -1,324 +1,340 @@
 ---
 /**
- * Über uns v13 — kuratiert aus 5 echten Tischler-/Zimmerer-Referenzseiten
- * (Archi Carpenter, Young & Son Woodworks, Woodworks-Template, Jake Thompson
- * Woodworks, Zonce Woodworking). Kernbeobachtung über alle fünf hinweg:
- *  - Durchgehend fette, klare Sans-Serif-Headlines — keine zurückhaltende
- *    Editorial-Serife. Deshalb hier Inter statt Fraunces/Lora.
- *  - Keine eingefärbten "Keyword"-Wörter im Fließtext — Farbe wird sparsam
- *    für Buttons/Karten eingesetzt, nicht zum Hervorheben einzelner Begriffe.
- *  - „Holz" kommt bei allen fünf ausschließlich aus echter Fotografie (Hero-
- *    Foto, Material-Nahaufnahme) — NIE aus einer Flächen-Textur hinter Text.
- *    Genau das hatte den vorherigen Anlauf ruiniert: eine synthetische
- *    Maserung sieht neben echten Fotos billig aus und untergräbt den
- *    hochwertigen Eindruck. Hintergrund deshalb wieder schlicht/hell.
- *  - Kurze Beleg-Fakten als eigenständige, solide Karten (nicht dünne
- *    Outline-Pins) — Referenz: Archi Carpenters vierteiliges Feature-Grid.
- * Bild-Seite (Foto-Karten, Fakten-Tags, Duoton-Enthüllung) bleibt
- * unverändert — die war laut Betreiber bereits gut.
+ * Über uns v14 — Umbau nach dem Archi-Carpenter-Referenztemplate.
+ * Kernidee: der frühere „Text-auf-Weiß"-Aufbau war strukturell tot. Das
+ * Template lebt von einem dunklen Holz-Band mit hohem Kontrast, klarer
+ * Foto-Komposition und einer Feature-Karten-Reihe. Übertragen auf Fandrich:
+ *
+ *  1) Kopf hell: Eyebrow + fette Sans-Headline (Inter 800, wie im Template).
+ *  2) Dunkles Walnuss-Panel (prozedurale Maserung bei DUNKLEM Ton — dort
+ *     wirkt Holz premium; die hellen Kiefer-Versuche zeigten jeden Fehler):
+ *     Foto-Diptychon links + Fließtext/CTA rechts, dazu ein ehrlicher
+ *     „Meisterbetrieb"-Badge, der über das Foto ragt (Pendant zum
+ *     „20 Years"-Badge — ohne erfundenes Gründungsjahr).
+ *  3) Feature-Karten-Reihe (Referenz: Archis 4er-Grid) — nur belegte
+ *     Fandrich-Fakten, keine erfundenen Trust-Stats.
+ *
+ * De-Dup-Gesetz gewahrt: beide ueber-uns-Fotos (2480, 2470) werden je 1×
+ * verwendet. Bewegung über bestehende Utilities: .reveal, .split, data-drift,
+ * plus lokaler IO für die Duoton→Farb-Enthüllung.
  */
 import { Image } from 'astro:assets';
 import { ueberUnsImages } from '../data/images';
 
 const [bib, bank] = ueberUnsImages; // 2480 Bibliothek, 2470 Fensterbank
-const fakten = ['Meisterbetrieb', 'Eigene Werkstatt'];
+
+const features = [
+  { t: 'Meisterbetrieb', d: 'Geführt von einem Tischlermeister.' },
+  { t: 'Eigene Werkstatt', d: 'Vom Aufmaß bis zur Montage aus einer Hand.' },
+  { t: 'Massivholz & Furniere', d: 'Materialien, die wir selbst aussuchen.' },
+  { t: 'Handarbeit', d: 'Verbindungen, wo nötig von Hand geschnitten.' },
+];
 ---
 
-<section class="ueber7 section" id="ueber-uns-v4" aria-label="Über uns">
-  <div class="wrap ueber7__grid">
-    <span class="ueber7__spine" aria-hidden="true" data-rail data-axis="y">
-      <span class="ueber7__spinefill" data-rail-fill></span>
-    </span>
-
-    <div class="ueber7__copy">
+<section class="ueber8 section" id="ueber-uns-v4" aria-label="Über uns">
+  <div class="wrap">
+    <header class="ueber8__head">
       <p class="eyebrow reveal"><span class="eyebrow__idx">(01)</span>Über uns</p>
-      <h2 class="headline--v4 ueber7__head-alt split">Vom Aufmaß bis zur Montage.</h2>
+      <h2 class="ueber8__title split">Vom Aufmaß bis zur Montage.</h2>
+    </header>
 
-      <p class="ueber7__lead lead reveal" style="--reveal-delay: 0.05s">
-        Wir sind eine Meistertischlerei in Berlin-Pankow.
-      </p>
-      <p class="ueber7__body reveal" style="--reveal-delay: 0.1s">
-        Vom ersten Aufmaß bis zur Montage entsteht jedes Stück in unserer eigenen Werkstatt —
-        Einbaumöbel, Restaurierungen, Innenausbau.
-      </p>
-      <p class="ueber7__body reveal" style="--reveal-delay: 0.15s">
-        Wir arbeiten mit Massivholz und ausgesuchten Furnieren, und dort, wo es das Möbel
-        verlangt, mit handgeschnittenen Verbindungen. Was wir bauen, soll bleiben.
-      </p>
+    <div class="ueber8__panel reveal">
+      <div class="ueber8__stage">
+        <figure class="ueber8__frame ueber8__frame--a" data-reveal data-drift="18">
+          <div class="ueber8__card">
+            <span class="ueber8__photo photo">
+              <Image
+                src={bib.src}
+                alt={bib.alt}
+                widths={[284, bib.src.width]}
+                sizes="(min-width: 900px) 17rem, 58vw"
+                loading="lazy"
+                quality={80}
+              />
+            </span>
+          </div>
+          <figcaption class="ueber8__loc">Einbaubibliothek — Prenzlauer Berg</figcaption>
+        </figure>
 
-      <div class="ueber7__actions reveal" style="--reveal-delay: 0.2s">
-        <a href="#werkstatt-v4" class="btn btn--oak ueber7__cta" data-cursor="link">
+        <figure class="ueber8__frame ueber8__frame--b" data-reveal style="--rd: 0.16s" data-drift="-26">
+          <div class="ueber8__card">
+            <span class="ueber8__photo photo">
+              <Image
+                src={bank.src}
+                alt={bank.alt}
+                widths={[240, bank.src.width]}
+                sizes="(min-width: 900px) 13rem, 44vw"
+                loading="lazy"
+                quality={80}
+              />
+            </span>
+          </div>
+          <figcaption class="ueber8__loc">Fensterbank mit Stauraum — Pankow</figcaption>
+        </figure>
+
+        <span class="ueber8__badge" data-reveal style="--rd: 0.35s">
+          <strong>Meister&shy;betrieb</strong>
+          <span>Tischlerei · Pankow</span>
+        </span>
+      </div>
+
+      <div class="ueber8__text">
+        <p class="ueber8__lead">Wir sind eine Meistertischlerei in Berlin-Pankow.</p>
+        <p class="ueber8__body">
+          Vom ersten Aufmaß bis zur Montage entsteht jedes Stück in unserer eigenen Werkstatt —
+          Einbaumöbel, Restaurierungen, Innenausbau. Wir arbeiten mit Massivholz und ausgesuchten
+          Furnieren, und dort, wo es das Möbel verlangt, mit handgeschnittenen Verbindungen.
+        </p>
+        <p class="ueber8__body ueber8__body--motto">Was wir bauen, soll bleiben.</p>
+        <a href="#werkstatt-v4" class="btn btn--oak ueber8__cta" data-cursor="link">
           Mehr über die Werkstatt <span class="arrow" aria-hidden="true">→</span>
         </a>
-        <ul class="ueber7__fakten">
-          {fakten.map((f) => <li>{f}</li>)}
-        </ul>
       </div>
     </div>
 
-    <div class="ueber7__stage">
-      <figure class="ueber7__frame ueber7__frame--a" data-reveal data-drift="22">
-        <div class="ueber7__card">
-          <span class="ueber7__photo photo">
-            <Image
-              src={bib.src}
-              alt={bib.alt}
-              widths={[284, bib.src.width]}
-              sizes="(min-width: 900px) 17rem, 58vw"
-              loading="eager"
-              quality={80}
-            />
-          </span>
-          <span class="ueber7__tag">Massivholz · Handarbeit</span>
-        </div>
-        <figcaption class="ueber7__loc">Einbaubibliothek — Prenzlauer Berg</figcaption>
-      </figure>
-
-      <figure class="ueber7__frame ueber7__frame--b" data-reveal style="--rd: 0.18s" data-drift="-30">
-        <div class="ueber7__card">
-          <span class="ueber7__photo photo">
-            <Image
-              src={bank.src}
-              alt={bank.alt}
-              widths={[240, bank.src.width]}
-              sizes="(min-width: 900px) 13rem, 44vw"
-              loading="eager"
-              quality={80}
-            />
-          </span>
-          <span class="ueber7__tag">Maßanfertigung</span>
-        </div>
-        <figcaption class="ueber7__loc">Fensterbank mit Stauraum — Pankow</figcaption>
-      </figure>
-    </div>
+    <ul class="ueber8__features">
+      {
+        features.map((f, i) => (
+          <li class="ueber8__feature reveal" style={`--reveal-delay: ${0.05 + i * 0.07}s`}>
+            <span class="ueber8__feature-mark" aria-hidden="true" />
+            <h3 class="ueber8__feature-t">{f.t}</h3>
+            <p class="ueber8__feature-d">{f.d}</p>
+          </li>
+        ))
+      }
+    </ul>
   </div>
 </section>
 
 <style>
-  /* Kein Textur-Hintergrund mehr — keine der fünf Referenzseiten legt Holz
-     als Fläche hinter Text, nur als echtes Foto. Ein synthetisches Muster
-     wirkt neben unseren echten Fotos billig statt hochwertig. Schlichter,
-     warmer Ton bleibt (getestet, für sich genommen nie kritisiert). */
-  .ueber7 {
+  .ueber8 {
     position: relative;
-    overflow: hidden;
     background: #f2e6d1;
   }
-  .ueber7__grid {
-    position: relative;
-    display: grid;
-    grid-template-columns: 6fr 6fr;
-    gap: clamp(2.5rem, 6vw, 5rem);
-    align-items: center;
-  }
 
-  /* Fortschritts-Spindel zwischen den Spalten — funktional (zeigt
-     Lesefortschritt der Sektion), nicht bloß Dekor. Nur Desktop. */
-  .ueber7__spine {
-    display: none;
-    position: absolute;
-    top: 0.3em;
-    bottom: 0.3em;
-    left: 50%;
-    width: 2px;
-    background: var(--oak-line);
-    transform: translateX(-50%);
-    overflow: hidden;
-    border-radius: 1px;
+  /* Kopf: fette Sans-Headline (Template-Duktus) */
+  .ueber8__head {
+    max-width: 40ch;
   }
-  .ueber7__spinefill {
-    position: absolute;
-    inset: 0;
-    background: var(--oak);
-    transform: scaleY(0);
-    transform-origin: top;
-  }
-  @media (min-width: 900px) {
-    .ueber7__spine {
-      display: block;
-    }
-  }
-
-  /* Fette Sans-Headline statt Fraunces/Lora — durchgehendes Muster aller
-     fünf Referenzseiten. Kein neuer Font: Inter (Body) ist schon geladen. */
-  .ueber7__head-alt {
+  .ueber8__title {
+    margin-top: 0.5rem;
     font-family: var(--font-body);
     font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1.05;
-  }
-
-  .ueber7__lead {
-    margin-top: clamp(1.75rem, 4vh, 2.5rem);
-  }
-  .ueber7__body {
-    margin-top: 1.1rem;
+    font-size: clamp(2.4rem, 5.5vw, 4rem);
+    line-height: 1.04;
+    letter-spacing: -0.025em;
     color: var(--ink);
-    max-width: 46ch;
+    text-wrap: balance;
   }
 
-  .ueber7__actions {
-    margin-top: 2.25rem;
-    display: flex;
-    flex-wrap: wrap;
+  /* Dunkles Walnuss-Panel — das Holz-Band des Templates. Maserung
+     prozedural bei dunklem Ton (dort premium), plus dezente Dielenfugen
+     und ein weiches Oberlicht für Tiefe. Kein Stockfoto. */
+  .ueber8__panel {
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    border-radius: clamp(1.25rem, 2.5vw, 2rem);
+    overflow: hidden;
+    padding: clamp(1.75rem, 4vw, 3.5rem);
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: clamp(2rem, 5vw, 4.5rem);
     align-items: center;
-    gap: 1.5rem 2rem;
-  }
-
-  /* Ehrliche Fakten-Karten: kein Fake-Rating, nur belegte Aussagen — als
-     solide Karten mit Schatten statt dünner Outline-Pins (Referenz: Archi
-     Carpenters Feature-Grid), damit die Textspalte nicht "leblos" wirkt. */
-  .ueber7__fakten {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.7rem;
-  }
-  .ueber7__fakten li {
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    color: var(--ink);
-    background: var(--paper);
-    border-radius: 0.6rem;
-    padding: 0.6rem 1.05rem;
+    color: var(--paper);
+    background-color: #33241a;
+    background-image:
+      radial-gradient(135% 90% at 22% -12%, rgba(255, 226, 190, 0.14), transparent 55%),
+      repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.2) 0 1px, transparent 1px 90px),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.05' numOctaves='5' seed='11' stitchTiles='stitch' result='n'/%3E%3CfeColorMatrix in='n' type='matrix' values='-0.05 -0.05 -0.05 0 0.28 -0.03 -0.03 -0.03 0 0.18 -0.017 -0.017 -0.017 0 0.11 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23w)'/%3E%3C/svg%3E");
+    background-size:
+      cover,
+      auto,
+      400px 400px;
     box-shadow:
-      0 1px 2px rgba(43, 37, 35, 0.05),
-      0 10px 18px -12px rgba(43, 37, 35, 0.3);
-  }
-  .ueber7__fakten li::before {
-    content: '';
-    flex: none;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--oak);
+      0 1px 2px rgba(43, 37, 35, 0.1),
+      0 40px 70px -30px rgba(43, 37, 35, 0.55);
   }
 
-  /* Bühne: zwei große, weich gerundete Foto-Karten, versetzt */
-  .ueber7__stage {
+  /* Foto-Diptychon im Panel */
+  .ueber8__stage {
     position: relative;
-    min-height: clamp(21rem, 35vw, 27rem);
+    min-height: clamp(20rem, 32vw, 25rem);
   }
-  .ueber7__frame {
+  .ueber8__frame {
     position: absolute;
     margin: 0;
   }
-  .ueber7__frame--a {
+  .ueber8__frame--a {
     top: 0;
-    left: clamp(0px, 4vw, 2rem);
-    width: min(19rem, 62%);
+    left: 0;
+    width: min(17rem, 60%);
     z-index: 1;
   }
-  .ueber7__frame--b {
-    top: clamp(6.5rem, 16vw, 9.5rem);
+  .ueber8__frame--b {
+    top: clamp(5.5rem, 14vw, 8.5rem);
     right: 0;
-    left: auto;
-    width: min(15rem, 50%);
+    width: min(13rem, 46%);
     z-index: 2;
   }
-
-  .ueber7__card {
-    position: relative;
-    display: block;
-    border-radius: 1.75rem;
-    overflow: visible;
-    box-shadow:
-      0 1px 2px rgba(43, 37, 35, 0.07),
-      0 22px 40px -18px rgba(43, 37, 35, 0.34);
+  .ueber8__card {
+    border-radius: 1.4rem;
+    overflow: hidden;
+    box-shadow: 0 24px 44px -20px rgba(0, 0, 0, 0.6);
   }
-  .ueber7__photo {
+  .ueber8__photo {
     display: block;
     overflow: hidden;
-    border-radius: 1.75rem;
     aspect-ratio: 2 / 3;
-    background: var(--paper-dim);
+    background: #2a1d14;
   }
-  .ueber7__frame--a .ueber7__photo {
+  .ueber8__frame--a .ueber8__photo {
     aspect-ratio: 213 / 320;
   }
-  .ueber7__photo :global(img) {
+  .ueber8__photo :global(img) {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* Basiszustand vor der Enthüllung: entsättigt — die Farb-Ankunft ist
-       die eigentliche Bewegung, nicht nur ein Fade. */
-    filter: grayscale(1) contrast(1.08) brightness(0.9);
-    transform: scale(1.1);
+    filter: grayscale(1) contrast(1.05) brightness(0.85);
+    transform: scale(1.12);
     transition:
       filter 1.1s var(--ease-out),
       transform 1.4s var(--ease-curtain);
     transition-delay: var(--rd, 0s);
   }
-  .ueber7__frame[data-reveal].is-in .ueber7__photo :global(img) {
+  .ueber8__frame[data-reveal].is-in .ueber8__photo :global(img) {
     filter: var(--photo-filter);
     transform: scale(1);
   }
-
-  /* Curtain-Clip zusätzlich zur Duoton-Ankunft */
-  .ueber7__frame[data-reveal] .ueber7__photo {
+  .ueber8__frame[data-reveal] .ueber8__card {
     clip-path: inset(0 0 100% 0);
     transition: clip-path 0.9s var(--ease-curtain);
     transition-delay: var(--rd, 0s);
   }
-  .ueber7__frame[data-reveal].is-in .ueber7__photo {
+  .ueber8__frame[data-reveal].is-in .ueber8__card {
     clip-path: inset(0 0 0 0);
   }
-
-  .ueber7__frame:hover .ueber7__photo :global(img) {
-    transform: scale(1.045);
+  .ueber8__frame:hover .ueber8__photo :global(img) {
+    transform: scale(1.05);
+  }
+  .ueber8__loc {
+    margin-top: 0.8rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    color: rgba(250, 247, 242, 0.62);
   }
 
-  /* Schwebender Fakten-Tag, überlappt die untere Kartenkante — Referenz:
-     Material-/Service-Badges direkt auf dem Foto statt stiller Caption. */
-  .ueber7__tag {
+  /* Ehrlicher Badge (Pendant zum „20 Years"-Badge), ragt über das Foto */
+  .ueber8__badge {
     position: absolute;
-    left: 0.9rem;
-    bottom: -0.85rem;
-    z-index: 1;
-    background: var(--oak);
+    left: -0.6rem;
+    top: auto;
+    bottom: clamp(3.5rem, 8vw, 5.5rem);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    background: var(--paper);
     color: var(--ink);
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    white-space: nowrap;
-    border-radius: 999px;
-    padding: 0.5rem 1rem;
-    box-shadow: 0 10px 18px -8px rgba(43, 37, 35, 0.45);
+    padding: 0.85rem 1.15rem;
+    border-radius: 0.9rem;
+    box-shadow: 0 18px 34px -14px rgba(0, 0, 0, 0.55);
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(8px) scale(0.96);
     transition:
       opacity 0.6s var(--ease-out),
       transform 0.6s var(--ease-out);
-    transition-delay: calc(var(--rd, 0s) + 0.55s);
+    transition-delay: var(--rd, 0s);
   }
-  .ueber7__frame[data-reveal].is-in .ueber7__tag {
+  .ueber8__badge.is-in {
     opacity: 1;
     transform: none;
   }
+  .ueber8__badge strong {
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    hyphens: manual;
+  }
+  .ueber8__badge span {
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--oak);
+    font-weight: 600;
+  }
 
-  .ueber7__loc {
-    margin-top: 1.4rem;
-    max-width: 14rem;
-    font-size: 0.76rem;
-    letter-spacing: 0.02em;
+  /* Textseite im Panel (hell auf dunkel) */
+  .ueber8__lead {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+    line-height: 1.35;
+    color: var(--paper);
+    max-width: 30ch;
+  }
+  .ueber8__body {
+    margin-top: 1.1rem;
+    color: rgba(250, 247, 242, 0.8);
+    max-width: 44ch;
+  }
+  .ueber8__body--motto {
+    color: var(--oak);
+    font-weight: 500;
+  }
+  .ueber8__cta {
+    margin-top: 1.9rem;
+  }
+
+  /* Feature-Karten-Reihe (Referenz: Archis 4er-Grid) */
+  .ueber8__features {
+    list-style: none;
+    margin-top: clamp(1.5rem, 3vw, 2.25rem);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(0.75rem, 1.5vw, 1.1rem);
+  }
+  .ueber8__feature {
+    background: var(--paper);
+    border-radius: 1rem;
+    padding: clamp(1.1rem, 2vw, 1.6rem);
+    box-shadow:
+      0 1px 2px rgba(43, 37, 35, 0.05),
+      0 14px 26px -18px rgba(43, 37, 35, 0.35);
+  }
+  .ueber8__feature-mark {
+    display: block;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 0.45rem;
+    background: var(--oak);
+    margin-bottom: 0.9rem;
+  }
+  .ueber8__feature-t {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .ueber8__feature-d {
+    margin-top: 0.35rem;
+    font-size: 0.82rem;
+    line-height: 1.45;
     color: var(--ink-soft);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .ueber7__photo :global(img) {
+    .ueber8__photo :global(img) {
       filter: var(--photo-filter);
       transform: none;
       transition: none;
     }
-    .ueber7__frame[data-reveal] .ueber7__photo {
+    .ueber8__frame[data-reveal] .ueber8__card {
       clip-path: none;
       transition: none;
     }
-    .ueber7__tag {
+    .ueber8__badge {
       opacity: 1;
       transform: none;
       transition: none;
@@ -326,29 +342,48 @@ const fakten = ['Meisterbetrieb', 'Eigene Werkstatt'];
   }
 
   @media (max-width: 899px) {
-    .ueber7__grid {
+    .ueber8__panel {
       grid-template-columns: 1fr;
-      gap: clamp(3.5rem, 10vh, 4.5rem);
+      gap: clamp(2rem, 6vw, 3rem);
     }
-    .ueber7__stage {
-      min-height: clamp(17rem, 76vw, 21rem);
+    /* Mobil: Überlappung auflösen — zwei Fotos nebeneinander im Flow,
+       damit die Bildunterschriften nicht in den Text darunter laufen. */
+    .ueber8__stage {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.9rem;
+      align-items: start;
     }
-    .ueber7__frame--a {
-      left: 0;
-      width: 56%;
+    .ueber8__frame {
+      position: static;
+      width: auto;
     }
-    .ueber7__frame--b {
-      top: clamp(5rem, 28vw, 6.5rem);
-      width: 46%;
+    .ueber8__frame--b {
+      margin-top: 1.75rem;
+    }
+    .ueber8__badge {
+      top: -0.5rem;
+      bottom: auto;
+      left: 0.4rem;
+    }
+    .ueber8__features {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 520px) {
+    .ueber8__features {
+      grid-template-columns: 1fr;
     }
   }
 </style>
 
 <script>
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const frames = document.querySelectorAll<HTMLElement>('#ueber-uns-v4 [data-reveal]');
+  const items = document.querySelectorAll<HTMLElement>('#ueber-uns-v4 [data-reveal]');
   if (reduced) {
-    frames.forEach((f) => f.classList.add('is-in'));
+    items.forEach((f) => f.classList.add('is-in'));
   } else {
     const io = new IntersectionObserver(
       (entries) => {
@@ -359,8 +394,8 @@ const fakten = ['Meisterbetrieb', 'Eigene Werkstatt'];
           }
         }
       },
-      { threshold: 0.25 },
+      { threshold: 0.2 },
     );
-    frames.forEach((f) => io.observe(f));
+    items.forEach((f) => io.observe(f));
   }
 </script>
