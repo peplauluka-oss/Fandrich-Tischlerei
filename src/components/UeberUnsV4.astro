@@ -1,57 +1,66 @@
 ---
 /**
- * Über uns v6 — „Zwei Werke, ein Anspruch": Zurück zu klarer Hierarchie
- * (Headline, Lead, zwei kurze Absätze statt eines Fließtext-Blocks), aber
- * mit spürbarer Bewegung statt einer Text-auf-Weiß-Wand.
- *
- * Bild-Realität (G2/STATUS.md): beide Fotos sind native 426×640 px, harte
- * Grenze also 284 px Anzeigebreite — sie werden NICHT größer skaliert.
- * Statt das zu kaschieren, werden sie als gerahmte Exponate inszeniert
- * (Passepartout, Schatten, große Oak-Ordnungszahlen) und über Bewegung
- * aufgewertet: Duoton→Farb-Enthüllung beim Eintritt, Curtain-Clip,
- * je eigenes Parallax-Tempo, eine sich mitfüllende Fortschritts-Spindel
- * zwischen Text und Bild, Keyword-Unterstriche, die sich einzeichnen.
- * Keine blueprint-artigen Mono-Bildunterschriften/Ghost-Ziffern hier —
- * das war der „PDF"-Eindruck.
+ * Über uns v7 — kuratierte Synthese aus Referenz-Screenshots (Betreiber-
+ * Input: moderne Construction-/Möbelhersteller-/Service-Sites). Übernommen
+ * NICHT 1:1, sondern gefiltert auf das, was zu Handwerk + unseren echten
+ * Bild-/Fakten-Grenzen passt:
+ *  - Große, weich gerundete Foto-Karten statt schmalem Passepartout.
+ *  - Schwebende Fakten-Tags direkt auf den Fotos (Referenz: "High Quality
+ *    Materials"-Badges) — aber nur mit Aussagen, die anderswo auf der Seite
+ *    bereits belegt sind (Massivholz, Maßanfertigung), keine erfundenen
+ *    Trust-Stats (keine Sterne/Kundenzahlen — die Referenzen zeigen genau
+ *    das, aber das Projekt verbietet erfundene Fakten).
+ *  - CTA als satter Oak-Button (.btn--oak) statt Outline — Referenzen setzen
+ *    durchgehend auf volle Farbflächen, nicht auf Ghost-Buttons.
+ *  - Kleine, ehrliche Vertrauens-Chips (Meisterbetrieb, Eigene Werkstatt)
+ *    als Pendant zu den Bewertungs-/Kundenzahl-Badges der Referenzen.
+ * Layout/Bewegung aus v6 bleibt (Duoton-Enthüllung, Parallax, Fortschritts-
+ * Spindel, Keyword-Unterstriche) — das war nicht der Kritikpunkt.
  */
 import { Image } from 'astro:assets';
 import { ueberUnsImages } from '../data/images';
 
 const [bib, bank] = ueberUnsImages; // 2480 Bibliothek, 2470 Fensterbank
+const fakten = ['Meisterbetrieb', 'Eigene Werkstatt'];
 ---
 
-<section class="ueber6 section" id="ueber-uns-v4" aria-label="Über uns">
-  <div class="wrap ueber6__grid">
-    <span class="ueber6__spine" aria-hidden="true" data-rail data-axis="y">
-      <span class="ueber6__spinefill" data-rail-fill></span>
+<section class="ueber7 section" id="ueber-uns-v4" aria-label="Über uns">
+  <div class="wrap ueber7__grid">
+    <span class="ueber7__spine" aria-hidden="true" data-rail data-axis="y">
+      <span class="ueber7__spinefill" data-rail-fill></span>
     </span>
 
-    <div class="ueber6__copy">
+    <div class="ueber7__copy">
       <p class="eyebrow reveal"><span class="eyebrow__idx">(01)</span>Über uns</p>
       <h2 class="headline--v4 split">Vom Aufmaß bis zur Montage.</h2>
 
-      <p class="ueber6__lead lead reveal" style="--reveal-delay: 0.05s">
+      <p class="ueber7__lead lead reveal" style="--reveal-delay: 0.05s">
         Wir sind eine <span class="key">Meistertischlerei</span> in Berlin-Pankow.
       </p>
-      <p class="ueber6__body reveal" style="--reveal-delay: 0.1s">
+      <p class="ueber7__body reveal" style="--reveal-delay: 0.1s">
         Vom ersten Aufmaß bis zur Montage entsteht jedes Stück in unserer{' '}
         <span class="key">eigenen Werkstatt</span> — Einbaumöbel, Restaurierungen, Innenausbau.
       </p>
-      <p class="ueber6__body reveal" style="--reveal-delay: 0.15s">
+      <p class="ueber7__body reveal" style="--reveal-delay: 0.15s">
         Wir arbeiten mit <span class="key">Massivholz</span> und ausgesuchten Furnieren, und dort,
         wo es das Möbel verlangt, mit <span class="key">handgeschnittenen Verbindungen</span>. Was
         wir bauen, soll bleiben.
       </p>
 
-      <a href="#werkstatt-v4" class="btn btn--ghost ueber6__cta reveal" style="--reveal-delay: 0.2s" data-cursor="link">
-        Mehr über die Werkstatt <span class="arrow" aria-hidden="true">→</span>
-      </a>
+      <div class="ueber7__actions reveal" style="--reveal-delay: 0.2s">
+        <a href="#werkstatt-v4" class="btn btn--oak ueber7__cta" data-cursor="link">
+          Mehr über die Werkstatt <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <ul class="ueber7__fakten">
+          {fakten.map((f) => <li>{f}</li>)}
+        </ul>
+      </div>
     </div>
 
-    <div class="ueber6__stage">
-      <figure class="ueber6__frame ueber6__frame--a" data-reveal data-drift="22">
-        <span class="ueber6__mat">
-          <span class="ueber6__photo photo">
+    <div class="ueber7__stage">
+      <figure class="ueber7__frame ueber7__frame--a" data-reveal data-drift="22">
+        <div class="ueber7__card">
+          <span class="ueber7__photo photo">
             <Image
               src={bib.src}
               alt={bib.alt}
@@ -61,16 +70,14 @@ const [bib, bank] = ueberUnsImages; // 2480 Bibliothek, 2470 Fensterbank
               quality={80}
             />
           </span>
-        </span>
-        <figcaption class="ueber6__cap">
-          <span class="ueber6__nr" aria-hidden="true">01</span>
-          <span class="ueber6__capline">Einbaubibliothek, Kirschbaum<br />Prenzlauer Berg</span>
-        </figcaption>
+          <span class="ueber7__tag">Massivholz · Handarbeit</span>
+        </div>
+        <figcaption class="ueber7__loc">Einbaubibliothek — Prenzlauer Berg</figcaption>
       </figure>
 
-      <figure class="ueber6__frame ueber6__frame--b" data-reveal style="--rd: 0.18s" data-drift="-30">
-        <span class="ueber6__mat">
-          <span class="ueber6__photo photo">
+      <figure class="ueber7__frame ueber7__frame--b" data-reveal style="--rd: 0.18s" data-drift="-30">
+        <div class="ueber7__card">
+          <span class="ueber7__photo photo">
             <Image
               src={bank.src}
               alt={bank.alt}
@@ -80,22 +87,20 @@ const [bib, bank] = ueberUnsImages; // 2480 Bibliothek, 2470 Fensterbank
               quality={80}
             />
           </span>
-        </span>
-        <figcaption class="ueber6__cap">
-          <span class="ueber6__nr" aria-hidden="true">02</span>
-          <span class="ueber6__capline">Fensterbank mit Stauraum<br />Pankow</span>
-        </figcaption>
+          <span class="ueber7__tag">Maßanfertigung</span>
+        </div>
+        <figcaption class="ueber7__loc">Fensterbank mit Stauraum — Pankow</figcaption>
       </figure>
     </div>
   </div>
 </section>
 
 <style>
-  .ueber6 {
+  .ueber7 {
     position: relative;
     overflow: hidden;
   }
-  .ueber6__grid {
+  .ueber7__grid {
     position: relative;
     display: grid;
     grid-template-columns: 6fr 6fr;
@@ -105,7 +110,7 @@ const [bib, bank] = ueberUnsImages; // 2480 Bibliothek, 2470 Fensterbank
 
   /* Fortschritts-Spindel zwischen den Spalten — funktional (zeigt
      Lesefortschritt der Sektion), nicht bloß Dekor. Nur Desktop. */
-  .ueber6__spine {
+  .ueber7__spine {
     display: none;
     position: absolute;
     top: 0.3em;
@@ -117,7 +122,7 @@ const [bib, bank] = ueberUnsImages; // 2480 Bibliothek, 2470 Fensterbank
     overflow: hidden;
     border-radius: 1px;
   }
-  .ueber6__spinefill {
+  .ueber7__spinefill {
     position: absolute;
     inset: 0;
     background: var(--oak);
@@ -125,29 +130,53 @@ const [bib, bank] = ueberUnsImages; // 2480 Bibliothek, 2470 Fensterbank
     transform-origin: top;
   }
   @media (min-width: 900px) {
-    .ueber6__spine {
+    .ueber7__spine {
       display: block;
     }
   }
 
-  .ueber6__lead {
+  .ueber7__lead {
     margin-top: clamp(1.75rem, 4vh, 2.5rem);
   }
-  .ueber6__body {
+  .ueber7__body {
     margin-top: 1.1rem;
     color: var(--ink);
     max-width: 46ch;
   }
-  .ueber6__cta {
+
+  .ueber7__actions {
     margin-top: 2.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem 2rem;
+  }
+
+  /* Ehrliche Vertrauens-Chips: kein Fake-Rating, nur belegte Fakten,
+     als leichte Outline-Pills — eine Gewichtsstufe unter dem CTA-Button
+     und den satten Foto-Tags. */
+  .ueber7__fakten {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .ueber7__fakten li {
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: var(--ink);
+    border: 1px solid var(--oak-line);
+    border-radius: 999px;
+    padding: 0.4rem 0.9rem;
   }
 
   /* Keyword-Unterstriche zeichnen sich mit dem Absatz-Reveal ein —
      an .reveal.is-visible gekoppelt, keine eigene Beobachtung nötig. */
-  .ueber6__copy .key {
+  .ueber7__copy .key {
     position: relative;
   }
-  .ueber6__copy .key::after {
+  .ueber7__copy .key::after {
     content: '';
     position: absolute;
     left: 0;
@@ -160,53 +189,53 @@ const [bib, bank] = ueberUnsImages; // 2480 Bibliothek, 2470 Fensterbank
     transition: transform 0.7s var(--ease-out);
     transition-delay: 0.35s;
   }
-  .ueber6__copy .reveal.is-visible .key::after {
+  .ueber7__copy .reveal.is-visible .key::after {
     transform: scaleX(1);
   }
 
-  /* Bühne: zwei gerahmte Exponate, versetzt, mit Passepartout */
-  .ueber6__stage {
+  /* Bühne: zwei große, weich gerundete Foto-Karten, versetzt */
+  .ueber7__stage {
     position: relative;
-    min-height: clamp(20rem, 34vw, 26rem);
+    min-height: clamp(21rem, 35vw, 27rem);
   }
-  .ueber6__frame {
+  .ueber7__frame {
     position: absolute;
     margin: 0;
   }
-  .ueber6__frame--a {
+  .ueber7__frame--a {
     top: 0;
     left: clamp(0px, 4vw, 2rem);
-    width: min(18.5rem, 62%);
+    width: min(19rem, 62%);
     z-index: 1;
   }
-  .ueber6__frame--b {
-    top: clamp(6rem, 15vw, 9rem);
+  .ueber7__frame--b {
+    top: clamp(6.5rem, 16vw, 9.5rem);
     right: 0;
     left: auto;
-    width: min(14.5rem, 50%);
+    width: min(15rem, 50%);
     z-index: 2;
   }
 
-  /* Passepartout: Museums-Mat aus Papierton + weicher Schatten macht aus
-     einem notgedrungen kleinen Abzug ein bewusst gerahmtes Exponat. */
-  .ueber6__mat {
+  .ueber7__card {
+    position: relative;
     display: block;
-    background: var(--paper);
-    padding: 0.6rem;
+    border-radius: 1.75rem;
+    overflow: visible;
     box-shadow:
-      0 1px 2px rgba(43, 37, 35, 0.06),
-      0 18px 34px -18px rgba(43, 37, 35, 0.32);
+      0 1px 2px rgba(43, 37, 35, 0.07),
+      0 22px 40px -18px rgba(43, 37, 35, 0.34);
   }
-  .ueber6__photo {
+  .ueber7__photo {
     display: block;
     overflow: hidden;
+    border-radius: 1.75rem;
     aspect-ratio: 2 / 3;
     background: var(--paper-dim);
   }
-  .ueber6__frame--a .ueber6__photo {
+  .ueber7__frame--a .ueber7__photo {
     aspect-ratio: 213 / 320;
   }
-  .ueber6__photo :global(img) {
+  .ueber7__photo :global(img) {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -219,77 +248,96 @@ const [bib, bank] = ueberUnsImages; // 2480 Bibliothek, 2470 Fensterbank
       transform 1.4s var(--ease-curtain);
     transition-delay: var(--rd, 0s);
   }
-  .ueber6__frame[data-reveal].is-in .ueber6__photo :global(img) {
+  .ueber7__frame[data-reveal].is-in .ueber7__photo :global(img) {
     filter: var(--photo-filter);
     transform: scale(1);
   }
 
   /* Curtain-Clip zusätzlich zur Duoton-Ankunft */
-  .ueber6__frame[data-reveal] .ueber6__mat {
+  .ueber7__frame[data-reveal] .ueber7__photo {
     clip-path: inset(0 0 100% 0);
     transition: clip-path 0.9s var(--ease-curtain);
     transition-delay: var(--rd, 0s);
   }
-  .ueber6__frame[data-reveal].is-in .ueber6__mat {
+  .ueber7__frame[data-reveal].is-in .ueber7__photo {
     clip-path: inset(0 0 0 0);
   }
 
-  .ueber6__frame:hover .ueber6__photo :global(img) {
+  .ueber7__frame:hover .ueber7__photo :global(img) {
     transform: scale(1.045);
   }
 
-  .ueber6__cap {
-    margin-top: 0.85rem;
-    display: flex;
-    align-items: baseline;
-    gap: 0.7rem;
+  /* Schwebender Fakten-Tag, überlappt die untere Kartenkante — Referenz:
+     Material-/Service-Badges direkt auf dem Foto statt stiller Caption. */
+  .ueber7__tag {
+    position: absolute;
+    left: 0.9rem;
+    bottom: -0.85rem;
+    z-index: 1;
+    background: var(--oak);
+    color: var(--ink);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    border-radius: 999px;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 10px 18px -8px rgba(43, 37, 35, 0.45);
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 0.6s var(--ease-out),
+      transform 0.6s var(--ease-out);
+    transition-delay: calc(var(--rd, 0s) + 0.55s);
   }
-  .ueber6__nr {
-    flex: none;
-    font-family: var(--font-body);
-    font-weight: 800;
-    font-size: 1.4rem;
-    line-height: 1;
-    color: var(--oak);
-    letter-spacing: -0.01em;
+  .ueber7__frame[data-reveal].is-in .ueber7__tag {
+    opacity: 1;
+    transform: none;
   }
-  .ueber6__capline {
-    font-size: 0.78rem;
-    letter-spacing: 0.03em;
-    line-height: 1.4;
+
+  .ueber7__loc {
+    margin-top: 1.4rem;
+    max-width: 14rem;
+    font-size: 0.76rem;
+    letter-spacing: 0.02em;
     color: var(--ink-soft);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .ueber6__photo :global(img) {
+    .ueber7__photo :global(img) {
       filter: var(--photo-filter);
       transform: none;
       transition: none;
     }
-    .ueber6__frame[data-reveal] .ueber6__mat {
+    .ueber7__frame[data-reveal] .ueber7__photo {
       clip-path: none;
       transition: none;
     }
-    .ueber6__copy .key::after {
+    .ueber7__tag {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    .ueber7__copy .key::after {
       transform: scaleX(1);
       transition: none;
     }
   }
 
   @media (max-width: 899px) {
-    .ueber6__grid {
+    .ueber7__grid {
       grid-template-columns: 1fr;
-      gap: clamp(3rem, 9vh, 4rem);
+      gap: clamp(3.5rem, 10vh, 4.5rem);
     }
-    .ueber6__stage {
-      min-height: clamp(16rem, 74vw, 20rem);
+    .ueber7__stage {
+      min-height: clamp(17rem, 76vw, 21rem);
     }
-    .ueber6__frame--a {
+    .ueber7__frame--a {
       left: 0;
       width: 56%;
     }
-    .ueber6__frame--b {
-      top: clamp(4.5rem, 26vw, 6rem);
+    .ueber7__frame--b {
+      top: clamp(5rem, 28vw, 6.5rem);
       width: 46%;
     }
   }
