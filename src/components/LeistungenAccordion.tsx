@@ -14,20 +14,26 @@ const LEISTUNGEN: Item[] = [
   {
     nr: '01',
     titel: 'Neuanfertigung',
-    text: 'Einbauschränke, Küchen und Bibliotheken, entworfen für Ihren Raum. Gefertigt aus Massivholz und ausgesuchten Furnieren — vom Aufmaß bis zur letzten Fuge.',
-    stichworte: ['Einbauschränke', 'Küchen', 'Bibliotheken', 'Massivholz'],
+    text: 'Möbel, Fenster und Türen nach Maß — entworfen für Ihren Raum, gefertigt aus Massivholz und ausgesuchten Furnieren. Vom Einbauschrank über die Küche bis zum Holz- oder Kunststofffenster, alles vom Aufmaß bis zur Montage.',
+    stichworte: ['Möbel nach Maß', 'Holzfenster', 'Türen', 'Einbauschränke', 'Küchen'],
   },
   {
     nr: '02',
     titel: 'Restaurierung',
-    text: 'Wir setzen Möbel mit Geschichte instand — mit Schellackpolitur, traditionellen Leimen und Respekt vor der Substanz. Was Ihre Familie geprägt hat, bleibt erhalten.',
-    stichworte: ['Schellackpolitur', 'traditionelle Leime', 'Furnierbild'],
+    text: 'Ob Familienerbstück oder modernes Designmöbel — wir setzen Stücke mit Geschichte wieder instand: Schellackpolitur, traditionelle Leime, Reparatur von Nutzungs-, Wasser- oder Brandschäden. Auch alte Kastenfenster bringen wir fachgerecht zurück.',
+    stichworte: ['Möbelrestaurierung', 'Schellackpolitur', 'Kastenfenster', 'Schadensreparatur'],
   },
   {
     nr: '03',
-    titel: 'Innenausbau & Reparatur',
-    text: 'Türen, Dielung, Fensterinstandsetzung und Balkonverglasung im Berliner Altbau. Präzise Reparaturen, die man am Ende nicht mehr sieht.',
-    stichworte: ['Türen', 'Dielung', 'Fensterinstandsetzung', 'Balkonverglasung'],
+    titel: 'Reparatur',
+    text: 'Fenster, Türen, Treppen, Böden und Küchen — wir richten, was klemmt, zieht oder verschlissen ist. Vom Einstellen und Abdichten über den Austausch einzelner Teile bis zu neuen Beschlägen und mehr Einbruchschutz an der Haustür.',
+    stichworte: ['Fenster & Türen', 'Treppen', 'Parkett & Dielen', 'Küchen', 'Sicherheit'],
+  },
+  {
+    nr: '04',
+    titel: 'Wartung',
+    text: 'Damit Fenster und Türen lange dicht und leichtgängig bleiben: regelmäßige Wartung, Nachstellen der Beschläge, Erneuern von Dichtungen. Für Privathaushalte, Hausverwaltungen und Unternehmen im Großraum Berlin.',
+    stichworte: ['Fensterwartung', 'Beschläge', 'Dichtungen', 'Hausverwaltungen'],
   },
 ];
 

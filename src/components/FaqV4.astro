@@ -1,0 +1,41 @@
+---
+import FaqAccordion from './FaqAccordion';
+---
+
+<section class="section faq4 section--warm" id="faq-v4" aria-label="Häufige Fragen">
+  <div class="wrap faq4__grid">
+    <div class="faq4__head">
+      <p class="eyebrow reveal"><span class="eyebrow__idx">(06)</span>Häufige Fragen</p>
+      <h2 class="headline--v4 split">Gute Frage.</h2>
+      <p class="faq4__intro reveal" style="--reveal-delay: 0.05s">
+        Das Wichtigste in Kürze — von der Fensterwartung bis zur Möbelreparatur. Ihre Frage ist nicht
+        dabei? <a href="#kontakt-v4" class="link-line">Schreiben Sie uns.</a>
+      </p>
+    </div>
+
+    <div class="faq4__list reveal" style="--reveal-delay: 0.05s">
+      <FaqAccordion client:visible />
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq4__grid {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: clamp(2.5rem, 6vw, 5rem);
+    align-items: start;
+  }
+  .faq4__intro {
+    margin-top: clamp(1.5rem, 3.5vh, 2.25rem);
+    color: var(--ink-soft);
+    max-width: 34ch;
+  }
+
+  @media (max-width: 899px) {
+    .faq4__grid {
+      grid-template-columns: 1fr;
+      gap: clamp(2rem, 6vh, 3rem);
+    }
+  }
+</style>

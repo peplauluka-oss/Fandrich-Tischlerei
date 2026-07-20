@@ -1,0 +1,64 @@
+/* Q&A / FAQ — Akkordeon (React-Island). Frage als klickbare Zeile,
+   Antwort im aufklappenden Panel. Ruhigeres Register als das Leistungs-
+   Akkordeon: Sans-Fragen, keine Riesen-Nummern. */
+.faq {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.faq__row {
+  position: relative;
+  border-top: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+}
+.faq__row:last-child {
+  border-bottom: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+}
+
+.faq__head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  padding-block: clamp(1.15rem, 2.6vh, 1.7rem);
+  color: var(--ink);
+}
+
+.faq__frage {
+  font-family: var(--font-head);
+  font-weight: 340;
+  font-size: clamp(1.15rem, 2.2vw, 1.6rem);
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.faq__toggle {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--oak);
+}
+
+.faq__panelwrap {
+  position: relative;
+}
+.faq__antwort {
+  padding-bottom: clamp(1.25rem, 3vh, 2rem);
+  max-width: 62ch;
+  color: var(--ink-soft);
+}
+
+@media (hover: hover) {
+  .faq__head:hover .faq__frage {
+    color: var(--oak);
+  }
+}
+.faq__row.is-open .faq__frage {
+  color: var(--oak);
+}
