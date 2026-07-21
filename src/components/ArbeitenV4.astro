@@ -1,23 +1,50 @@
 ---
+/**
+ * Referenzen (Schritt 4). Aus „Aus der Werkstatt" (Blur-Bildfelder) werden
+ * klickbare, scharfe Bild-Kärtchen mit Beschriftung + Lightbox. Kein Blur,
+ * kein Upscale (Schärfe-Gesetz), sauberes Raster ohne Spalt, Zitat als
+ * Schluss-Statement. Kein Eyebrow / keine „(03)"-Nummer (impeccable-Bans).
+ */
 import ShowcaseGallery from './ShowcaseGallery';
 ---
 
-<section class="section arb4" id="arbeiten-v4" aria-label="Ausgewählte Arbeiten">
+<section class="section ref-sec" id="arbeiten-v4" aria-label="Unsere Referenzen">
   <div class="wrap">
-    <div class="arb4__head">
-      <p class="eyebrow reveal"><span class="eyebrow__idx">(03)</span>Aus der Werkstatt</p>
-      <h2 class="headline--v4 split">Vier Räume, ein Anspruch.</h2>
+    <div class="ref-sec__head">
+      <h2 class="ref-sec__title split">Unsere Referenzen.</h2>
+      <p class="ref-sec__intro reveal">
+        Möbel, Einbauten und Außenprojekte aus Berlin und Brandenburg — tippen Sie ein Stück an
+        für die ganze Ansicht.
+      </p>
     </div>
   </div>
 
-  <ShowcaseGallery client:visible />
+  <div class="wrap">
+    <ShowcaseGallery client:visible />
+  </div>
 </section>
 
 <style>
-  .arb4 {
-    padding-bottom: var(--section-gap);
+  .ref-sec {
+    position: relative;
   }
-  .arb4__head {
-    margin-bottom: clamp(2.5rem, 6vh, 4rem);
+  .ref-sec__head {
+    max-width: 44ch;
+  }
+  .ref-sec__title {
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--wood-ink);
+    text-wrap: balance;
+  }
+  .ref-sec__intro {
+    margin-top: clamp(1rem, 2.4vh, 1.5rem);
+    font-size: clamp(1.02rem, 1.4vw, 1.2rem);
+    line-height: 1.55;
+    color: rgba(58, 42, 28, 0.8);
+    max-width: 50ch;
   }
 </style>
