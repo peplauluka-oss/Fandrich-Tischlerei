@@ -1,85 +1,161 @@
 ---
-// Conversion-Band: einziger Oak-Vollflächen-Block der Seite — maximaler
-// Kontrast direkt vor dem Kontakt. Nur verifizierte Angaben (Telefon).
+/**
+ * CTA-Höhepunkt (Schritt 6). Der generische 4-Schritt-Prozess ist raus;
+ * seine ehrliche Kurzinfo lebt als schlanke Prozess-Leiste weiter. Der
+ * Call-to-Action dominiert: großes Walnuss-Band (echtes Holz), Headline,
+ * Oak-Button + Telefon. Kein Ghost-Wasserzeichen (impeccable-Ban).
+ */
 import { site } from '../data/site';
+import woodTex from '../assets/textures/holz-kiefer.jpeg';
+
+const ablauf = [
+  { nr: '01', t: 'Aufmaß & Beratung' },
+  { nr: '02', t: 'Entwurf mit Material zum Anfassen' },
+  { nr: '03', t: 'Fertigung in Pankow' },
+  { nr: '04', t: 'Montage & Übergabe' },
+];
 ---
 
-<section class="ctab" aria-label="Projekt anfragen">
-  <span class="wm ctab__wm" aria-hidden="true" data-drift="36">F</span>
-  <div class="wrap ctab__grid">
-    <h2 class="ctab__title split">Lassen Sie uns über Ihr Projekt sprechen.</h2>
-    <div class="ctab__actions reveal">
-      <a href="#kontakt-v4" class="btn ctab__btn" data-cursor="link">
-        Projekt anfragen <span class="arrow" aria-hidden="true">→</span>
-      </a>
-      <a href={`tel:${site.phoneHref}`} class="ctab__tel" data-cursor="link">
-        oder direkt anrufen: <strong>{site.phone}</strong>
-      </a>
+<section class="cta" id="cta-band" aria-label="Projekt anfragen" style={`--panel-tex: url(${woodTex.src})`}>
+  <div class="wrap cta__inner">
+    <ol class="cta__ribbon" aria-label="So läuft es ab">
+      {
+        ablauf.map((a) => (
+          <li class="cta__beat">
+            <span class="cta__beatnr" aria-hidden="true">{a.nr}</span>
+            <span class="cta__beatt">{a.t}</span>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="cta__main">
+      <h2 class="cta__title split">Lassen Sie uns über Ihr Projekt sprechen.</h2>
+      <p class="cta__sub">
+        Vom ersten Aufmaß bis zur Montage — ein Ansprechpartner, kurze Wege, alles aus einer Hand.
+      </p>
+
+      <div class="cta__actions">
+        <a href="#kontakt-v4" class="btn btn--oak cta__btn" data-cursor="link">
+          Projekt anfragen <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a href={`tel:${site.phoneHref}`} class="cta__tel" data-cursor="link">
+          oder direkt anrufen <strong>{site.phone}</strong>
+        </a>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .ctab {
+  .cta {
     position: relative;
     overflow: hidden;
-    background: var(--oak);
-    color: var(--ink);
-    padding-block: clamp(4.5rem, 11vh, 7rem);
+    color: var(--paper);
+    padding-block: clamp(4rem, 10vh, 6.5rem);
+    background-color: #201610;
+    background-image:
+      radial-gradient(120% 90% at 82% 10%, rgba(184, 137, 90, 0.22), transparent 55%),
+      linear-gradient(150deg, rgba(16, 10, 6, 0.82), rgba(34, 23, 14, 0.9)),
+      var(--panel-tex, none);
+    background-size: cover, cover, cover;
+    background-position: center;
   }
 
-  .ctab__wm {
-    top: 50%;
-    right: -0.05em;
-    transform: translateY(-50%);
-    font-size: clamp(16rem, 42vw, 34rem);
-    -webkit-text-stroke: 1px rgba(43, 37, 35, 0.18);
+  /* Schlanke Prozess-Leiste (ersetzt die 4 Karten) */
+  .cta__ribbon {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem 1.5rem;
+    padding-bottom: clamp(2rem, 5vh, 3rem);
+    margin-bottom: clamp(2rem, 5vh, 3rem);
+    border-bottom: 1px solid rgba(250, 247, 242, 0.14);
+  }
+  .cta__beat {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    color: rgba(250, 247, 242, 0.7);
+  }
+  .cta__beatnr {
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: var(--oak);
   }
 
-  .ctab__grid {
-    position: relative;
-    z-index: 1;
+  .cta__main {
     display: grid;
-    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
     gap: clamp(2rem, 5vw, 4rem);
-    align-items: center;
+    align-items: end;
   }
-
-  .ctab__title {
-    font-family: var(--font-head);
-    font-weight: 340;
-    font-size: clamp(2.2rem, 5vw, 3.8rem);
-    line-height: 1.08;
+  .cta__title {
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: clamp(2.2rem, 5.2vw, 4rem);
+    line-height: 1.04;
     letter-spacing: -0.03em;
+    color: var(--paper);
     text-wrap: balance;
   }
+  .cta__sub {
+    display: none;
+  }
 
-  .ctab__actions {
+  .cta__actions {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 1.25rem;
+    gap: 1.1rem;
+    padding-bottom: 0.3rem;
   }
-
-  .ctab__btn {
+  .cta__btn {
     font-size: 1.05rem;
     padding: 1.15rem 2rem;
+    transition:
+      transform 0.16s ease-out,
+      filter 0.2s ease-out;
   }
-
-  .ctab__tel {
+  .cta__btn:hover {
+    filter: brightness(1.05);
+  }
+  .cta__btn:active {
+    transform: scale(0.98);
+  }
+  .cta__tel {
+    display: inline-flex;
+    gap: 0.4rem;
     text-decoration: none;
-    font-size: 1rem;
-    border-bottom: 1px solid rgba(43, 37, 35, 0.4);
-    padding-bottom: 2px;
+    font-size: 0.98rem;
+    color: rgba(250, 247, 242, 0.82);
+  }
+  .cta__tel strong {
+    color: var(--paper);
+    border-bottom: 1px solid rgba(184, 137, 90, 0.5);
+    padding-bottom: 1px;
     transition: border-color 0.25s var(--ease-out);
   }
-  .ctab__tel:hover {
-    border-color: var(--ink);
+  .cta__tel:hover strong {
+    border-color: var(--oak);
   }
 
   @media (max-width: 899px) {
-    .ctab__grid {
+    .cta__main {
       grid-template-columns: 1fr;
+      gap: clamp(1.75rem, 5vh, 2.5rem);
+      align-items: start;
+    }
+    /* Der erklärende Untertext hilft mobil, wo die Prozess-Leiste kürzer wirkt */
+    .cta__sub {
+      display: block;
+      margin-top: 1rem;
+      max-width: 46ch;
+      color: rgba(250, 247, 242, 0.78);
+      font-size: 1rem;
+      line-height: 1.5;
     }
   }
 </style>
