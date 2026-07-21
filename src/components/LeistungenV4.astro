@@ -1,24 +1,47 @@
 ---
-import GridLines from './GridLines.astro';
-import LeistungenAccordion from './LeistungenAccordion';
+/**
+ * Leistungen — Redesign (Schritt 3). Das 4-Klick-Accordion (eher Q&A-Muster)
+ * weicht einem horizontalen Card-Scroller mit Drag-Momentum (Emil/Apple).
+ * Der ausführliche Text steht NICHT mehr auf der Landingpage, sondern auf je
+ * einer eigenen SEO-Unterseite /leistungen/<slug> — kürzere Landingpage.
+ * Kein Eyebrow, keine „(02)"-Nummer, kein Grid-Overlay (impeccable-Bans).
+ */
+import LeistungenScroller from './LeistungenScroller';
+import woodTex from '../assets/textures/holz-kiefer.jpeg';
 ---
 
-<section class="section section--warm has-grid" id="leistungen-v4" aria-label="Leistungen">
-  <GridLines variant="paper" />
-  <div class="wrap">
-    <div class="leist4__head">
-      <p class="eyebrow reveal"><span class="eyebrow__idx">(02)</span>Unsere Leistungen</p>
-      <h2 class="headline--v4 split">Wie wir Ihnen helfen.</h2>
-    </div>
-
-    <div class="leist4__list reveal" style="--reveal-delay: 0.05s">
-      <LeistungenAccordion client:visible />
-    </div>
+<section class="section leist" id="leistungen-v4" aria-label="Leistungen">
+  <div class="wrap leist__head">
+    <h2 class="leist__title split">Vier Gewerke, eine Meisterhand.</h2>
+    <p class="leist__intro reveal">
+      Neuanfertigung, Restaurierung, Reparatur und Wartung — ziehen Sie durch, was wir für Sie tun.
+    </p>
   </div>
+
+  <LeistungenScroller client:visible texUrl={woodTex.src} />
 </section>
 
 <style>
-  .leist4__list {
-    margin-top: clamp(3rem, 7vh, 5rem);
+  .leist {
+    position: relative;
+  }
+  .leist__head {
+    max-width: 40ch;
+  }
+  .leist__title {
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--wood-ink);
+    text-wrap: balance;
+  }
+  .leist__intro {
+    margin-top: clamp(1rem, 2.4vh, 1.5rem);
+    font-size: clamp(1.02rem, 1.4vw, 1.2rem);
+    line-height: 1.55;
+    color: rgba(58, 42, 28, 0.8);
+    max-width: 48ch;
   }
 </style>

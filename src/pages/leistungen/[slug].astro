@@ -1,0 +1,179 @@
+---
+/**
+ * SEO-Unterseite je Leistung. Der ausführliche Text wandert von der
+ * Landingpage hierher — eine indexierbare Seite pro Gewerk, kürzere Startseite.
+ */
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav';
+import { site } from '../../data/site';
+import { leistungen } from '../../data/leistungen';
+
+export function getStaticPaths() {
+  return leistungen.map((l, i) => ({
+    params: { slug: l.slug },
+    props: { l, prev: leistungen[(i + leistungen.length - 1) % leistungen.length], next: leistungen[(i + 1) % leistungen.length] },
+  }));
+}
+
+const { l, next } = Astro.props;
+const title = `${l.titel} — Tischlerei Fandrich, Berlin-Pankow`;
+const description = l.kurz;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Base title={title} description={description} noindex={false}>
+  <Nav client:load solid />
+  <main class="lp">
+    <div class="wrap lp__inner">
+      <a href={`${base}/#leistungen-v4`} class="lp__back" data-cursor="link">
+        <span aria-hidden="true">←</span> Alle Leistungen
+      </a>
+
+      <p class="lp__nr" aria-hidden="true">{l.nr}</p>
+      <h1 class="lp__title">{l.titel}</h1>
+      <p class="lp__lead">{l.kurz}</p>
+
+      <div class="lp__panel">
+        <p class="lp__text">{l.text}</p>
+        <ul class="lp__tags">
+          {l.stichworte.map((s) => <li>{s}</li>)}
+        </ul>
+      </div>
+
+      <div class="lp__cta">
+        <a href={`${base}/#kontakt-v4`} class="btn btn--oak" data-cursor="link">
+          {l.titel} anfragen <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a href={`tel:${site.phoneHref}`} class="lp__tel" data-cursor="link">
+          oder anrufen: <strong>{site.phone}</strong>
+        </a>
+      </div>
+
+      <a href={`${base}/leistungen/${next.slug}`} class="lp__next" data-cursor="link">
+        <span class="lp__next-label">Nächste Leistung</span>
+        <span class="lp__next-titel">{next.titel} <span aria-hidden="true">→</span></span>
+      </a>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .lp {
+    padding-top: clamp(7rem, 16vh, 10rem);
+    padding-bottom: clamp(4rem, 10vh, 7rem);
+  }
+  .lp__inner {
+    max-width: 60rem;
+  }
+  .lp__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: rgba(58, 42, 28, 0.75);
+    text-decoration: none;
+    transition: color 0.25s var(--ease-out);
+  }
+  .lp__back:hover {
+    color: var(--oak);
+  }
+  .lp__nr {
+    margin-top: clamp(2rem, 5vh, 3.5rem);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.16em;
+    color: var(--oak);
+  }
+  .lp__title {
+    margin-top: 0.4rem;
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    color: var(--wood-ink);
+  }
+  .lp__lead {
+    margin-top: 1rem;
+    font-size: clamp(1.15rem, 2vw, 1.5rem);
+    line-height: 1.4;
+    color: rgba(58, 42, 28, 0.82);
+    max-width: 40ch;
+  }
+
+  /* Dunkles Holz-Panel für den ausführlichen Text */
+  .lp__panel {
+    margin-top: clamp(2.5rem, 6vh, 4rem);
+    padding: clamp(1.75rem, 4vw, 3rem);
+    border-radius: clamp(1rem, 2vw, 1.5rem);
+    background:
+      linear-gradient(160deg, rgba(18, 12, 7, 0.88), rgba(36, 25, 16, 0.92));
+    color: var(--paper);
+    box-shadow: 0 30px 60px -34px rgba(28, 18, 10, 0.6);
+  }
+  .lp__text {
+    font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+    line-height: 1.65;
+    color: rgba(250, 247, 242, 0.9);
+    max-width: 62ch;
+  }
+  .lp__tags {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+  .lp__tags li {
+    font-size: 0.8rem;
+    color: rgba(250, 247, 242, 0.85);
+    padding: 0.35rem 0.8rem;
+    border: 1px solid rgba(250, 247, 242, 0.22);
+    border-radius: 999px;
+  }
+
+  .lp__cta {
+    margin-top: clamp(2rem, 5vh, 3rem);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.75rem;
+  }
+  .lp__tel {
+    text-decoration: none;
+    color: rgba(58, 42, 28, 0.82);
+    border-bottom: 1px solid var(--oak-line);
+    padding-bottom: 2px;
+    transition: border-color 0.25s var(--ease-out);
+  }
+  .lp__tel:hover {
+    border-color: var(--oak);
+  }
+
+  .lp__next {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    margin-top: clamp(3rem, 7vh, 5rem);
+    text-decoration: none;
+    color: var(--wood-ink);
+  }
+  .lp__next-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(58, 42, 28, 0.6);
+  }
+  .lp__next-titel {
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    letter-spacing: -0.02em;
+    transition: color 0.25s var(--ease-out);
+  }
+  .lp__next:hover .lp__next-titel {
+    color: var(--oak);
+  }
+</style>
