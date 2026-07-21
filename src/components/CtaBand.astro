@@ -1,34 +1,14 @@
 ---
 /**
- * CTA-Höhepunkt (Schritt 6). Der generische 4-Schritt-Prozess ist raus;
- * seine ehrliche Kurzinfo lebt als schlanke Prozess-Leiste weiter. Der
- * Call-to-Action dominiert: großes Walnuss-Band (echtes Holz), Headline,
- * Oak-Button + Telefon. Kein Ghost-Wasserzeichen (impeccable-Ban).
+ * CTA-Höhepunkt. Reines Walnuss-Band (echtes Holz): Headline, Oak-Button,
+ * Telefon. Kompakt, kein Ghost-Wasserzeichen (impeccable-Ban).
  */
 import { site } from '../data/site';
 import woodTex from '../assets/textures/holz-kiefer.jpeg';
-
-const ablauf = [
-  { nr: '01', t: 'Aufmaß & Beratung' },
-  { nr: '02', t: 'Entwurf mit Material zum Anfassen' },
-  { nr: '03', t: 'Fertigung in Pankow' },
-  { nr: '04', t: 'Montage & Übergabe' },
-];
 ---
 
 <section class="cta" id="cta-band" aria-label="Projekt anfragen" style={`--panel-tex: url(${woodTex.src})`}>
   <div class="wrap cta__inner">
-    <ol class="cta__ribbon" aria-label="So läuft es ab">
-      {
-        ablauf.map((a) => (
-          <li class="cta__beat">
-            <span class="cta__beatnr" aria-hidden="true">{a.nr}</span>
-            <span class="cta__beatt">{a.t}</span>
-          </li>
-        ))
-      }
-    </ol>
-
     <div class="cta__main">
       <h2 class="cta__title split">Lassen Sie uns über Ihr Projekt sprechen.</h2>
       <p class="cta__sub">
@@ -52,7 +32,7 @@ const ablauf = [
     position: relative;
     overflow: hidden;
     color: var(--paper);
-    padding-block: clamp(4rem, 10vh, 6.5rem);
+    padding-block: clamp(2.75rem, 6.5vh, 4.5rem);
     background-color: #201610;
     background-image:
       radial-gradient(120% 90% at 82% 10%, rgba(184, 137, 90, 0.22), transparent 55%),
@@ -60,30 +40,6 @@ const ablauf = [
       var(--panel-tex, none);
     background-size: cover, cover, cover;
     background-position: center;
-  }
-
-  /* Schlanke Prozess-Leiste (ersetzt die 4 Karten) */
-  .cta__ribbon {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.9rem 1.5rem;
-    padding-bottom: clamp(2rem, 5vh, 3rem);
-    margin-bottom: clamp(2rem, 5vh, 3rem);
-    border-bottom: 1px solid rgba(250, 247, 242, 0.14);
-  }
-  .cta__beat {
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-    font-size: 0.82rem;
-    color: rgba(250, 247, 242, 0.7);
-  }
-  .cta__beatnr {
-    font-weight: 800;
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    color: var(--oak);
   }
 
   .cta__main {
@@ -148,7 +104,7 @@ const ablauf = [
       gap: clamp(1.75rem, 5vh, 2.5rem);
       align-items: start;
     }
-    /* Der erklärende Untertext hilft mobil, wo die Prozess-Leiste kürzer wirkt */
+    /* Erklärender Untertext nur mobil, für etwas Kontext unter der Headline */
     .cta__sub {
       display: block;
       margin-top: 1rem;
