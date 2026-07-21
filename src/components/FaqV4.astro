@@ -1,41 +1,65 @@
 ---
+/**
+ * Q&A (Schritt 5). Die früheren neutralen Balken werden zu Holzdielen:
+ * jede Frage ein Brett mit echter Maserung, in vier Tönen gestapelt.
+ * Kein Eyebrow / keine „(06)"-Nummer, kein Warm-Tint (impeccable-Bans).
+ */
 import FaqAccordion from './FaqAccordion';
+import woodTex from '../assets/textures/holz-kiefer.jpeg';
 ---
 
-<section class="section faq4 section--warm" id="faq-v4" aria-label="Häufige Fragen">
-  <div class="wrap faq4__grid">
+<section class="section faq4" id="faq-v4" aria-label="Häufige Fragen">
+  <div class="wrap faq4__inner">
     <div class="faq4__head">
-      <p class="eyebrow reveal"><span class="eyebrow__idx">(06)</span>Häufige Fragen</p>
-      <h2 class="headline--v4 split">Gute Frage.</h2>
-      <p class="faq4__intro reveal" style="--reveal-delay: 0.05s">
+      <h2 class="faq4__title split">Gute Frage.</h2>
+      <p class="faq4__intro reveal">
         Das Wichtigste in Kürze — von der Fensterwartung bis zur Möbelreparatur. Ihre Frage ist nicht
         dabei? <a href="#kontakt-v4" class="link-line">Schreiben Sie uns.</a>
       </p>
     </div>
 
-    <div class="faq4__list reveal" style="--reveal-delay: 0.05s">
-      <FaqAccordion client:visible />
+    <div class="faq4__list">
+      <FaqAccordion client:visible texUrl={woodTex.src} />
     </div>
   </div>
 </section>
 
 <style>
-  .faq4__grid {
+  .faq4 {
+    position: relative;
+  }
+  .faq4__inner {
     display: grid;
-    grid-template-columns: 5fr 7fr;
+    grid-template-columns: 4fr 8fr;
     gap: clamp(2.5rem, 6vw, 5rem);
     align-items: start;
   }
+  .faq4__head {
+    position: sticky;
+    top: 6rem;
+  }
+  .faq4__title {
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    color: var(--wood-ink);
+    text-wrap: balance;
+  }
   .faq4__intro {
-    margin-top: clamp(1.5rem, 3.5vh, 2.25rem);
-    color: var(--ink-soft);
+    margin-top: clamp(1.1rem, 3vh, 1.75rem);
+    color: rgba(58, 42, 28, 0.8);
     max-width: 34ch;
   }
 
   @media (max-width: 899px) {
-    .faq4__grid {
+    .faq4__inner {
       grid-template-columns: 1fr;
-      gap: clamp(2rem, 6vh, 3rem);
+      gap: clamp(1.75rem, 5vh, 2.5rem);
+    }
+    .faq4__head {
+      position: static;
     }
   }
 </style>

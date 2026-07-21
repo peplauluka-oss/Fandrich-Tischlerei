@@ -1,18 +1,71 @@
-/* Q&A / FAQ — Akkordeon (React-Island). Frage als klickbare Zeile,
-   Antwort im aufklappenden Panel. Ruhigeres Register als das Leistungs-
-   Akkordeon: Sans-Fragen, keine Riesen-Nummern. */
+/* ================================================================
+   Q&A als Holzdielen — jede Frage ist ein Brett mit echter Maserung
+   (Kiefer-Textur, pro Ton getönt), gestapelt wie Dielen. Klick öffnet
+   die Antwort im Brett. Motion: Emil (ease-drawer, nur wo nötig).
+   ================================================================ */
+
 .faq {
   list-style: none;
-  margin: 0;
-  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem; /* schmale Fuge zwischen den Dielen */
 }
 
-.faq__row {
+/* Ein Brett */
+.faq__plank {
   position: relative;
-  border-top: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+  border-radius: 10px;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--plank-ink);
+  background-color: var(--plank-bg);
+  background-image: var(--tex, none);
+  background-size: 460px auto;
+  background-position: var(--plank-pos, center);
+  background-blend-mode: multiply;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.22),
+    0 12px 24px -18px rgba(28, 18, 10, 0.6);
+  transition:
+    transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+    filter 0.3s ease-out;
 }
-.faq__row:last-child {
-  border-bottom: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+
+/* Vier Töne (zyklisch über die Fragen) */
+.faq__plank--t0 {
+  --plank-bg: #e3d2ad;
+  --plank-ink: #3a2a1c;
+  --plank-ink-soft: rgba(58, 42, 28, 0.8);
+  --plank-line: rgba(58, 42, 28, 0.2);
+  --plank-pos: 10% 30%;
+}
+.faq__plank--t1 {
+  --plank-bg: #c99a5b;
+  --plank-ink: #2a1c0c;
+  --plank-ink-soft: rgba(42, 28, 12, 0.82);
+  --plank-line: rgba(42, 28, 12, 0.24);
+  --plank-pos: 60% 70%;
+}
+.faq__plank--t2 {
+  --plank-bg: #6d4a2c;
+  --plank-ink: #fdf6ea;
+  --plank-ink-soft: rgba(253, 246, 234, 0.82);
+  --plank-line: rgba(253, 246, 234, 0.22);
+  --plank-pos: 35% 50%;
+}
+.faq__plank--t3 {
+  --plank-bg: #3a2616;
+  --plank-ink: #f6ece0;
+  --plank-ink-soft: rgba(246, 236, 224, 0.8);
+  --plank-line: rgba(246, 236, 224, 0.18);
+  --plank-pos: 80% 20%;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .faq__plank:hover {
+    filter: brightness(1.05);
+  }
 }
 
 .faq__head {
@@ -20,45 +73,59 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: clamp(1rem, 3vw, 2.5rem);
+  gap: 1.25rem;
+  padding: clamp(1.05rem, 2vw, 1.45rem) clamp(1.25rem, 2.4vw, 1.9rem);
   background: none;
   border: 0;
-  cursor: pointer;
   text-align: left;
-  padding-block: clamp(1.15rem, 2.6vh, 1.7rem);
-  color: var(--ink);
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
 }
-
 .faq__frage {
-  font-family: var(--font-head);
-  font-weight: 340;
-  font-size: clamp(1.15rem, 2.2vw, 1.6rem);
-  letter-spacing: -0.02em;
-  line-height: 1.25;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  color: var(--plank-ink);
 }
-
 .faq__toggle {
   flex: none;
-  font-family: var(--font-mono);
-  font-size: 1.5rem;
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--plank-line);
+  color: var(--plank-ink);
+  font-size: 1.2rem;
   line-height: 1;
-  color: var(--oak);
 }
 
 .faq__panelwrap {
-  position: relative;
+  overflow: hidden;
 }
 .faq__antwort {
-  padding-bottom: clamp(1.25rem, 3vh, 2rem);
-  max-width: 62ch;
-  color: var(--ink-soft);
+  margin: 0;
+  padding: 0 clamp(1.25rem, 2.4vw, 1.9rem) clamp(1.2rem, 2.2vw, 1.6rem);
+  max-width: 64ch;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--plank-ink-soft);
+}
+/* feine Trennlinie zwischen Frage und Antwort (Brett-Fuge) */
+.faq__antwort::before {
+  content: '';
+  display: block;
+  height: 1px;
+  background: var(--plank-line);
+  margin-bottom: 1rem;
+  opacity: 0.6;
 }
 
-@media (hover: hover) {
-  .faq__head:hover .faq__frage {
-    color: var(--oak);
+@media (prefers-reduced-motion: reduce) {
+  .faq__plank {
+    transition: none;
   }
-}
-.faq__row.is-open .faq__frage {
-  color: var(--oak);
 }

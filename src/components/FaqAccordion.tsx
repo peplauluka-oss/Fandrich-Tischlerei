@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { REVEAL_EASE, DURATION, STAGGER } from '../tokens/motion';
 import '../styles/faq.css';
+
+const EASE_OUT = [0.23, 1, 0.32, 1] as const;
+const EASE_DRAWER = [0.32, 0.72, 0, 1] as const; // iOS-Drawer-Kurve (Emil)
 
 interface Qa {
   frage: string;
   antwort: string;
 }
 
-// Verdichtete Q&A aus dem detaillierten Leistungs-Content der Altseite —
-// je eine gängige Kundenfrage, knapp und modern beantwortet.
 const FRAGEN: Qa[] = [
   {
     frage: 'Repariert ihr auch Kunststofffenster?',
@@ -43,22 +43,27 @@ const FRAGEN: Qa[] = [
   },
 ];
 
-export default function FaqAccordion() {
+interface Props {
+  /** URL der Kiefer-Textur — Grundmaserung jeder Diele. */
+  texUrl: string;
+}
+
+export default function FaqAccordion({ texUrl }: Props) {
   const [open, setOpen] = useState<number | null>(0);
   const reduced = useReducedMotion();
 
   return (
-    <ul className="faq">
+    <ul className="faq" style={{ ['--tex' as string]: `url(${texUrl})` }}>
       {FRAGEN.map((q, i) => {
         const isOpen = open === i;
+        const ton = i % 4;
         return (
           <motion.li
-            className={`faq__row ${isOpen ? 'is-open' : ''}`}
+            className={`faq__plank faq__plank--t${ton} ${isOpen ? 'is-open' : ''}`}
             key={q.frage}
-            initial={reduced ? false : { opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: DURATION.reveal, ease: REVEAL_EASE, delay: i * STAGGER }}
+            initial={reduced ? false : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, ease: EASE_OUT, delay: i * 0.06 }}
           >
             <button
               type="button"
@@ -71,7 +76,7 @@ export default function FaqAccordion() {
                 className="faq__toggle"
                 aria-hidden="true"
                 animate={{ rotate: isOpen ? 45 : 0 }}
-                transition={{ duration: DURATION.hover, ease: REVEAL_EASE }}
+                transition={{ duration: 0.22, ease: EASE_OUT }}
               >
                 +
               </motion.span>
@@ -84,8 +89,7 @@ export default function FaqAccordion() {
                   initial={reduced ? { opacity: 1 } : { height: 0, opacity: 0 }}
                   animate={reduced ? { opacity: 1 } : { height: 'auto', opacity: 1 }}
                   exit={reduced ? { opacity: 0 } : { height: 0, opacity: 0 }}
-                  transition={{ duration: 0.5, ease: REVEAL_EASE }}
-                  style={{ overflow: 'hidden' }}
+                  transition={{ duration: 0.34, ease: EASE_DRAWER }}
                 >
                   <p className="faq__antwort">{q.antwort}</p>
                 </motion.div>
