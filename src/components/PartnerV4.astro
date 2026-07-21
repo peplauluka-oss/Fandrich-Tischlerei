@@ -77,7 +77,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     gap: clamp(0.55rem, 1vw, 0.85rem);
   }
   .partner__wall > li {
-    flex: 0 1 clamp(9rem, 17vw, 12rem);
+    /* Zielbreite so, dass 11 Logos als volle 6 + 5 umbrechen (kein Einzel-Waisenkind) */
+    flex: 0 1 clamp(8.5rem, 14vw, 10.75rem);
   }
 
   .partner__tile {

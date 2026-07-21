@@ -32,6 +32,7 @@ export const logoPartner: LogoPartner[] = [
   { name: 'Zeilinga', url: 'https://www.zeilinga-riedl.com', logo: 'partners/zeilinga.png' },
   { name: 'Tischlerei Jähnke', url: 'https://www.tischlerei-jaehnke.de', logo: 'partners/jaehnke.jpeg' },
   { name: 'Korb-Jacob', url: 'https://www.korb-jacob.de', logo: 'partners/korb-jacob.png', invert: true },
+  { name: 'WEGO Badcenter', url: 'https://www.wego-badcenter.de', logo: 'partners/wego.png' },
 ];
 
 /** Weitere Partner ohne Logo — schlanke Namenszeile. */
@@ -40,5 +41,4 @@ export const weiterePartner: string[] = [
   'Schüco',
   'Braun Raumausstattung',
   'Schlosserei Scholz',
-  'WEGO Badcenter',
 ];
