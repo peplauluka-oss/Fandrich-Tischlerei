@@ -1,40 +1,44 @@
 /**
- * Partner & Auftraggeber — Trust-Sektion.
+ * Partner & Auftraggeber — Trust-Sektion als Logo-Wall.
  *
- * Aktuell als Namens-Wortmarken dargestellt. Sobald echte Logos vorliegen:
- * Datei unter `public/partners/<name>.svg` ablegen und hier `logo` setzen
- * (Pfad relativ zu BASE_URL, z. B. 'partners/gesobau.svg'). Die Komponente
- * zeigt dann automatisch das Logo statt des Schriftzugs — ohne Layout-Änderung.
+ * `logoPartner` erscheinen als echte Logos in der Wall (im Ruhezustand
+ * monochrom, bei Hover in Originalfarbe). Die Dateien liegen in
+ * `public/partners/`. `invert: true` markiert helle Logos, die auf dem
+ * hellen Kachel-Grund sonst unsichtbar wären (z. B. Korb-Jacob) — sie
+ * werden per CSS zu dunklem Ink invertiert.
  *
- * TODO Betreiber: Firmennamen + URLs gegenprüfen (aus der Altseite abgeleitet),
- * insbesondere die abgeschnittene CRESCO-URL.
+ * `weiterePartner` sind Namen ohne (nutzbares) Logo — als schlanke,
+ * gedämpfte Zeile unter der Wall, damit Reichweite/SEO erhalten bleiben,
+ * ohne die Wall optisch zu brechen.
  */
-export interface Partner {
+export interface LogoPartner {
   name: string;
   url: string;
-  /** optional: Pfad zu einem echten Logo (SVG/PNG) in public/partners/ */
-  logo?: string;
+  /** Pfad relativ zu BASE_URL, in public/partners/ */
+  logo: string;
+  /** helle Logos auf transparentem Grund -> zu dunklem Ink invertieren */
+  invert?: boolean;
 }
 
-/** Hausverwaltungen & Auftraggeber — der stärkere Trust-Block. */
-export const auftraggeber: Partner[] = [
-  { name: 'GESOBAU', url: 'https://www.gesobau.de' },
-  { name: 'HOWOGE', url: 'https://www.howoge.de' },
-  { name: 'AGEWO', url: 'https://www.agewo.de' },
-  { name: 'OPTIMUS', url: 'https://www.optimus-hv.de' },
-  { name: 'ADLER Wohnen', url: 'https://www.adler-wohnen.com' },
-  { name: 'CRESCO', url: 'https://www.crescocapital.com' }, // TODO URL prüfen
-  { name: 'GA-tec', url: 'https://www.ga-tec.de' },
+/** Echte Logos — Auftraggeber zuerst (stärkerer Trust), dann Handwerkspartner. */
+export const logoPartner: LogoPartner[] = [
+  { name: 'GESOBAU', url: 'https://www.gesobau.de', logo: 'partners/gesobau.png' },
+  { name: 'HOWOGE', url: 'https://www.howoge.de', logo: 'partners/howoge.jpeg' },
+  { name: 'ADLER Group', url: 'https://www.adler-group.com', logo: 'partners/adler.png' },
+  { name: 'AGEWo', url: 'https://www.agewo.de', logo: 'partners/agewo.png' },
+  { name: 'Cresco Capital Group', url: 'https://www.crescocapital.com', logo: 'partners/cresco.jpeg' },
+  { name: 'GA-tec', url: 'https://www.ga-tec.de', logo: 'partners/gatec.jpeg' },
+  { name: 'ALPRO Metallbau', url: 'https://www.alpro-metallbau.de', logo: 'partners/alpro.png' },
+  { name: 'Zeilinga', url: 'https://www.zeilinga-riedl.com', logo: 'partners/zeilinga.png' },
+  { name: 'Korb-Jacob', url: 'https://www.korb-jacob.de', logo: 'partners/korb-jacob.png', invert: true },
 ];
 
-/** Partnerbetriebe — Handwerk, mit dem wir zusammenarbeiten. */
-export const partnerBetriebe: Partner[] = [
-  { name: 'Schüco Fenster', url: 'https://www.assmann-klasen.de' },
-  { name: 'Alpro Metallbau', url: 'https://www.alpro-metallbau.de' },
-  { name: 'Jähnke Fensterbau', url: 'https://www.tischlerei-jaehnke.de' },
-  { name: 'Braun Raumausstattung', url: 'https://www.braun-raumausstattung.de' },
-  { name: 'Schlosserei Scholz', url: 'https://www.schlosserei-scholz-berlin.de' },
-  { name: 'Korb Jacob', url: 'https://www.korb-jacob.de' },
-  { name: 'Zeilinga Hebebühnen', url: 'https://www.zeilinga-riedl.com' },
-  { name: 'WEGO Badcenter', url: 'https://www.wego-badcenter.de' },
+/** Weitere Partner ohne Logo — schlanke Namenszeile. */
+export const weiterePartner: string[] = [
+  'Optimus Hausverwaltung',
+  'Schüco',
+  'Tischlerei Jähnke',
+  'Braun Raumausstattung',
+  'Schlosserei Scholz',
+  'WEGO Badcenter',
 ];

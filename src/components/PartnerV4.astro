@@ -1,62 +1,55 @@
 ---
 /**
- * Partner & Auftraggeber — moderne „Logo-Wall" als Trust-Sektion.
- * Statt monotoner Linkliste: gruppierte Karten mit Wortmarke (oder echtem
- * Logo, sobald geliefert), monochrom, Hover hebt an + färbt Oak.
- * Un-nummerierte Band-Sektion (wie CtaBand) — reiht sich vor dem Q&A ein,
- * ohne die Kapitel-Nummerierung zu verschieben.
+ * Partner & Auftraggeber — Logo-Wall (Schritt 7).
+ * Echte Logos statt Wortmarken, als ein System: im Ruhezustand monochrom
+ * (grayscale), bei Hover in Originalfarbe mit sanftem Anheben (Emil).
+ * Kein Eyebrow, keine Deko-Nummer (impeccable). Helle Logos werden
+ * invertiert, damit sie auf dem hellen Kachel-Grund sichtbar bleiben.
  */
-import { auftraggeber, partnerBetriebe } from '../data/partners';
+import { logoPartner, weiterePartner } from '../data/partners';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const gruppen = [
-  { label: 'Hausverwaltungen & Auftraggeber', items: auftraggeber },
-  { label: 'Partnerbetriebe', items: partnerBetriebe },
-];
 ---
 
-<section class="partner section--warm" id="partner-v4" aria-label="Partner und Auftraggeber">
+<section class="partner" id="partner-v4" aria-label="Partner und Auftraggeber">
   <div class="wrap">
     <div class="partner__head">
-      <p class="eyebrow reveal">Partner &amp; Referenzen</p>
       <h2 class="headline--v4 split">In guter Gesellschaft.</h2>
       <p class="partner__intro reveal" style="--reveal-delay: 0.05s">
-        Wir arbeiten Hand in Hand mit Berliner Handwerksbetrieben — und fertigen für
-        Hausverwaltungen und Auftraggeber in der ganzen Stadt.
+        Berliner Hausverwaltungen, Wohnungsunternehmen und Handwerksbetriebe arbeiten seit
+        Jahren mit uns — vom einzelnen Auftrag bis zur laufenden Betreuung ganzer Objekte.
       </p>
     </div>
 
-    {
-      gruppen.map((g, gi) => (
-        <div class="partner__group reveal" style={`--reveal-delay: ${0.1 + gi * 0.05}s`}>
-          <h3 class="partner__label">{g.label}</h3>
-          <ul class="partner__grid">
-            {g.items.map((p) => (
-              <li>
-                <a
-                  class="partner__card"
-                  href={p.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-cursor="link"
-                >
-                  {p.logo ? (
-                    <img
-                      class="partner__logo"
-                      src={`${base}/${p.logo}`}
-                      alt={p.name}
-                      loading="lazy"
-                    />
-                  ) : (
-                    <span class="partner__name">{p.name}</span>
-                  )}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))
-    }
+    <ul class="partner__wall reveal" style="--reveal-delay: 0.1s">
+      {
+        logoPartner.map((p, i) => (
+          <li>
+            <a
+              class="partner__tile"
+              href={p.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={p.name}
+              data-cursor="link"
+              style={`--i: ${i}`}
+            >
+              <img
+                class={`partner__logo${p.invert ? ' is-invert' : ''}`}
+                src={`${base}/${p.logo}`}
+                alt={p.name}
+                loading="lazy"
+                decoding="async"
+              />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="partner__more reveal" style="--reveal-delay: 0.16s">
+      Außerdem u. a. {weiterePartner.join(' · ')}
+    </p>
   </div>
 </section>
 
@@ -65,102 +58,116 @@ const gruppen = [
     padding-block: var(--section-gap);
   }
   .partner__head {
-    max-width: 52ch;
-    margin-bottom: clamp(2.5rem, 6vh, 4rem);
+    max-width: 46ch;
+    margin-bottom: clamp(2.25rem, 5vh, 3.25rem);
   }
   .partner__intro {
-    margin-top: clamp(1.25rem, 3vh, 1.75rem);
+    margin-top: clamp(1.1rem, 3vh, 1.6rem);
     color: var(--ink-soft);
   }
 
-  .partner__group + .partner__group {
-    margin-top: clamp(2.5rem, 5vh, 3.5rem);
-  }
-  .partner__label {
-    font-family: var(--font-mono);
-    font-size: 0.74rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--oak);
-    margin-bottom: 1.1rem;
-  }
-
-  .partner__grid {
+  /* -------- Logo-Wall -------- */
+  /* Zentriertes Flex-Raster: 9 Logos brechen als ausgewogene 5 + 4 um,
+     die letzte Reihe bleibt mittig statt links angeschlagen. */
+  .partner__wall {
     list-style: none;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr));
-    gap: clamp(0.6rem, 1.2vw, 0.9rem);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(0.55rem, 1vw, 0.85rem);
+  }
+  .partner__wall > li {
+    flex: 0 1 clamp(9rem, 17vw, 12rem);
   }
 
-  .partner__card {
+  .partner__tile {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 5.5rem;
-    padding: 1rem 1.25rem;
+    padding: 1.1rem 1.35rem;
     background: var(--paper);
     border: 1px solid var(--oak-line);
-    border-radius: 0.9rem;
-    text-decoration: none;
-    text-align: center;
+    border-radius: 14px;
+    /* nur transform/opacity/farb-relevante Props animieren (Emil) */
     transition:
-      color 0.25s var(--ease-out),
-      border-color 0.25s var(--ease-out),
-      transform 0.25s var(--ease-out),
-      box-shadow 0.25s var(--ease-out);
-  }
-  .partner__name {
-    font-family: var(--font-body);
-    font-weight: 700;
-    font-size: 0.98rem;
-    letter-spacing: -0.01em;
-    line-height: 1.2;
-    color: var(--ink-soft);
-    transition: color 0.25s var(--ease-out);
-  }
-  /* Echte Logos: monochrom im Ruhezustand, Farbe bei Hover (Logo-Wall-Look) */
-  .partner__logo {
-    max-height: 2.4rem;
-    max-width: 100%;
-    width: auto;
-    object-fit: contain;
-    filter: grayscale(1);
-    opacity: 0.7;
-    transition:
-      filter 0.25s var(--ease-out),
-      opacity 0.25s var(--ease-out);
+      transform 0.3s var(--ease-out),
+      border-color 0.3s var(--ease-out),
+      box-shadow 0.3s var(--ease-out);
   }
 
-  @media (hover: hover) {
-    .partner__card:hover {
-      border-color: var(--oak);
+  .partner__logo {
+    max-height: 2.5rem;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    /* Ruhezustand: ein System — monochrom, zurückgenommen */
+    filter: grayscale(1);
+    opacity: 0.6;
+    transition:
+      filter 0.35s var(--ease-out),
+      opacity 0.35s var(--ease-out);
+  }
+  /* Helle Logos (weiß auf transparent) sichtbar machen: zu Ink invertieren */
+  .partner__logo.is-invert {
+    filter: grayscale(1) invert(1);
+    opacity: 0.72;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .partner__tile:hover {
       transform: translateY(-3px);
-      box-shadow: 0 14px 26px -16px rgba(43, 37, 35, 0.4);
+      border-color: var(--oak);
+      box-shadow: 0 16px 30px -20px rgba(43, 37, 35, 0.45);
     }
-    .partner__card:hover .partner__name {
-      color: var(--ink);
+    .partner__tile:hover .partner__logo {
+      filter: grayscale(0);
+      opacity: 1;
     }
-    .partner__card:hover .partner__logo {
-      filter: none;
+    /* invertierte Logos haben keine nutzbare Farbversion: dunkel + voll */
+    .partner__tile:hover .partner__logo.is-invert {
+      filter: grayscale(1) invert(1);
       opacity: 1;
     }
   }
-  .partner__card:focus-visible {
+
+  /* Press-Feedback (Emil) */
+  .partner__tile:active {
+    transform: scale(0.985);
+  }
+  .partner__tile:focus-visible {
     outline: 2px solid var(--oak);
-    outline-offset: 2px;
+    outline-offset: 3px;
   }
 
-  @media (max-width: 520px) {
-    .partner__grid {
-      grid-template-columns: repeat(2, 1fr);
+  .partner__more {
+    margin-top: clamp(1.5rem, 3.5vh, 2.25rem);
+    font-size: 0.86rem;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    opacity: 0.72;
+    max-width: 60ch;
+  }
+
+  @media (max-width: 640px) {
+    .partner__wall > li {
+      flex: 0 1 calc(50% - 0.3rem);
     }
-    .partner__card {
+    .partner__tile {
       min-height: 4.75rem;
-      padding: 0.85rem;
+      padding: 0.9rem;
     }
-    .partner__name {
-      font-size: 0.9rem;
+    .partner__logo {
+      max-height: 2.1rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .partner__tile,
+    .partner__logo {
+      transition: none;
     }
   }
 </style>
