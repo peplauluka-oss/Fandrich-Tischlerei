@@ -25,6 +25,9 @@
   /* Bewegung — EIN Easing-System (Möbelscharnier: präzise, gedämpft) */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-curtain: cubic-bezier(0.76, 0, 0.24, 1);
+  /* Redesign-Motion (Emil Kowalski / Apple): exponentielles Ease-out, kein Bounce */
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-quart: cubic-bezier(0.25, 1, 0.5, 1);
 
   /* Raum */
   /* Dichte-Gesetz: Sektionsabstand 96–140px, nie mehr. */
@@ -33,6 +36,16 @@
 
   /* Einheitlicher warmer Look für alle Projektfotos */
   --photo-filter: sepia(0.06) saturate(1.05) brightness(1.02) contrast(1.01);
+
+  /* ── Holz-Material-System (Redesign) ─────────────────────────────
+     Durchgängiges Holz statt flacher Cream-Fläche. Heller Kiefer-Grund
+     trägt den Fluss; dunkles Walnuss-Band setzt Kontrast-Sektionen. */
+  --wood-base: #e7d8ba; /* heller Kiefer-Grund (Ton der echten Textur) */
+  --wood-veil: rgba(231, 216, 186, 0.6); /* warmer Schleier für Lesbarkeit */
+  --wood-line: rgba(58, 42, 28, 0.14); /* feine Fugen/Trennung auf Holz */
+  --walnut: #241a12; /* dunkles Walnuss-Band (Hero, Kontrast) */
+  --walnut-2: #33241a; /* zweite Walnuss-Ebene (Panels) */
+  --wood-ink: #3a2a1c; /* warmer Text auf hellem Holz */
 }
 
 * {
@@ -50,14 +63,37 @@ html:not(.lenis) {
   scroll-behavior: smooth;
 }
 
+html {
+  background: var(--wood-base);
+}
+
 body {
-  background: var(--paper);
+  background: transparent;
   color: var(--ink);
   font-family: var(--font-body);
   font-size: clamp(1.05rem, 0.4vw + 0.95rem, 1.125rem);
   font-weight: 400;
   line-height: 1.7;
   overflow-x: clip;
+}
+
+/* ── Durchgängiger Holz-Hintergrund ──────────────────────────────────
+   Eine fixierte Kiefer-Fläche hinter der ganzen Seite (kein Kachel-Seam:
+   cover, viewport-fixiert). Dunkle Sektionen liegen opak darüber; helle
+   Sektionen sind transparent und zeigen das Holz — so gibt es keinen
+   Beige↔Holz-Bruch mehr, ein Material über den ganzen Scroll. */
+.woodbg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--wood-base) var(--wood-tex, none) center / cover no-repeat;
+}
+.woodbg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--wood-veil);
 }
 
 ::selection {
@@ -473,7 +509,9 @@ main > .section {
 
 /* Hintergrund-Rhythmus */
 .section--warm {
-  background: var(--paper-warm);
+  /* Redesign: kein separater Beige-Grund mehr — das durchgängige Holz
+     trägt den Fluss. Nur ein Hauch wärmerer Schleier für Rhythmuswechsel. */
+  background: rgba(58, 42, 28, 0.05);
 }
 .section--ink {
   background: var(--ink);

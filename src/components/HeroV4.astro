@@ -1,15 +1,11 @@
 ---
-import GridLines from './GridLines.astro';
 import { heroVideos } from '../data/heroMedia';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const hasVideo = heroVideos.length > 0;
-
-// Anker/Teaser der Kernleistungen (Sprungmarken zur Leistungssektion)
-const anker = ['Neuanfertigung', 'Restaurierung', 'Innenausbau'];
 ---
 
-<section class="hero4 section--ink has-grid" id="hero-v4" aria-label="Intro">
+<section class="hero4" id="hero-v4" aria-label="Intro">
   <!-- VideoSlot-Layer: leer bis Clips vorliegen (src/data/heroMedia.ts) -->
   {
     hasVideo && (
@@ -31,8 +27,6 @@ const anker = ['Neuanfertigung', 'Restaurierung', 'Innenausbau'];
       </div>
     )
   }
-
-  <GridLines variant="ink" />
 
   <div class="hero4__inner wrap" data-hero-exit>
     <p class="hero4__mark">Meistertischlerei — Berlin-Pankow</p>
@@ -61,18 +55,10 @@ const anker = ['Neuanfertigung', 'Restaurierung', 'Innenausbau'];
   </div>
 
   <div class="hero4__foot wrap">
-    <ul class="hero4__anker">
-      {
-        anker.map((a) => (
-          <li>
-            <a href="#leistungen-v4" class="hero4__ankerlink">
-              {a}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-    <span class="hero4__scroll" aria-hidden="true"></span>
+    <a href="#ueber-uns-v4" class="hero4__scrollcue" aria-label="Weiter zu Über uns">
+      <span class="hero4__scrolltext">Scrollen</span>
+      <span class="hero4__scroll" aria-hidden="true"></span>
+    </a>
   </div>
 </section>
 
@@ -84,6 +70,22 @@ const anker = ['Neuanfertigung', 'Restaurierung', 'Innenausbau'];
     grid-template-rows: 1fr auto;
     overflow: clip;
     padding-top: clamp(6rem, 14vh, 9rem);
+    color: var(--paper);
+    /* Dunkles Walnuss-Band mit warmem Oberlicht — Holz-Welt, nicht flaches Ink */
+    background:
+      radial-gradient(120% 80% at 20% -10%, rgba(255, 214, 170, 0.16), transparent 55%),
+      linear-gradient(180deg, #2b1e14 0%, var(--walnut) 60%, #1c140d 100%);
+  }
+  /* Weicher Übergang: der dunkle Hero schmilzt unten ins helle Holz —
+     kein harter Beige↔Dunkel-Bruch mehr. */
+  .hero4::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0 0;
+    height: clamp(5rem, 12vh, 9rem);
+    background: linear-gradient(180deg, transparent, var(--wood-base));
+    pointer-events: none;
+    z-index: 0;
   }
 
   /* VideoSlot */
@@ -185,41 +187,34 @@ const anker = ['Neuanfertigung', 'Restaurierung', 'Innenausbau'];
     z-index: 1;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     gap: 1.5rem;
     padding-bottom: clamp(1.5rem, 4vh, 2.5rem);
     padding-top: 1.25rem;
-    border-top: 1px solid var(--grid-line-ink);
   }
-  .hero4__anker {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem 2rem;
-  }
-  .hero4__ankerlink {
-    font-family: var(--font-mono);
-    font-size: 0.76rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: rgba(250, 247, 242, 0.75);
-    text-decoration: none;
-    padding-block: 0.4rem;
-    min-height: 44px;
+  .hero4__scrollcue {
     display: inline-flex;
+    flex-direction: column;
     align-items: center;
-    transition: color 0.25s var(--ease-out);
+    gap: 0.6rem;
+    text-decoration: none;
+    color: rgba(250, 247, 242, 0.65);
+    transition: color 0.3s var(--ease-out);
   }
-  .hero4__ankerlink:hover {
+  .hero4__scrollcue:hover {
     color: var(--oak);
+  }
+  .hero4__scrolltext {
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
   }
 
   .hero4__scroll {
     flex: none;
     width: 1px;
     height: 42px;
-    background: var(--paper);
-    opacity: 0.5;
+    background: currentColor;
+    opacity: 0.7;
     transform-origin: top;
     animation: heroScroll 2.6s ease-in-out infinite;
   }
@@ -235,30 +230,11 @@ const anker = ['Neuanfertigung', 'Restaurierung', 'Innenausbau'];
     }
   }
 
-  /* Werkplan-Effekt: Raster zeichnet sich beim Laden ein (nur im Hero) */
-  .hero4 :global(.wp-grid__col) {
-    transform: scaleY(0);
-    transform-origin: top;
-    animation: hero-grid 1.1s var(--ease-out) both;
-  }
-  .hero4 :global(.wp-grid__col:nth-child(2n)) {
-    animation-delay: 0.15s;
-  }
-  .hero4 :global(.wp-grid__col:nth-child(3n)) {
-    animation-delay: 0.3s;
-  }
-  @keyframes hero-grid {
-    to {
-      transform: scaleY(1);
-    }
-  }
-
   @media (prefers-reduced-motion: reduce) {
     .hero4__title .w,
     .hero4__sub,
     .hero4__cta,
-    .hero4__scroll,
-    .hero4 :global(.wp-grid__col) {
+    .hero4__scroll {
       animation: none;
       opacity: 1;
       transform: none;
