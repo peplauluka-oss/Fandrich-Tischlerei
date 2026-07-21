@@ -30,6 +30,7 @@ export const logoPartner: LogoPartner[] = [
   { name: 'GA-tec', url: 'https://www.ga-tec.de', logo: 'partners/gatec.jpeg' },
   { name: 'ALPRO Metallbau', url: 'https://www.alpro-metallbau.de', logo: 'partners/alpro.png' },
   { name: 'Zeilinga', url: 'https://www.zeilinga-riedl.com', logo: 'partners/zeilinga.png' },
+  { name: 'Tischlerei Jähnke', url: 'https://www.tischlerei-jaehnke.de', logo: 'partners/jaehnke.jpeg' },
   { name: 'Korb-Jacob', url: 'https://www.korb-jacob.de', logo: 'partners/korb-jacob.png', invert: true },
 ];
 
@@ -37,7 +38,6 @@ export const logoPartner: LogoPartner[] = [
 export const weiterePartner: string[] = [
   'Optimus Hausverwaltung',
   'Schüco',
-  'Tischlerei Jähnke',
   'Braun Raumausstattung',
   'Schlosserei Scholz',
   'WEGO Badcenter',
