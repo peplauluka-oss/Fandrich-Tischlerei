@@ -106,10 +106,6 @@ export default function LeistungenScroller({ bg }: Props) {
     }
   };
 
-  const nudge = (dir: -1 | 1) => {
-    inertia.current += dir * 0.85;
-  };
-
   return (
     <div className="lsc">
       <div
@@ -165,24 +161,6 @@ export default function LeistungenScroller({ bg }: Props) {
 
       <div className="lsc__controls">
         <span className="lsc__hint">Läuft automatisch · ziehen zum Blättern</span>
-        <div className="lsc__arrows">
-          <button
-            type="button"
-            className="lsc__arrow"
-            aria-label="Nach links schieben"
-            onClick={() => nudge(-1)}
-          >
-            ←
-          </button>
-          <button
-            type="button"
-            className="lsc__arrow"
-            aria-label="Nach rechts schieben"
-            onClick={() => nudge(1)}
-          >
-            →
-          </button>
-        </div>
       </div>
     </div>
   );

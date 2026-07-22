@@ -159,3 +159,14 @@
 .nav--hidden:not(.nav--open) {
   transform: translateY(-100%);
 }
+
+/* Menü offen: KEIN backdrop-filter/transform auf .nav — sonst würde das
+   fixed-Overlay relativ zur Nav-Leiste positioniert (Containing-Block-Falle)
+   und die Seite blutet beim Runtergescrollt-Sein durch. */
+.nav--open {
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  transform: none;
+  border-bottom-color: transparent;
+}
