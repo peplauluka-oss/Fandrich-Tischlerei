@@ -8,6 +8,7 @@ import {
   useReducedMotion,
 } from 'framer-motion';
 import '../styles/craft.css';
+import KarateChop from './KarateChop';
 
 export interface CraftImage {
   src: string;
@@ -18,14 +19,12 @@ export interface CraftImage {
 
 interface Props {
   images: CraftImage[];
-  /** WebP-Quelle der Holz-Textur für das „wegfliegende Brett". */
-  coverTex: string;
+  /** WebP-Quelle des Holzbretts für den Karate-Chop-Reveal. */
+  chopTex: string;
 }
 
 const EASE_DRAWER = [0.32, 0.72, 0, 1] as const; // iOS-Drawer-Kurve (Emil)
 const TITLE_LINES = ['Vom Aufmaß bis', 'zur Montage.'];
-// Handwerks-Etappen, die auf dem Brett stehen und mit ihm wegfliegen.
-const STAGES = ['In der Werkstatt', 'Vor Ort montiert'];
 
 /* Magnetischer Button: useSpring auf x/y, an die Cursor-Position gekoppelt.
    Kein State im Render-Pfad -> 60 fps, jederzeit unterbrechbar (Emil). */
@@ -65,14 +64,12 @@ function ParallaxFigure({
   im,
   withBadge,
   reduced,
-  coverTex,
-  stage,
+  chopTex,
 }: {
   im: CraftImage;
   withBadge: boolean;
   reduced: boolean | null;
-  coverTex: string;
-  stage: string;
+  chopTex: string;
 }) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -81,33 +78,20 @@ function ParallaxFigure({
   });
   // Bild-Parallax: wandert langsamer als der Scroll.
   const y = useTransform(scrollYProgress, [0, 1], ['-9%', '9%']);
-  // Das Holzbrett liegt zuerst über dem Bild und fliegt beim Scrollen nach
-  // unten weg -> Storytelling: von der Arbeit zum fertigen Ergebnis.
-  const coverY = useTransform(scrollYProgress, [0.4, 0.62], ['0%', '108%']);
 
   return (
     <figure className="cs__fig" ref={ref}>
-      <div className="cs__frame" style={{ aspectRatio: String(im.ratio) }}>
-        <motion.img
-          src={im.src}
-          alt={im.alt}
-          loading="lazy"
-          decoding="async"
-          style={{ y: reduced ? 0 : y }}
-        />
-        {!reduced && (
-          <motion.div
-            className="cs__cover"
-            aria-hidden="true"
-            style={{
-              y: coverY,
-              backgroundImage: `url(${coverTex})`,
-            }}
-          >
-            <span className="cs__coverlabel">{stage}</span>
-          </motion.div>
-        )}
-      </div>
+      <KarateChop woodSrc={chopTex}>
+        <div className="cs__frame" style={{ aspectRatio: String(im.ratio) }}>
+          <motion.img
+            src={im.src}
+            alt={im.alt}
+            loading="lazy"
+            decoding="async"
+            style={{ y: reduced ? 0 : y }}
+          />
+        </div>
+      </KarateChop>
       {withBadge && (
         <span className="cs__badge">
           <strong>Meisterbetrieb</strong>
@@ -119,7 +103,7 @@ function ParallaxFigure({
   );
 }
 
-export default function CraftSplit({ images, coverTex }: Props) {
+export default function CraftSplit({ images, chopTex }: Props) {
   const reduced = useReducedMotion();
 
   return (
@@ -164,8 +148,7 @@ export default function CraftSplit({ images, coverTex }: Props) {
             im={im}
             withBadge={i === 0}
             reduced={reduced}
-            coverTex={coverTex}
-            stage={STAGES[i % STAGES.length]}
+            chopTex={chopTex}
           />
         ))}
       </div>

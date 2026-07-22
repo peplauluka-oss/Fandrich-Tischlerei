@@ -1,0 +1,110 @@
+/* ================================================================
+   Karate-Chop-Reveal: ein Holzbrett liegt über dem Foto, mittig
+   gezackt gesplittet. Klick/Tap -> beide Hälften fliegen mit Spring-
+   Physik nach außen, das fertige Werk erscheint (scale 0.9 -> 1).
+   ================================================================ */
+
+.kc {
+  position: relative;
+  display: block;
+  border: 0;
+  padding: 0;
+  width: 100%;
+  border-radius: clamp(1rem, 2vw, 1.5rem);
+  overflow: hidden;
+  background: transparent;
+}
+.kc[data-broken='false'] {
+  cursor: pointer;
+}
+.kc[data-broken='false']:focus-visible {
+  outline: 2px solid var(--oak);
+  outline-offset: 3px;
+}
+
+/* Das freigelegte Werk (Foto) */
+.kc__content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Die zwei Brett-Hälften — identischer Hintergrund, nur unterschiedlich
+   geclippt, damit sie zusammen eine durchgehende Bohle ergeben. */
+.kc__half {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+.kc__half--l {
+  clip-path: polygon(
+    0% 0%, 50% 0%,
+    46% 9%, 53% 20%, 45% 31%, 54% 43%, 46% 54%,
+    54% 66%, 45% 77%, 53% 88%, 48% 96%, 50% 100%,
+    0% 100%
+  );
+  box-shadow: inset -2px 0 6px rgba(0, 0, 0, 0.45);
+}
+.kc__half--r {
+  clip-path: polygon(
+    50% 0%, 100% 0%, 100% 100%, 50% 100%,
+    48% 96%, 53% 88%, 45% 77%, 54% 66%, 46% 54%,
+    54% 43%, 45% 31%, 53% 20%, 46% 9%
+  );
+  box-shadow: inset 2px 0 6px rgba(0, 0, 0, 0.45);
+}
+/* feiner Lichtgrat oben, damit es wie echtes Holz sitzt */
+.kc__half::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(255, 236, 210, 0.1), transparent 40%);
+  pointer-events: none;
+}
+
+/* „Zum Aufbrechen tippen" — pulsierender Hinweis */
+.kc__hint {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.6rem 1.05rem;
+  border-radius: 999px;
+  background: rgba(20, 13, 7, 0.5);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 245, 230, 0.18);
+  color: var(--paper);
+  font-size: 0.82rem;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.kc__hint::before {
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--oak);
+  box-shadow: 0 0 0 0 rgba(200, 157, 102, 0.6);
+  animation: kcPulse 1.9s var(--ease-out) infinite;
+}
+@keyframes kcPulse {
+  to {
+    box-shadow: 0 0 0 13px rgba(200, 157, 102, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kc__hint::before {
+    animation: none;
+  }
+}

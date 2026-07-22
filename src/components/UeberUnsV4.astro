@@ -15,7 +15,7 @@
  */
 import { getImage } from 'astro:assets';
 import { ueberUnsImages } from '../data/images';
-import woodTex from '../assets/textures/holz-kiefer.jpeg';
+import chopWood from '../assets/textures/holz-brett.jpeg';
 import CraftSplit, { type CraftImage } from './CraftSplit';
 import PhilosophyStack, { type Wert } from './PhilosophyStack';
 
@@ -32,8 +32,8 @@ const craftImages: CraftImage[] = await Promise.all(
   }),
 );
 
-// Holz-Textur für das „wegfliegende Brett" (optimiert).
-const coverTex = (await getImage({ src: woodTex, width: 760, format: 'webp', quality: 78 })).src;
+// Holzbrett für den Karate-Chop-Reveal (optimiert).
+const chopTex = (await getImage({ src: chopWood, width: 900, format: 'webp', quality: 80 })).src;
 
 // Vier Grundwerte — komprimiert aus der Firmenphilosophie, je ein Satz.
 const werte: Wert[] = [
@@ -58,7 +58,7 @@ const werte: Wert[] = [
 
 <section class="ueber8 section" id="ueber-uns-v4" aria-label="Über uns">
   <div class="wrap">
-    <CraftSplit client:visible images={craftImages} coverTex={coverTex} />
+    <CraftSplit client:visible images={craftImages} chopTex={chopTex} />
 
     <div class="ueber8__philo">
       <h2 class="ueber8__philo-t split">Der Kreislauf guter Arbeit</h2>
