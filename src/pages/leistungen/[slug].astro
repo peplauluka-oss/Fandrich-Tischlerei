@@ -1,12 +1,16 @@
 ---
 /**
- * SEO-Unterseite je Leistung. Der ausführliche Text wandert von der
- * Landingpage hierher — eine indexierbare Seite pro Gewerk, kürzere Startseite.
+ * SEO-Unterseite je Leistung — editoriales Split-Screen-Layout.
+ * Links: sticky Titel + Kurzbeschreibung + CTA. Rechts: Leistungsfoto
+ * (Parallax) und der ausführliche, indexierbare Text in ruhigen Blöcken.
+ * Reveals laufen über das globale .reveal/.split-System (stage.ts).
  */
+import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav';
 import { site } from '../../data/site';
 import { leistungen } from '../../data/leistungen';
+import { leistungenImages } from '../../data/images';
 
 export function getStaticPaths() {
   return leistungen.map((l, i) => ({
@@ -16,54 +20,88 @@ export function getStaticPaths() {
 }
 
 const { l, next } = Astro.props;
+const bild = leistungenImages[l.slug];
 const title = `${l.titel} — Tischlerei Fandrich, Berlin-Pankow`;
 const description = l.kurz;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Fließtext in ruhige Absätze (je Satz ein Block) für editorialen Rhythmus.
+const absaetze = l.text.split(/(?<=\.)\s+/).filter(Boolean);
 ---
 
 <Base title={title} description={description} noindex={false}>
   <Nav client:load solid />
   <main class="lp">
-    <div class="wrap lp__inner">
-      <a href={`${base}/#leistungen-v4`} class="lp__back" data-cursor="link">
-        <span aria-hidden="true">←</span> Alle Leistungen
-      </a>
-
-      <p class="lp__nr" aria-hidden="true">{l.nr}</p>
-      <h1 class="lp__title">{l.titel}</h1>
-      <p class="lp__lead">{l.kurz}</p>
-
-      <div class="lp__panel">
-        <p class="lp__text">{l.text}</p>
-        <ul class="lp__tags">
-          {l.stichworte.map((s) => <li>{s}</li>)}
-        </ul>
-      </div>
-
-      <div class="lp__cta">
-        <a href={`${base}/#kontakt-v4`} class="btn btn--oak" data-cursor="link">
-          {l.titel} anfragen <span class="arrow" aria-hidden="true">→</span>
+    <div class="wrap lp__grid">
+      <!-- Links: sticky -->
+      <aside class="lp__aside">
+        <a href={`${base}/#leistungen-v4`} class="lp__back" data-cursor="link">
+          <span aria-hidden="true">←</span> Alle Leistungen
         </a>
-        <a href={`tel:${site.phoneHref}`} class="lp__tel" data-cursor="link">
-          oder anrufen: <strong>{site.phone}</strong>
+
+        <p class="lp__nr" aria-hidden="true">{l.nr}</p>
+        <h1 class="lp__title split">{l.titel}</h1>
+        <p class="lp__lead reveal">{l.kurz}</p>
+
+        <div class="lp__cta reveal">
+          <a href={`${base}/#kontakt-v4`} class="btn btn--oak" data-cursor="link" data-magnetic="0.3">
+            {l.titel} anfragen <span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <a href={`tel:${site.phoneHref}`} class="lp__tel" data-cursor="link">
+            oder anrufen: <strong>{site.phone}</strong>
+          </a>
+        </div>
+      </aside>
+
+      <!-- Rechts: Foto + Fließtext -->
+      <div class="lp__content">
+        <figure class="lp__figure reveal" data-plx>
+          <Image
+            src={bild.src}
+            alt={bild.alt}
+            widths={[480, 760, bild.src.width]}
+            sizes="(min-width: 900px) 46vw, 92vw"
+            quality={80}
+          />
+          <figcaption class="lp__cap">{bild.caption}</figcaption>
+        </figure>
+
+        <div class="lp__prose">
+          {absaetze.map((p) => <p class="lp__p reveal">{p}</p>)}
+        </div>
+
+        <section class="lp__umfang reveal" aria-label="Leistungsumfang">
+          <h2 class="lp__umfang-t">Was dazugehört</h2>
+          <ul class="lp__tags">
+            {l.stichworte.map((s) => <li>{s}</li>)}
+          </ul>
+        </section>
+
+        <a href={`${base}/leistungen/${next.slug}`} class="lp__next" data-cursor="link">
+          <span class="lp__next-label">Nächste Leistung</span>
+          <span class="lp__next-titel">{next.titel} <span aria-hidden="true">→</span></span>
         </a>
       </div>
-
-      <a href={`${base}/leistungen/${next.slug}`} class="lp__next" data-cursor="link">
-        <span class="lp__next-label">Nächste Leistung</span>
-        <span class="lp__next-titel">{next.titel} <span aria-hidden="true">→</span></span>
-      </a>
     </div>
   </main>
 </Base>
 
 <style>
   .lp {
-    padding-top: clamp(7rem, 16vh, 10rem);
+    padding-top: clamp(6rem, 14vh, 9rem);
     padding-bottom: clamp(4rem, 10vh, 7rem);
   }
-  .lp__inner {
-    max-width: 60rem;
+  .lp__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: start;
+  }
+
+  /* Links: sticky Typo */
+  .lp__aside {
+    position: sticky;
+    top: clamp(6rem, 14vh, 8rem);
   }
   .lp__back {
     display: inline-flex;
@@ -79,7 +117,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     color: var(--oak);
   }
   .lp__nr {
-    margin-top: clamp(2rem, 5vh, 3.5rem);
+    margin-top: clamp(1.5rem, 4vh, 2.5rem);
     font-family: var(--font-body);
     font-weight: 700;
     font-size: 0.85rem;
@@ -90,56 +128,25 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     margin-top: 0.4rem;
     font-family: var(--font-body);
     font-weight: 800;
-    font-size: clamp(2.6rem, 7vw, 5rem);
-    line-height: 1.02;
+    font-size: clamp(2.1rem, 4vw, 3.3rem);
+    line-height: 1.03;
     letter-spacing: -0.03em;
     color: var(--wood-ink);
+    overflow-wrap: break-word;
   }
   .lp__lead {
     margin-top: 1rem;
-    font-size: clamp(1.15rem, 2vw, 1.5rem);
+    font-size: clamp(1.15rem, 1.8vw, 1.45rem);
     line-height: 1.4;
     color: rgba(58, 42, 28, 0.82);
-    max-width: 40ch;
+    max-width: 34ch;
   }
-
-  /* Dunkles Holz-Panel für den ausführlichen Text */
-  .lp__panel {
-    margin-top: clamp(2.5rem, 6vh, 4rem);
-    padding: clamp(1.75rem, 4vw, 3rem);
-    border-radius: clamp(1rem, 2vw, 1.5rem);
-    background:
-      linear-gradient(160deg, rgba(18, 12, 7, 0.88), rgba(36, 25, 16, 0.92));
-    color: var(--paper);
-    box-shadow: 0 30px 60px -34px rgba(28, 18, 10, 0.6);
-  }
-  .lp__text {
-    font-size: clamp(1.05rem, 1.5vw, 1.2rem);
-    line-height: 1.65;
-    color: rgba(250, 247, 242, 0.9);
-    max-width: 62ch;
-  }
-  .lp__tags {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 1.5rem;
-  }
-  .lp__tags li {
-    font-size: 0.8rem;
-    color: rgba(250, 247, 242, 0.85);
-    padding: 0.35rem 0.8rem;
-    border: 1px solid rgba(250, 247, 242, 0.22);
-    border-radius: 999px;
-  }
-
   .lp__cta {
-    margin-top: clamp(2rem, 5vh, 3rem);
+    margin-top: clamp(1.75rem, 4vh, 2.5rem);
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1rem 1.75rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.1rem;
   }
   .lp__tel {
     text-decoration: none;
@@ -150,6 +157,74 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   }
   .lp__tel:hover {
     border-color: var(--oak);
+  }
+
+  /* Rechts: Foto + Text */
+  .lp__figure {
+    position: relative;
+    margin: 0;
+    border-radius: clamp(1rem, 2vw, 1.5rem);
+    overflow: hidden;
+    aspect-ratio: 16 / 11;
+    box-shadow: 0 34px 60px -34px rgba(28, 18, 10, 0.5);
+  }
+  .lp__figure :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    will-change: transform;
+  }
+  .lp__cap {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 1.4rem 1.2rem 1rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+    color: var(--paper);
+    background: linear-gradient(0deg, rgba(12, 8, 4, 0.7), transparent);
+  }
+
+  .lp__prose {
+    margin-top: clamp(2rem, 5vh, 3rem);
+  }
+  .lp__p {
+    font-size: clamp(1.08rem, 1.5vw, 1.3rem);
+    line-height: 1.62;
+    color: rgba(48, 34, 22, 0.9);
+    max-width: 60ch;
+  }
+  .lp__p + .lp__p {
+    margin-top: 1.1rem;
+  }
+
+  .lp__umfang {
+    margin-top: clamp(2.5rem, 6vh, 4rem);
+    padding-top: clamp(1.5rem, 4vh, 2.25rem);
+    border-top: 1px solid var(--oak-line);
+  }
+  .lp__umfang-t {
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    letter-spacing: -0.02em;
+    color: var(--wood-ink);
+  }
+  .lp__tags {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.1rem;
+  }
+  .lp__tags li {
+    font-size: 0.85rem;
+    color: rgba(48, 34, 22, 0.85);
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--oak-line);
+    border-radius: 999px;
+    background: rgba(255, 251, 244, 0.5);
   }
 
   .lp__next {
@@ -175,5 +250,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   }
   .lp__next:hover .lp__next-titel {
     color: var(--oak);
+  }
+
+  @media (max-width: 899px) {
+    .lp__grid {
+      grid-template-columns: 1fr;
+      gap: clamp(1.75rem, 6vw, 2.5rem);
+    }
+    .lp__aside {
+      position: static;
+    }
   }
 </style>

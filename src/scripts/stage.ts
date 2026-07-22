@@ -428,6 +428,55 @@ function initDrift() {
 }
 
 /* ------------------------------------------------------------------ *
+ * 14 — Magnetische CTAs: der Button zieht sanft zum Cursor
+ *      ([data-magnetic="stärke"], Standard 0.3). Nur Desktop/pointer:fine.
+ *      Nutzt CSS `translate` (nicht `transform`) -> Button-eigene :active-
+ *      Scale bleibt unberührt. rAF-Lerp -> jederzeit unterbrechbar.
+ * ------------------------------------------------------------------ */
+function initMagnetic() {
+  if (reduced || !finePointer) return;
+  const els = [...document.querySelectorAll<HTMLElement>('[data-magnetic]')];
+  for (const el of els) {
+    const strength = parseFloat(el.dataset.magnetic || '') || 0.3;
+    const target = { x: 0, y: 0 };
+    const pos = { x: 0, y: 0 };
+    let raf = 0;
+    let active = false;
+
+    const render = () => {
+      pos.x += (target.x - pos.x) * 0.15;
+      pos.y += (target.y - pos.y) * 0.15;
+      const settled =
+        !active && Math.abs(target.x - pos.x) < 0.1 && Math.abs(target.y - pos.y) < 0.1;
+      if (settled) {
+        el.style.translate = '';
+        raf = 0;
+        return;
+      }
+      el.style.translate = `${pos.x.toFixed(2)}px ${pos.y.toFixed(2)}px`;
+      raf = requestAnimationFrame(render);
+    };
+    const kick = () => {
+      if (!raf) raf = requestAnimationFrame(render);
+    };
+
+    el.addEventListener('mousemove', (e) => {
+      const r = el.getBoundingClientRect();
+      target.x = (e.clientX - (r.left + r.width / 2)) * strength;
+      target.y = (e.clientY - (r.top + r.height / 2)) * strength;
+      active = true;
+      kick();
+    });
+    el.addEventListener('mouseleave', () => {
+      target.x = 0;
+      target.y = 0;
+      active = false;
+      kick();
+    });
+  }
+}
+
+/* ------------------------------------------------------------------ *
  * Boot
  * ------------------------------------------------------------------ */
 function boot() {
@@ -442,6 +491,7 @@ function boot() {
   initRails();
   initParallax();
   initDrift();
+  initMagnetic();
 }
 
 // Kein Preloader: Hero-Choreografie startet sofort beim Laden.
