@@ -9,10 +9,11 @@
  *
  *  hero       → IMG_2479 (Kochinsel)                        — nur Hero
  *  ueber-uns  → IMG_2480 (Bibliothek) · IMG_2470 (Fensterbank)
+ *  leistungen → IMG_2746 (Möbelbau) · IMG_2748 (Restaurierung)
+ *               IMG_2745 (Fenster) · IMG_2743 (Servicewagen)  — Card-Scroller
  *  galerie    → IMG_2475 · IMG_2463 · IMG_2467 · IMG_2486   — nur „Aus der Werkstatt"
  *  werkstatt  → IMG_2482 (Werkstattgebäude)                 — nur Werkstatt
  *
- * Leistungen und Prozess sind bewusst BILDLOS.
  * IMG_2472 (Essplatz) wird nicht mehr verwendet (nicht in der Zuordnung).
  *
  * SCHÄRFE-REGEL (Bild-Gesetz G2): Kein Bild wird über native Breite ÷ 1.5
@@ -30,6 +31,10 @@ import schrank from '../assets/images/IMG_2463.jpeg';
 import fassade from '../assets/images/IMG_2467.jpeg';
 import steg from '../assets/images/IMG_2486.jpeg';
 import werkstatt from '../assets/images/IMG_2482.jpeg';
+import lMoebelbau from '../assets/images/IMG_2746.jpeg';
+import lRestaurierung from '../assets/images/IMG_2748.jpeg';
+import lReparatur from '../assets/images/IMG_2745.jpeg';
+import lWartung from '../assets/images/IMG_2743.jpeg';
 
 /** Reserve für hochauflösende Displays: Anzeige = native Breite ÷ 1.5 */
 export const RETINA_FAKTOR = 1.5;
@@ -38,7 +43,7 @@ export const RETINA_FAKTOR = 1.5;
 export const maxDisplayWidth = (src: ImageMetadata) => Math.round(src.width / RETINA_FAKTOR);
 export const mx = (src: ImageMetadata) => `${maxDisplayWidth(src)}px`;
 
-export type Sektion = 'hero' | 'ueber-uns' | 'galerie' | 'werkstatt';
+export type Sektion = 'hero' | 'ueber-uns' | 'leistungen' | 'galerie' | 'werkstatt';
 
 export interface Bild {
   id: string;
@@ -82,6 +87,42 @@ export const ueberUnsImages: Bild[] = [
     alt: 'Loftraum mit durchlaufender Fensterbank und eingebauten Regalen, Sonne auf Dielenboden',
   },
 ];
+
+/* ── Leistungen (Card-Scroller, je Leistung ein Foto, slug-verschlüsselt) ─ */
+export const leistungenImages: Record<string, Bild> = {
+  neuanfertigung: {
+    id: 'IMG_2746',
+    src: lMoebelbau,
+    sektion: 'leistungen',
+    hochformat: false,
+    caption: 'Neuanfertigung — Möbelbau in der Werkstatt',
+    alt: 'Tischler sägt eine Verbindung an einem Nussbaum-Korpus in der Werkstatt',
+  },
+  restaurierung: {
+    id: 'IMG_2748',
+    src: lRestaurierung,
+    sektion: 'leistungen',
+    hochformat: false,
+    caption: 'Restaurierung — Möbel mit Geschichte',
+    alt: 'Hand prüft eine polierte Furnier-Intarsie unter Arbeitsleuchte, Poliertuch daneben',
+  },
+  reparatur: {
+    id: 'IMG_2745',
+    src: lReparatur,
+    sektion: 'leistungen',
+    hochformat: false,
+    caption: 'Reparatur & Austausch — Fenster und Türen',
+    alt: 'Zwei Tischler setzen ein neues Holzfenster in einen Altbau ein',
+  },
+  wartung: {
+    id: 'IMG_2743',
+    src: lWartung,
+    sektion: 'leistungen',
+    hochformat: false,
+    caption: 'Wartung — Service vor Ort',
+    alt: 'Zwei Mitarbeiter am Fandrich-Servicewagen mit Werkzeugkoffer auf der Straße',
+  },
+};
 
 /* ── Galerie „Aus der Werkstatt" (Reihenfolge = R3-Rhythmus) ──────────── */
 export const galerieImages: Bild[] = [
@@ -137,6 +178,7 @@ export const werkstattImage: Bild = {
 export const alleBilder: Bild[] = [
   heroImage,
   ...ueberUnsImages,
+  ...Object.values(leistungenImages),
   ...galerieImages,
   werkstattImage,
 ];
