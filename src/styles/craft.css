@@ -95,6 +95,49 @@
   object-fit: cover;
   will-change: transform;
 }
+
+/* Das „Holzbrett", das beim Scrollen nach unten wegfliegt und das
+   fertige Ergebnis freigibt. Getönte Massivholz-Optik + Fasen-Kanten. */
+.cs__cover {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  background-color: #4b331e;
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: multiply;
+  /* Tönung, damit das Brett klar über dem Foto liegt (nicht mit dem hellen
+     Seiten-Holz verschmilzt) + Fasen: helle Ober-, dunkle Unterkante. */
+  box-shadow:
+    inset 0 6px 0 rgba(255, 232, 200, 0.12),
+    inset 0 -8px 18px rgba(0, 0, 0, 0.4),
+    0 26px 40px -14px rgba(0, 0, 0, 0.5);
+  will-change: transform;
+}
+.cs__cover::before {
+  /* Walnuss-Tönung als Overlay über der Kiefer-Textur */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(155deg, rgba(58, 38, 20, 0.55), rgba(34, 22, 12, 0.68));
+}
+.cs__coverlabel {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: clamp(1.15rem, 2.4vw, 1.8rem);
+  letter-spacing: 0.01em;
+  text-align: center;
+  padding-inline: 1rem;
+  /* eingraviert: heller Grat unten, dunkler Schatten oben */
+  color: rgba(247, 232, 210, 0.72);
+  text-shadow:
+    0 1px 0 rgba(255, 240, 220, 0.18),
+    0 -1px 1px rgba(0, 0, 0, 0.45);
+}
 .cs__loc {
   margin-top: 0.8rem;
   font-size: 0.78rem;

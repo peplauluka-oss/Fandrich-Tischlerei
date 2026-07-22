@@ -18,10 +18,14 @@ export interface CraftImage {
 
 interface Props {
   images: CraftImage[];
+  /** WebP-Quelle der Holz-Textur für das „wegfliegende Brett". */
+  coverTex: string;
 }
 
 const EASE_DRAWER = [0.32, 0.72, 0, 1] as const; // iOS-Drawer-Kurve (Emil)
 const TITLE_LINES = ['Vom Aufmaß bis', 'zur Montage.'];
+// Handwerks-Etappen, die auf dem Brett stehen und mit ihm wegfliegen.
+const STAGES = ['In der Werkstatt', 'Vor Ort montiert'];
 
 /* Magnetischer Button: useSpring auf x/y, an die Cursor-Position gekoppelt.
    Kein State im Render-Pfad -> 60 fps, jederzeit unterbrechbar (Emil). */
@@ -61,17 +65,25 @@ function ParallaxFigure({
   im,
   withBadge,
   reduced,
+  coverTex,
+  stage,
 }: {
   im: CraftImage;
   withBadge: boolean;
   reduced: boolean | null;
+  coverTex: string;
+  stage: string;
 }) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start end', 'end start'],
   });
+  // Bild-Parallax: wandert langsamer als der Scroll.
   const y = useTransform(scrollYProgress, [0, 1], ['-9%', '9%']);
+  // Das Holzbrett liegt zuerst über dem Bild und fliegt beim Scrollen nach
+  // unten weg -> Storytelling: von der Arbeit zum fertigen Ergebnis.
+  const coverY = useTransform(scrollYProgress, [0.4, 0.62], ['0%', '108%']);
 
   return (
     <figure className="cs__fig" ref={ref}>
@@ -83,6 +95,18 @@ function ParallaxFigure({
           decoding="async"
           style={{ y: reduced ? 0 : y }}
         />
+        {!reduced && (
+          <motion.div
+            className="cs__cover"
+            aria-hidden="true"
+            style={{
+              y: coverY,
+              backgroundImage: `url(${coverTex})`,
+            }}
+          >
+            <span className="cs__coverlabel">{stage}</span>
+          </motion.div>
+        )}
       </div>
       {withBadge && (
         <span className="cs__badge">
@@ -95,7 +119,7 @@ function ParallaxFigure({
   );
 }
 
-export default function CraftSplit({ images }: Props) {
+export default function CraftSplit({ images, coverTex }: Props) {
   const reduced = useReducedMotion();
 
   return (
@@ -135,7 +159,14 @@ export default function CraftSplit({ images }: Props) {
 
       <div className="cs__gallery">
         {images.map((im, i) => (
-          <ParallaxFigure key={im.src} im={im} withBadge={i === 0} reduced={reduced} />
+          <ParallaxFigure
+            key={im.src}
+            im={im}
+            withBadge={i === 0}
+            reduced={reduced}
+            coverTex={coverTex}
+            stage={STAGES[i % STAGES.length]}
+          />
         ))}
       </div>
     </div>
