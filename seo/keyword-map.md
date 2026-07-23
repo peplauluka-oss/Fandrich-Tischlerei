@@ -83,26 +83,23 @@ Themen, die auf mehreren Seiten auftauchen **könnten**, werden strikt nach **Su
 
 ---
 
-## 3 · Geo-Modifier — Einsatzgebiet Nordosten
+## 3 · Geo-Strategie — „Berlin und Umgebung" (Betreiber-Angabe)
 
-**Standort-Anker (überall identisch, NAP-konsistent):** Berlin-Pankow, Treseburger Straße 30, 13129.
+**Zwei Ebenen bewusst getrennt:**
 
-**Verteilung der Ortsteile** — organisch im jeweiligen „Einsatzgebiet"-Absatz, **nicht** als Footer-Liste. Pro Seite ein rotierender Schwerpunkt, damit kein dünner Duplicate-Text entsteht:
+1. **Standort-Anker (NAP, identisch überall):** Meisterbetrieb / Niederlassung **Berlin-Pankow**, Treseburger Straße 30, 13129. → Adresse in Impressum, Footer, `LocalBusiness`-Schema, Google Business Profile. Dieser feste Ort ist der Hebel für den lokalen „Map-Pack" rund um Pankow.
+2. **Einsatzgebiet (`areaServed`):** **ganz Berlin (alle Bezirke) + naher Brandenburg-Rand** — offiziell „**Berlin und Umgebung**". Aufträge werden stadtweit aufgenommen; gerade bei Möbelanfertigung lohnen größere Wege (hoher Auftragswert).
 
-| URL | Geo-Schwerpunkt im Fließtext | Bezirk |
-|---|---|---|
-| S | Pankow, Prenzlauer Berg, Weißensee, Lichtenberg — „im Berliner Nordosten" (Überblick, beide Bezirke) | Pankow + Lichtenberg |
-| L1 | Prenzlauer Berg, Niederschönhausen, Karlshorst (Altbau-Maßmöbel) | gemischt |
-| L2 | Prenzlauer Berg, Weißensee, Alt-Hohenschönhausen (Altbau/Denkmal) | gemischt |
-| L3 | Pankow, Heinersdorf, Fennpfuhl, Friedrichsfelde (Reparatur wohnungsnah) | gemischt |
-| L4 | Buch, Karow, Neu-Hohenschönhausen, Marzahn (Großwohnanlagen → B2B) | Pankow + Lichtenberg |
+**Konsequenz für Keywords/Texte:**
+- **Citywide** statt Nordosten-Verengung: Leistungs-Keywords tragen „**Berlin**" (nicht „Berlin-Pankow"), z. B. *Möbel nach Maß Berlin*, *Fensterreparatur Berlin*. Das erweitert die Reichweite auf das reale Einsatzgebiet.
+- **Pankow** erscheint als **Standort/Herkunft** im Body + Schema (Vertrauens-/Local-Anker), nicht als Reichweiten-Begrenzung.
+- **Ortsteile** nur noch als **ehrliche Beispiele** einstreuen (nahe HQ hohe Altbau-Dichte = ideale Kundschaft), plus die Klammer „**im gesamten Stadtgebiet und im Berliner Umland**":
+  - Nahe HQ (Beispiele, organisch): Pankow, Prenzlauer Berg, Weißensee, Niederschönhausen.
+  - Citywide-Framing: „in ganz Berlin — von Charlottenburg bis Köpenick" o. ä. (2–3 Beispiele, keine Bezirks-Wüste).
+  - Umland (streifen): „und im angrenzenden Brandenburger Umland".
+- **Kein** Ausschütten aller ~40 Ortsteile — Google wertet Ortsteil-Listen als thin/spam. Stattdessen: „Berlin und Umgebung" + wenige echte Beispiele + Projekt-Captions mit echtem Ortsbezug (bereits gut: „Einbaubibliothek — Prenzlauer Berg").
 
-**Ortsteil-Pool (nur ehrlich einsetzen, keine Aufzählungs-Wüste):**
-- **Pankow:** Pankow, Prenzlauer Berg, Weißensee, Niederschönhausen, Heinersdorf, Blankenburg, Karow, Buch, Französisch Buchholz, Wilhelmsruh, Rosenthal, Blankenfelde
-- **Lichtenberg:** Lichtenberg, Alt-Hohenschönhausen, Neu-Hohenschönhausen, Fennpfuhl, Rummelsburg, Karlshorst, Friedrichsfelde, Falkenberg, Malchow, Wartenberg
-- **Sekundär (nur streifen):** Mitte, Friedrichshain, Marzahn
-
-**Bestehender guter Ansatz** (beibehalten/ausbauen): echte Ortsbezüge in Projekt-Captions wie „Einbaubibliothek — Prenzlauer Berg", „Fensterbank mit Stauraum — Pankow".
+**`areaServed` (JSON-LD, Phase 2):** `City: Berlin` + Text „Berlin und Umgebung / Berliner Umland". Keine erfundenen Landkreis-Polygone.
 
 ---
 
@@ -114,7 +111,7 @@ Themen, die auf mehreren Seiten auftauchen **könnten**, werden strikt nach **Su
 | „Was kostet ein Einbauschrank nach Maß?" | L1 | Mini-FAQ L1 + Prozess-Block |
 | „Fenster schließt nicht richtig" | L3 | H2/FAQ L3 |
 | „alte Möbel aufarbeiten lassen" | L2 | Intro/FAQ L2 |
-| „Tischler Notdienst / Tür klemmt" | L3 | FAQ L3 (ehrlich: kein 24/7-Notdienst? → mit Kunde klären, `todo-betreiber.md`) |
+| ~~„Tischler Notdienst / Tür klemmt"~~ | — | **entfällt** — kein Notdienst (Betreiber bestätigt), nicht bewerben |
 | „Denkmalschutz Fenster Berlin" | L2 | H2/Body L2 |
 | „lohnt sich Reparatur vs. Neukauf" | L3 | FAQ L3 (Einwandbehandlung, Phase 6) |
 | „Wie läuft eine Anfrage ab / wer kommt zu mir?" | alle L + S | „So läuft's ab"-Block (Phase 3) |
@@ -127,13 +124,13 @@ Bestehende zentrale FAQ-Sektion (Startseite) behält allgemeine Vertrauensfragen
 
 | URL | Title (≤ 60 Z.) | Meta-Description (140–155 Z., Nutzen + CTA) |
 |---|---|---|
-| S | `Tischlerei Berlin-Pankow · Meisterbetrieb | Fandrich` | Meistertischlerei im Berliner Nordosten: Möbel nach Maß, Fenster, Türen, Restaurierung & Reparatur. Aus einer Hand — Antwort binnen 24 h. |
-| L1 | `Möbel & Einbauschränke nach Maß in Berlin-Pankow` | Einbaumöbel, Holzfenster und Türen nach Maß vom Meisterbetrieb in Pankow — Aufmaß, Fertigung, Montage aus einer Hand. Jetzt anfragen. |
-| L2 | `Möbelrestaurierung & Kastenfenster-Sanierung Berlin` | Schellackpolitur, Antikmöbel, Kastenfenster fachgerecht saniert im Berliner Nordosten. Stücke mit Geschichte erhalten. Unverbindlich anfragen. |
-| L3 | `Fenster- & Türreparatur in Berlin-Pankow | Fandrich` | Fenster einstellen, Türen, Parkett, Treppen und Küchen reparieren — schnell und sauber im Nordosten Berlins. Schaden schildern, wir melden uns. |
-| L4 | `Fensterwartung Berlin — auch für Hausverwaltungen` | Wartung von Fenstern & Türen für Privat und Hausverwaltungen: Beschläge, Dichtungen, Objektbetreuung. Ein Ansprechpartner, kurze Wege. |
+| S | `Tischlerei Berlin-Pankow · Meisterbetrieb | Fandrich` | Meistertischlerei in Berlin und Umgebung: Möbel nach Maß, Fenster, Türen, Restaurierung & Reparatur. Aus einer Hand — Antwort binnen 24 h. |
+| L1 | `Möbel & Einbauschränke nach Maß in Berlin | Fandrich` | Einbaumöbel, Küchen, Holzfenster und Türen nach Maß vom Meisterbetrieb aus Berlin-Pankow — Aufmaß, Fertigung, Montage aus einer Hand. Jetzt anfragen. |
+| L2 | `Möbelrestaurierung & Kastenfenster-Sanierung Berlin` | Schellackpolitur, Antikmöbel, Kastenfenster fachgerecht saniert — in ganz Berlin. Stücke mit Geschichte erhalten. Unverbindlich anfragen. |
+| L3 | `Fenster- & Türreparatur in Berlin | Tischlerei Fandrich` | Fenster einstellen, Türen, Parkett, Treppen und Küchen reparieren — schnell und sauber in ganz Berlin. Schaden schildern, wir melden uns. |
+| L4 | `Fensterwartung Berlin — auch für Hausverwaltungen` | Wartung von Fenstern & Türen für Privat und Hausverwaltungen in Berlin: Beschläge, Dichtungen, Objektbetreuung. Ein Ansprechpartner, kurze Wege. |
 
-*(Titles sind Entwürfe; Zeichenzahl in Phase 2 final geprüft.)*
+*Standort-Anker „Berlin-Pankow" bleibt auf der Startseite (Marke + Local-Pack); Leistungsseiten führen citywide „Berlin", Pankow im Body/Schema. Zeichenzahl in Phase 2 final geprüft.*
 
 ---
 
@@ -148,11 +145,11 @@ Bestehende zentrale FAQ-Sektion (Startseite) behält allgemeine Vertrauensfragen
 
 ---
 
-## 7 · Offene Punkte / Freigabe nötig
+## 7 · Offene Punkte — vom Betreiber geklärt ✓
 
-1. **Notdienst?** Gibt es einen (Tür klemmt / Notfall)? Wenn nein, „Notdienst"-Longtail streichen — nichts erfinden.
-2. **Küche nach Maß** wirklich im Angebot (L1) oder nur Reparatur/Montage (L3)? Aktuell Annahme: beides, getrennt nach Intent.
-3. **Ortsteil-Ehrlichkeit:** Ist Lichtenberg (Karlshorst, Friedrichsfelde …) tatsächlich Einsatzgebiet? Wenn Fokus enger, Pool kürzen.
-4. **Title-Anker:** durchgängig „Berlin-Pankow" ok, oder sollen einzelne Seiten andere Ortsteile führen?
+1. **Notdienst?** → **Nein.** „Notdienst/Tür klemmt"-Longtail entfällt, wird nicht beworben.
+2. **Küche nach Maß?** → **Ja, im Angebot.** Bleibt auf L1 (Neuanfertigung); Küchenreparatur separat auf L3.
+3. **Einsatzgebiet?** → **Ganz Berlin + naher Brandenburg-Rand** („Berlin und Umgebung"). Nordosten-Verengung aufgehoben (siehe §3). Pankow nur noch Standort-Anker.
+4. **Title-Anker?** → **Startseite „Berlin-Pankow"** (Marke/Local-Pack), **Leistungsseiten citywide „Berlin"**, Pankow im Body/Schema.
 
-→ Nach deiner Freigabe (ggf. mit Korrekturen zu 1–4) starte ich **Phase 2 (technisches SEO: Titles, Meta, JSON-LD, Canonicals, Sitemap, interne Links)**.
+→ Damit ist Phase 1 freigegeben. Nächster Schritt: **Phase 2 (technisches SEO: Titles, Meta, JSON-LD, Canonicals, Sitemap, interne Links)**.
