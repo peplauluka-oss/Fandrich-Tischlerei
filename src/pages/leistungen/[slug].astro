@@ -21,15 +21,45 @@ export function getStaticPaths() {
 
 const { l, next } = Astro.props;
 const bild = leistungenImages[l.slug];
-const title = `${l.titel} — Tischlerei Fandrich, Berlin-Pankow`;
-const description = l.kurz;
+const title = l.seoTitle;
+const description = l.seoDescription;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+// Absolute URLs für die strukturierten Daten
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const homeUrl = new URL(base + '/', Astro.site).href;
 
 // Fließtext in ruhige Absätze (je Satz ein Block) für editorialen Rhythmus.
 const absaetze = l.text.split(/(?<=\.)\s+/).filter(Boolean);
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: `${l.titel} — Tischlerei Fandrich`,
+    serviceType: l.titel,
+    description: l.kurz,
+    provider: {
+      '@type': 'Carpenter',
+      '@id': `${Astro.site?.href}#business`,
+      name: `Tischlerei ${site.name}`,
+    },
+    areaServed: { '@type': 'City', name: 'Berlin' },
+    url: canonical,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Start', item: homeUrl },
+      { '@type': 'ListItem', position: 2, name: 'Leistungen', item: `${homeUrl}#leistungen-v4` },
+      { '@type': 'ListItem', position: 3, name: l.titel, item: canonical },
+    ],
+  },
+];
 ---
 
-<Base title={title} description={description} noindex={false}>
+<Base title={title} description={description} noindex={false} schema={schema}>
   <Nav client:load solid />
   <main class="lp">
     <div class="wrap lp__grid">

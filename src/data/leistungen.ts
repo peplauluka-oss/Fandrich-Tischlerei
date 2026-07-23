@@ -15,6 +15,10 @@ export interface Leistung {
   stichworte: string[];
   /** Holzton-Variante der Card (Rhythmus/Abwechslung). */
   ton: 'hell' | 'mittel' | 'dunkel' | 'oak';
+  /** SEO-Title (≤ 60 Z.) für die Unterseite. */
+  seoTitle: string;
+  /** SEO-Meta-Description (140–155 Z.) für die Unterseite. */
+  seoDescription: string;
 }
 
 export const leistungen: Leistung[] = [
@@ -26,6 +30,9 @@ export const leistungen: Leistung[] = [
     text: 'Möbel, Fenster und Türen nach Maß — entworfen für Ihren Raum, gefertigt aus Massivholz und ausgesuchten Furnieren. Vom Einbauschrank über die Küche bis zum Holz- oder Kunststofffenster: alles entsteht in unserer eigenen Werkstatt und wird von uns montiert.',
     stichworte: ['Möbel nach Maß', 'Holzfenster', 'Türen', 'Einbauschränke', 'Küchen'],
     ton: 'oak',
+    seoTitle: 'Möbel & Einbauschränke nach Maß in Berlin | Fandrich',
+    seoDescription:
+      'Einbaumöbel, Küchen, Holzfenster und Türen nach Maß vom Meisterbetrieb aus Berlin-Pankow — Aufmaß, Fertigung und Montage aus einer Hand. Jetzt anfragen.',
   },
   {
     slug: 'restaurierung',
@@ -35,6 +42,9 @@ export const leistungen: Leistung[] = [
     text: 'Ob Familienerbstück oder modernes Designmöbel — wir setzen Stücke mit Geschichte wieder instand: Schellackpolitur, traditionelle Leime, Reparatur von Nutzungs-, Wasser- oder Brandschäden. Auch alte Kastenfenster bringen wir fachgerecht zurück.',
     stichworte: ['Möbelrestaurierung', 'Schellackpolitur', 'Kastenfenster', 'Schadensreparatur'],
     ton: 'dunkel',
+    seoTitle: 'Möbelrestaurierung & Kastenfenster-Sanierung Berlin',
+    seoDescription:
+      'Schellackpolitur, Antikmöbel und Kastenfenster fachgerecht restauriert — in ganz Berlin und Umgebung. Stücke mit Geschichte erhalten. Unverbindlich anfragen.',
   },
   {
     slug: 'reparatur',
@@ -44,6 +54,9 @@ export const leistungen: Leistung[] = [
     text: 'Fenster, Türen, Treppen, Böden und Küchen — wir richten, was klemmt, zieht oder verschlissen ist. Vom Einstellen und Abdichten über den Austausch einzelner Teile bis zu neuen Beschlägen und mehr Einbruchschutz an der Haustür.',
     stichworte: ['Fenster & Türen', 'Treppen', 'Parkett & Dielen', 'Küchen', 'Sicherheit'],
     ton: 'mittel',
+    seoTitle: 'Fenster- & Türreparatur in Berlin | Tischlerei Fandrich',
+    seoDescription:
+      'Fenster einstellen, Türen, Parkett, Treppen und Küchen reparieren — schnell und sauber in ganz Berlin. Schaden schildern, wir melden uns umgehend.',
   },
   {
     slug: 'wartung',
@@ -53,5 +66,8 @@ export const leistungen: Leistung[] = [
     text: 'Damit Fenster und Türen lange dicht und leichtgängig bleiben: regelmäßige Wartung, Nachstellen der Beschläge, Erneuern von Dichtungen. Für Privathaushalte, Hausverwaltungen und Unternehmen im Großraum Berlin.',
     stichworte: ['Fensterwartung', 'Beschläge', 'Dichtungen', 'Hausverwaltungen'],
     ton: 'hell',
+    seoTitle: 'Fensterwartung Berlin — auch für Hausverwaltungen',
+    seoDescription:
+      'Wartung von Fenstern & Türen für Privat und Hausverwaltungen in Berlin: Beschläge nachstellen, Dichtungen erneuern, laufende Objektbetreuung. Ein Ansprechpartner.',
   },
 ];

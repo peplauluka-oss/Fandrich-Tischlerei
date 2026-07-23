@@ -12,9 +12,12 @@ interface Props {
   description: string;
   /** Unterseiten (Impressum etc.) nicht in den Index */
   noindex?: boolean;
+  /** Zusätzliche JSON-LD-Knoten (z. B. Service, BreadcrumbList, FAQPage). */
+  schema?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title, description, noindex = false } = Astro.props;
+const { title, description, noindex = false, schema } = Astro.props;
+const extraSchema = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
 
 // OG-Image: stärkstes Galerie-Motiv (IMG_2479 wird in v4 nirgends verwendet)
 const ogImage = await getImage({
@@ -28,11 +31,13 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Carpenter',
+  '@id': `${Astro.site?.href}#business`,
   name: `Tischlerei ${site.name}`,
   description:
-    'Meistertischlerei in Berlin-Pankow: Möbel nach Maß, Möbelrestaurierung und Innenausbau.',
+    'Meistertischlerei in Berlin-Pankow für Möbel nach Maß, Möbelrestaurierung, Fenster- und Türreparatur — tätig in ganz Berlin und Umgebung.',
   url: Astro.site?.href,
   telephone: site.phoneHref,
+  priceRange: '€€',
   // TODO: email + foundingDate ergänzen, sobald verifiziert (src/data/site.ts)
   ...(site.email ? { email: site.email } : {}),
   address: {
@@ -40,6 +45,7 @@ const jsonLd = {
     streetAddress: site.street,
     postalCode: site.zip,
     addressLocality: site.city,
+    addressRegion: site.district,
     addressCountry: 'DE',
   },
   geo: {
@@ -47,8 +53,19 @@ const jsonLd = {
     latitude: site.geo.lat,
     longitude: site.geo.lng,
   },
-  openingHours: site.openingHoursSchema, // TODO: echte Öffnungszeiten
-  areaServed: { '@type': 'City', name: 'Berlin' },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '07:00',
+      closes: '16:00',
+    },
+  ],
+  // Einsatzgebiet: ganz Berlin + naher Brandenburg-Rand („Berlin und Umgebung")
+  areaServed: [
+    { '@type': 'City', name: 'Berlin' },
+    { '@type': 'AdministrativeArea', name: 'Berliner Umland (Brandenburg)' },
+  ],
   image: ogImageUrl.href,
 };
 ---
@@ -79,6 +96,11 @@ const jsonLd = {
     <meta name="twitter:card" content="summary_large_image" />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    {
+      extraSchema.map((s) => (
+        <script type="application/ld+json" set:html={JSON.stringify(s)} />
+      ))
+    }
   </head>
   <body>
     <span class="scroll-progress" aria-hidden="true" data-scroll-progress></span>

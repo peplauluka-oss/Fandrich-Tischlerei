@@ -10,13 +10,25 @@ import PartnerV4 from '../components/PartnerV4.astro';
 import FaqV4 from '../components/FaqV4.astro';
 import CtaBand from '../components/CtaBand.astro';
 import KontaktV4 from '../components/KontaktV4.astro';
+import { fragen } from '../data/faq';
 
-const title = 'Tischlerei Berlin Pankow — Möbel nach Maß & Restaurierung | Fandrich GmbH';
+const title = 'Tischlerei Berlin-Pankow · Meisterbetrieb | Fandrich';
 const description =
-  'Meistertischlerei in Berlin-Pankow: Einbaumöbel nach Maß, Möbelrestaurierung und Innenausbau — gefertigt in der eigenen Werkstatt.';
+  'Meistertischlerei in Berlin und Umgebung: Möbel nach Maß, Fenster, Türen, Restaurierung & Reparatur — aus eigener Werkstatt in Pankow. Antwort binnen 24 h.';
+
+// FAQPage-Schema aus derselben Quelle wie das sichtbare Accordion.
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: fragen.map((q) => ({
+    '@type': 'Question',
+    name: q.frage,
+    acceptedAnswer: { '@type': 'Answer', text: q.antwort },
+  })),
+};
 ---
 
-<Base title={title} description={description}>
+<Base title={title} description={description} schema={faqSchema}>
   <Nav client:load />
   <main>
     <HeroV4 />

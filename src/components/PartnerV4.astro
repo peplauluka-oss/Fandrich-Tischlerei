@@ -25,23 +25,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       {
         logoPartner.map((p, i) => (
           <li>
-            <a
-              class="partner__tile"
-              href={p.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={p.name}
-              data-cursor="link"
-              style={`--i: ${i}`}
-            >
+            {/* Kein externer Link (harte Regel): Logo als reines Bild mit Alt-Text. */}
+            <div class="partner__tile" style={`--i: ${i}`}>
               <img
                 class={`partner__logo${p.invert ? ' is-invert' : ''}`}
                 src={`${base}/${p.logo}`}
-                alt={p.name}
+                alt={`Auftraggeber ${p.name}`}
                 loading="lazy"
                 decoding="async"
               />
-            </a>
+            </div>
           </li>
         ))
       }
