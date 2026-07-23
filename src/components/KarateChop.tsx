@@ -11,10 +11,10 @@ interface Props {
   hint?: string;
 }
 
-// Kräftige, „explosive" Feder wie in der Vorgabe.
-const SPRING = { type: 'spring' as const, stiffness: 200, damping: 15 };
+// Feder: explosiv, aber schwer wie echtes Holz (stiffness 150, damping 18, mass 1.2).
+const SPRING = { type: 'spring' as const, stiffness: 150, damping: 18, mass: 1.2 };
 
-export default function KarateChop({ woodSrc, children, hint = 'Zum Aufbrechen tippen' }: Props) {
+export default function KarateChop({ woodSrc, children, hint = 'Antippen zum Öffnen' }: Props) {
   const reduced = useReducedMotion();
   const [broken, setBroken] = useState(false);
 
@@ -46,8 +46,8 @@ export default function KarateChop({ woodSrc, children, hint = 'Zum Aufbrechen t
       <motion.div
         className="kc__content"
         initial={false}
-        animate={{ scale: broken ? 1 : 0.9 }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        animate={{ scale: broken ? 1 : 1.1 }}
+        transition={{ type: 'spring', stiffness: 150, damping: 22, mass: 1 }}
       >
         {children}
       </motion.div>
@@ -56,14 +56,14 @@ export default function KarateChop({ woodSrc, children, hint = 'Zum Aufbrechen t
         className="kc__half kc__half--l"
         style={wood}
         initial={false}
-        animate={broken ? { x: '-108%', rotate: -15, opacity: 0 } : { x: 0, rotate: 0, opacity: 1 }}
+        animate={broken ? { x: '-120%', rotate: -8, opacity: 0 } : { x: 0, rotate: 0, opacity: 1 }}
         transition={SPRING}
       />
       <motion.div
         className="kc__half kc__half--r"
         style={wood}
         initial={false}
-        animate={broken ? { x: '108%', rotate: 15, opacity: 0 } : { x: 0, rotate: 0, opacity: 1 }}
+        animate={broken ? { x: '120%', rotate: 8, opacity: 0 } : { x: 0, rotate: 0, opacity: 1 }}
         transition={SPRING}
       />
 

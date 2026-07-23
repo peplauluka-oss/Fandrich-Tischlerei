@@ -20,7 +20,7 @@ function initLenis() {
   if (reduced || !isDesktop || !finePointer) return null;
 
   const lenis = new Lenis({
-    lerp: 0.1,
+    lerp: 0.08,
     wheelMultiplier: 1,
     smoothWheel: true,
   });
@@ -460,10 +460,12 @@ function initMagnetic() {
       if (!raf) raf = requestAnimationFrame(render);
     };
 
+    const MAX = 15; // maximale Verschiebung in px
+    const clamp = (v: number) => Math.max(-MAX, Math.min(MAX, v));
     el.addEventListener('mousemove', (e) => {
       const r = el.getBoundingClientRect();
-      target.x = (e.clientX - (r.left + r.width / 2)) * strength;
-      target.y = (e.clientY - (r.top + r.height / 2)) * strength;
+      target.x = clamp((e.clientX - (r.left + r.width / 2)) * strength);
+      target.y = clamp((e.clientY - (r.top + r.height / 2)) * strength);
       active = true;
       kick();
     });

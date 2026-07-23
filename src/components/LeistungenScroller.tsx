@@ -121,10 +121,12 @@ export default function LeistungenScroller({ bg }: Props) {
           {items.map((l, i) => {
             const clone = i >= leistungen.length;
             return (
-              <article
+              <motion.article
                 key={`${l.slug}-${i}`}
                 className={`lsc__card lsc__card--${l.ton}`}
                 aria-hidden={clone ? true : undefined}
+                whileHover={reduced ? undefined : { scale: 0.98 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               >
                 <div
                   className="lsc__bg"
@@ -153,14 +155,10 @@ export default function LeistungenScroller({ bg }: Props) {
                     Mehr erfahren <span className="arrow" aria-hidden="true">→</span>
                   </a>
                 </div>
-              </article>
+              </motion.article>
             );
           })}
         </motion.div>
-      </div>
-
-      <div className="lsc__controls">
-        <span className="lsc__hint">Läuft automatisch · ziehen zum Blättern</span>
       </div>
     </div>
   );

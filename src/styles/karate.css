@@ -41,21 +41,13 @@
   backface-visibility: hidden;
 }
 .kc__half--l {
-  clip-path: polygon(
-    0% 0%, 50% 0%,
-    46% 9%, 53% 20%, 45% 31%, 54% 43%, 46% 54%,
-    54% 66%, 45% 77%, 53% 88%, 48% 96%, 50% 100%,
-    0% 100%
-  );
-  box-shadow: inset -2px 0 6px rgba(0, 0, 0, 0.45);
+  /* angewinkelter Schnitt -> wirkt wie ein natürlicher Bruch/Splitter */
+  clip-path: polygon(0% 0%, 52% 0%, 48% 100%, 0% 100%);
+  box-shadow: inset -3px 0 8px rgba(0, 0, 0, 0.5);
 }
 .kc__half--r {
-  clip-path: polygon(
-    50% 0%, 100% 0%, 100% 100%, 50% 100%,
-    48% 96%, 53% 88%, 45% 77%, 54% 66%, 46% 54%,
-    54% 43%, 45% 31%, 53% 20%, 46% 9%
-  );
-  box-shadow: inset 2px 0 6px rgba(0, 0, 0, 0.45);
+  clip-path: polygon(52% 0%, 100% 0%, 100% 100%, 48% 100%);
+  box-shadow: inset 3px 0 8px rgba(0, 0, 0, 0.5);
 }
 /* feiner Lichtgrat oben, damit es wie echtes Holz sitzt */
 .kc__half::after {
