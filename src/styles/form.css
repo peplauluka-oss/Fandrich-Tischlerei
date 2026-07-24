@@ -74,6 +74,15 @@
   font-size: 0.95rem;
 }
 
+/* Reassurance-Microcopy unter dem Absenden-Button (Conversion/Vertrauen) */
+.form__note {
+  margin-top: 0.9rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 46ch;
+}
+
 /* -------- Dunkler Kontext (Schluss-Sektion --ink) -------- */
 .on-ink .form__field input,
 .on-ink .form__field textarea {
@@ -93,6 +102,9 @@
 .on-ink .form__error,
 .on-ink .form__result {
   color: var(--paper);
+}
+.on-ink .form__note {
+  color: rgba(250, 247, 242, 0.55);
 }
 
 /* Autofill auf dunklem Grund nicht weiß überdecken */

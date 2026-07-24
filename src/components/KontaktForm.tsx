@@ -63,7 +63,11 @@ export default function KontaktForm() {
   if (status === 'success') {
     return (
       <p className="form__result" role="status">
-        Ihre Nachricht ist angekommen. Wir melden uns innerhalb von zwei Werktagen bei Ihnen.
+        Ihre Nachricht ist angekommen. Wir melden uns innerhalb von zwei Werktagen bei Ihnen. Eilt
+        es? Rufen Sie uns direkt an:{' '}
+        <a href="tel:+493036445760" className="link-static">
+          030&nbsp;36&nbsp;44&nbsp;57&nbsp;60
+        </a>
       </p>
     );
   }
@@ -99,6 +103,11 @@ export default function KontaktForm() {
           →
         </span>
       </button>
+
+      <p className="form__note">
+        Unverbindlich — keine Werbung. Ihre Angaben nutzen wir ausschließlich zur Beantwortung Ihrer
+        Anfrage.
+      </p>
 
       {status === 'error' && (
         <p className="form__result form__result--error" role="alert">
