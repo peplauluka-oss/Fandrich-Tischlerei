@@ -1,0 +1,146 @@
+---
+/**
+ * Kundenstimmen — echte Google-Rezensionen (Auswahl fürs Vertrauen kurz vor
+ * dem finalen CTA). Gesamtbewertung als Platzhalter, bis exakte Werte vorliegen.
+ */
+import { reviews, bewertung } from '../data/reviews';
+---
+
+<section class="stimmen section" id="stimmen-v4" aria-label="Kundenstimmen">
+  <div class="wrap">
+    <div class="stimmen__head">
+      <h2 class="headline--v4 split">Was Kundinnen und Kunden sagen.</h2>
+
+      <div class="stimmen__rating reveal" style="--reveal-delay: 0.06s">
+        <span class="stimmen__stars" aria-hidden="true">★★★★★</span>
+        <span class="stimmen__ratingtext">
+          <strong>{bewertung.schnitt}</strong> von 5 · {bewertung.anzahl} Rezensionen auf&nbsp;<span
+            class="stimmen__google">Google</span
+          >
+        </span>
+      </div>
+    </div>
+
+    <ul class="stimmen__grid">
+      {
+        reviews.map((r, i) => (
+          <li class="stimme reveal" style={`--reveal-delay: ${0.1 + i * 0.08}s`}>
+            <span class="stimme__mark" aria-hidden="true">&ldquo;</span>
+            <span class="stimme__stars" aria-label="5 von 5 Sternen">★★★★★</span>
+            <p class="stimme__text">{r.text}</p>
+            <footer class="stimme__foot">
+              <span class="stimme__autor">{r.autor}</span>
+              <span class="stimme__meta">{r.leistung} · {r.wann} · Google Rezension</span>
+            </footer>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .stimmen {
+    position: relative;
+  }
+  .stimmen__head {
+    max-width: 46ch;
+  }
+  .stimmen__rating {
+    margin-top: clamp(1rem, 2.5vh, 1.5rem);
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+  }
+  .stimmen__stars {
+    color: var(--oak);
+    font-size: 1.15rem;
+    letter-spacing: 0.1em;
+  }
+  .stimmen__ratingtext {
+    font-size: 1rem;
+    color: rgba(58, 42, 28, 0.82);
+  }
+  .stimmen__ratingtext strong {
+    color: var(--wood-ink);
+    font-weight: 800;
+  }
+  .stimmen__google {
+    font-weight: 700;
+    color: var(--wood-ink);
+  }
+
+  .stimmen__grid {
+    list-style: none;
+    margin-top: clamp(2.25rem, 5vw, 3.5rem);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1rem, 2vw, 1.6rem);
+  }
+
+  .stimme {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(1.5rem, 2.6vw, 2.1rem);
+    border-radius: 18px;
+    background: linear-gradient(155deg, rgba(252, 248, 241, 0.9), rgba(244, 236, 225, 0.82));
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.6),
+      0 22px 44px -28px rgba(43, 30, 18, 0.5);
+    overflow: hidden;
+  }
+  .stimme__mark {
+    position: absolute;
+    top: -0.6rem;
+    right: 0.6rem;
+    font-family: var(--font-head);
+    font-size: 6rem;
+    line-height: 1;
+    color: var(--oak);
+    opacity: 0.14;
+    pointer-events: none;
+  }
+  .stimme__stars {
+    position: relative;
+    z-index: 1;
+    color: var(--oak);
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+  }
+  .stimme__text {
+    position: relative;
+    z-index: 1;
+    margin-top: 0.9rem;
+    font-size: clamp(0.98rem, 1.2vw, 1.06rem);
+    line-height: 1.55;
+    color: rgba(48, 34, 22, 0.9);
+  }
+  .stimme__foot {
+    margin-top: auto;
+    padding-top: 1.3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  .stimme__autor {
+    font-family: var(--font-body);
+    font-weight: 800;
+    color: var(--wood-ink);
+  }
+  .stimme__meta {
+    font-size: 0.76rem;
+    letter-spacing: 0.02em;
+    color: rgba(58, 42, 28, 0.6);
+  }
+
+  @media (max-width: 899px) {
+    .stimmen__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
