@@ -28,6 +28,9 @@ const ogImage = await getImage({
 const ogImageUrl = new URL(ogImage.src, Astro.site);
 const canonical = new URL(Astro.url.pathname, Astro.site);
 
+// Vollflächen-Holztextur als WebP (auf jeder Seite -> Bandbreite/LCP schonen).
+const woodWebp = await getImage({ src: woodTex, width: 1600, format: 'webp', quality: 70 });
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Carpenter',
@@ -104,7 +107,7 @@ const jsonLd = {
   </head>
   <body>
     <span class="scroll-progress" aria-hidden="true" data-scroll-progress></span>
-    <div class="woodbg" aria-hidden="true" style={`--wood-tex: url(${woodTex.src})`}></div>
+    <div class="woodbg" aria-hidden="true" style={`--wood-tex: url(${woodWebp.src})`}></div>
 
     <div class="cursor" aria-hidden="true">
       <span class="cursor__dot"></span>
