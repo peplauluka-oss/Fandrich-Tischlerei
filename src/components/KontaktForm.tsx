@@ -9,11 +9,10 @@ interface Errors {
   nachricht?: string;
 }
 
-// TODO Formular-Backend: Formspree-Endpoint eintragen (https://formspree.io),
-// z. B. 'https://formspree.io/f/XXXXXXXX'. Solange leer, zeigt das Formular
-// nach dem Absenden eine ehrliche Fehlermeldung statt vorzutäuschen, dass
-// die Nachricht ankam.
-const FORM_ENDPOINT = '';
+// Formular-Backend: Formspree. Sendet an anfrage@tischlerei-fandrich.de.
+// Wichtig: Die ERSTE Absendung muss einmalig per E-Mail von Formspree bestätigt
+// werden, damit das Formular aktiv ist (Double-Opt-in des Anbieters).
+const FORM_ENDPOINT = 'https://formspree.io/f/xpqvyvgb';
 
 export default function KontaktForm() {
   const [status, setStatus] = useState<Status>('idle');

@@ -37,7 +37,7 @@ Die von dir geschickte Datenschutzerklärung stammt erkennbar von einer **anders
 - `[[BILDNACHWEISE]]` — einige Motive sind gestaltete/generierte Bilder; Quelle/Lizenz klären
 
 **Datenschutz:**
-- `[[FORMULAR-BACKEND]]` / `[[FORMULAR-DRITTLAND]]` — **wichtig:** Wohin sendet das Kontaktformular technisch? Anbieter = Auftragsverarbeiter, muss benannt werden.
+- Kontaktformular: **Formspree eingebunden** ✅ (Endpoint verdrahtet, stellt an anfrage@tischlerei-fandrich.de zu, in der Datenschutzerklärung als Auftragsverarbeiter/USA benannt). Offen: `[[FORMSPREE-DPA]]` — Auftragsverarbeitungsvertrag mit Formspree abschließen. **Hinweis:** Die erste Absendung muss einmalig über die Formspree-Bestätigungs-E-Mail aktiviert werden, sonst kommen keine Nachrichten an.
 - `[[AUFTRAGSVERARBEITUNG-HOSTING]]` — AV-Vereinbarung/DPA mit GitHub dokumentieren
 
 **AGB:**
