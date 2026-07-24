@@ -20,13 +20,13 @@ const email = site.email || '[[E-MAIL]]';
 
       <h2>Angaben gemäß § 5 DDG</h2>
       <p>
-        Tischlerei {site.name}<br />
+        {site.legalName}<br />
         {site.street}<br />
         {site.zip} {site.city}
       </p>
 
       <h2>Vertreten durch</h2>
-      <p>Geschäftsführer: [[GESCHÄFTSFÜHRER]]</p>
+      <p>Geschäftsführer: {site.geschaeftsfuehrer}</p>
 
       <h2>Kontakt</h2>
       <p>
@@ -37,8 +37,8 @@ const email = site.email || '[[E-MAIL]]';
       <h2>Registereintrag</h2>
       <p>
         Eingetragen im Handelsregister.<br />
-        Registergericht: [[REGISTERGERICHT, z. B. Amtsgericht Charlottenburg]]<br />
-        Registernummer: [[HRB-NUMMER]]
+        Registergericht: {site.registergericht}<br />
+        Registernummer: {site.hrb}
       </p>
 
       <h2>Umsatzsteuer-ID</h2>
@@ -57,7 +57,7 @@ const email = site.email || '[[E-MAIL]]';
 
       <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
       <p>
-        [[VERANTWORTLICHE-PERSON]]<br />
+        Die Geschäftsführung ({site.geschaeftsfuehrer})<br />
         {site.street}, {site.zip} {site.city}
       </p>
 

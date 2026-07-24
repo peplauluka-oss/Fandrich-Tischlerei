@@ -4,6 +4,12 @@
  */
 export const site = {
   name: 'Fandrich GmbH',
+  /** Vollständige Firmierung laut Handelsregister (für Impressum/Recht). */
+  legalName: 'Tischlerei und Möbelrestaurierung Fandrich GmbH',
+  /** Geschäftsführer (verifiziert). */
+  geschaeftsfuehrer: 'D. Debski und S. Winkler',
+  registergericht: 'Amtsgericht Charlottenburg',
+  hrb: 'HRB 80705',
   brand: 'FANDRICH',
   claim: 'Tischlerei & Möbelrestaurierung, Berlin',
   // Hinweis: Das Fassadenschild zeigt "Meisterbetrieb seit 19??" (schwer
@@ -16,10 +22,8 @@ export const site = {
   district: 'Pankow',
   phone: '030 36 44 57 60', // TODO verifizieren
   phoneHref: '+493036445760',
-  // TODO: Echte E-Mail-Adresse eintragen. Solange leer, blenden Kontakt,
-  // Footer und Formular-Fallback die E-Mail komplett aus — keine erfundene
-  // Adresse auf der Live-Seite.
-  email: '',
+  email: 'anfrage@tischlerei-fandrich.de', // verifiziert
+
   geo: { lat: 52.594, lng: 13.437 }, // TODO: exakte Koordinaten prüfen (Treseburger Str. 30)
   openingHours: 'Mo–Fr 7–16 Uhr', // TODO: Öffnungszeiten verifizieren
   openingHoursSchema: 'Mo-Fr 07:00-16:00', // TODO: an echte Zeiten anpassen
