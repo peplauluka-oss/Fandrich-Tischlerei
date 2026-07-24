@@ -1,0 +1,214 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const email = site.email || '[[E-MAIL]]';
+const stand = 'Juli 2026';
+---
+
+<Base
+  title="AGB | Fandrich GmbH — Tischlerei Berlin Pankow"
+  description="Allgemeine Geschäftsbedingungen der Tischlerei Fandrich GmbH für Werkverträge in Berlin und Umgebung."
+>
+  <Nav client:load solid />
+  <main class="legal">
+    <div class="wrap">
+      <p class="eyebrow">Rechtliches</p>
+      <h1 class="headline">Allgemeine Geschäftsbedingungen</h1>
+      <p class="legal__lead">
+        Diese Bedingungen gelten für Werk- und Werklieferungsverträge der Tischlerei {site.name},
+        {site.street}, {site.zip} {site.city}. Abschnitte, die ausdrücklich Verbraucher oder
+        Unternehmer betreffen, sind entsprechend gekennzeichnet.
+      </p>
+
+      <h2>§ 1 Geltungsbereich</h2>
+      <p>
+        (1) Diese AGB gelten für alle Verträge zwischen der Tischlerei {site.name} (nachfolgend
+        „wir“) und dem Auftraggeber (nachfolgend „Kunde“). Verbraucher ist jede natürliche Person,
+        die den Vertrag zu Zwecken schließt, die überwiegend weder ihrer gewerblichen noch ihrer
+        selbständigen beruflichen Tätigkeit zugerechnet werden können (§ 13 BGB). Unternehmer ist,
+        wer bei Abschluss in Ausübung seiner gewerblichen oder selbständigen beruflichen Tätigkeit
+        handelt (§ 14 BGB).
+      </p>
+      <p>
+        (2) Abweichenden Bedingungen des Kunden wird widersprochen; sie werden nur bei ausdrücklicher
+        schriftlicher Zustimmung Vertragsbestandteil.
+      </p>
+
+      <h2>§ 2 Vertragsschluss</h2>
+      <p>
+        (1) Unsere Angebote sind freibleibend, sofern sie nicht ausdrücklich als verbindlich
+        bezeichnet sind. Ein als verbindlich bezeichnetes Angebot hat eine Bindefrist von
+        [[BINDEFRIST, z. B. 14 Tagen]] ab Datum, soweit nichts anderes angegeben ist.
+      </p>
+      <p>
+        (2) Der Vertrag kommt durch unsere Auftragsbestätigung oder mit Beginn der Ausführung
+        zustande.
+      </p>
+
+      <h2>§ 3 Preise, Aufmaß und Angebot</h2>
+      <p>
+        (1) Maßgeblich ist in der Regel ein Angebot nach vorheriger Besichtigung und Aufmaß vor Ort.
+        Alle Preise verstehen sich zzgl. der gesetzlichen Umsatzsteuer.
+      </p>
+      <p>
+        (2) Regie- bzw. Stundenlohnarbeiten werden nach tatsächlichem Aufwand abgerechnet. Der
+        Stundensatz beträgt [[STUNDENSATZ]]; Anfahrt und Material werden gesondert ausgewiesen.
+      </p>
+
+      <h2>§ 4 Mitwirkungspflichten des Kunden</h2>
+      <p>
+        Der Kunde stellt sicher, dass die Ausführung ungehindert erfolgen kann. Dazu gehören
+        insbesondere der rechtzeitige Zugang zu den Räumen, das Freiräumen des Arbeitsbereichs sowie
+        die Bereitstellung von Strom und Wasser. Verzögerungen oder Mehraufwand aufgrund
+        unterlassener Mitwirkung gehen zu Lasten des Kunden.
+      </p>
+
+      <h2>§ 5 Liefer- und Ausführungsfristen</h2>
+      <p>
+        Termine und Fristen sind nur verbindlich, wenn sie ausdrücklich als verbindlich vereinbart
+        wurden. Bei höherer Gewalt, Lieferengpässen oder vom Kunden zu vertretenden Verzögerungen
+        verlängern sich Fristen angemessen.
+      </p>
+
+      <h2>§ 6 Abnahme</h2>
+      <p>
+        Der Kunde ist zur Abnahme des vertragsgemäß erstellten Werks verpflichtet (§ 640 BGB).
+        Unwesentliche Mängel berechtigen nicht zur Verweigerung der Abnahme. Nimmt der Kunde ein
+        fertiggestelltes Werk nicht innerhalb einer angemessenen, von uns gesetzten Frist ab, gilt
+        die Abnahme unter den Voraussetzungen des § 640 Abs. 2 BGB als erfolgt.
+      </p>
+
+      <h2>§ 7 Gewährleistung</h2>
+      <p>
+        (1) <strong>Gegenüber Verbrauchern</strong> gelten die gesetzlichen Mängelrechte; eine
+        Verkürzung der Verjährung erfolgt nicht.
+      </p>
+      <p>
+        (2) <strong>Gegenüber Unternehmern</strong> gilt die kaufmännische Untersuchungs- und
+        Rügepflicht nach § 377 HGB entsprechend; offensichtliche Mängel sind unverzüglich schriftlich
+        anzuzeigen. Im Übrigen richten sich die Rechte nach den gesetzlichen Bestimmungen.
+      </p>
+      <p>
+        (3) Bei Holz als Naturwerkstoff sind branchenübliche Abweichungen in Farbe, Maserung und
+        Struktur sowie natürliches Arbeiten des Holzes kein Mangel.
+      </p>
+
+      <h2>§ 8 Eigentumsvorbehalt</h2>
+      <p>
+        Gelieferte Waren bleiben bis zur vollständigen Bezahlung unser Eigentum. Gegenüber
+        Unternehmern behalten wir uns das Eigentum bis zur Erfüllung aller Forderungen aus der
+        Geschäftsverbindung vor.
+      </p>
+
+      <h2>§ 9 Zahlung und Abschlagszahlungen</h2>
+      <p>
+        (1) Rechnungen sind, sofern nichts anderes vereinbart ist, innerhalb von
+        [[ZAHLUNGSZIEL, z. B. 14 Tagen]] ohne Abzug zahlbar.
+      </p>
+      <p>
+        (2) Für in sich abgeschlossene Teile der Leistung können wir Abschlagszahlungen in Höhe des
+        Wertes der erbrachten und vertragsgemäßen Leistungen verlangen (§ 632a BGB).
+      </p>
+
+      <h2>§ 10 Widerrufsrecht für Verbraucher</h2>
+      <p>
+        Schließen Sie als Verbraucher einen Vertrag außerhalb unserer Geschäftsräume (z. B. bei
+        Ihnen zu Hause) oder im Fernabsatz, steht Ihnen ein gesetzliches Widerrufsrecht nach
+        §§ 312b, 312g, 355 BGB zu.
+      </p>
+
+      <h3>Widerrufsbelehrung</h3>
+      <p>
+        <strong>Widerrufsrecht.</strong> Sie haben das Recht, binnen vierzehn Tagen ohne Angabe von
+        Gründen diesen Vertrag zu widerrufen. Die Widerrufsfrist beträgt vierzehn Tage ab dem Tag des
+        Vertragsschlusses. Um Ihr Widerrufsrecht auszuüben, müssen Sie uns (Tischlerei {site.name},
+        {site.street}, {site.zip} {site.city}, Telefon {site.phone}, E-Mail {email}) mittels einer
+        eindeutigen Erklärung (z. B. per Brief oder E-Mail) über Ihren Entschluss, diesen Vertrag zu
+        widerrufen, informieren. Zur Wahrung der Widerrufsfrist genügt die rechtzeitige Absendung der
+        Mitteilung.
+      </p>
+      <p>
+        <strong>Folgen des Widerrufs.</strong> Wenn Sie diesen Vertrag widerrufen, haben wir Ihnen
+        alle Zahlungen, die wir von Ihnen erhalten haben, unverzüglich und spätestens binnen vierzehn
+        Tagen zurückzuzahlen. Haben Sie verlangt, dass die Dienstleistung während der Widerrufsfrist
+        beginnen soll, so haben Sie uns einen angemessenen Betrag für die bis zum Widerruf bereits
+        erbrachte Leistung zu zahlen.
+      </p>
+      <p>
+        <strong>Erlöschen des Widerrufsrechts (§ 312g Abs. 2 BGB).</strong> Das Widerrufsrecht
+        besteht nicht bei Verträgen zur Lieferung von Waren, die nicht vorgefertigt sind und für
+        deren Herstellung eine individuelle Auswahl oder Bestimmung durch den Verbraucher maßgeblich
+        ist oder die eindeutig auf die persönlichen Bedürfnisse des Verbrauchers zugeschnitten sind
+        (Maßanfertigungen). Bei vollständig erbrachten Dienstleistungen erlischt das Widerrufsrecht,
+        wenn wir mit der Ausführung erst nach Ihrer ausdrücklichen Zustimmung und Ihrer Bestätigung
+        Ihrer Kenntnis vom Erlöschen des Widerrufsrechts begonnen haben.
+      </p>
+
+      <h2>§ 11 Haftung</h2>
+      <p>
+        Wir haften unbeschränkt bei Vorsatz und grober Fahrlässigkeit sowie bei der Verletzung von
+        Leben, Körper und Gesundheit. Bei einfacher Fahrlässigkeit haften wir nur bei Verletzung
+        einer wesentlichen Vertragspflicht (Kardinalpflicht) und der Höhe nach begrenzt auf den
+        vertragstypischen, vorhersehbaren Schaden. Eine weitergehende Haftung ist ausgeschlossen.
+        Zwingende gesetzliche Regelungen, insbesondere nach dem Produkthaftungsgesetz, bleiben
+        unberührt.
+      </p>
+
+      <h2>§ 12 Gerichtsstand</h2>
+      <p>
+        Ist der Kunde Kaufmann, juristische Person des öffentlichen Rechts oder
+        öffentlich-rechtliches Sondervermögen, ist ausschließlicher Gerichtsstand unser Geschäftssitz
+        in Berlin. Gegenüber Verbrauchern gilt diese Gerichtsstandsvereinbarung nicht; es gelten die
+        gesetzlichen Regelungen. Es gilt das Recht der Bundesrepublik Deutschland.
+      </p>
+
+      <h2>§ 13 Salvatorische Klausel</h2>
+      <p>
+        Sollte eine Bestimmung dieser AGB unwirksam sein oder werden, bleibt die Wirksamkeit der
+        übrigen Bestimmungen unberührt. An die Stelle der unwirksamen Regelung tritt die gesetzliche
+        Regelung.
+      </p>
+
+      <p>Stand dieser AGB: {stand}.</p>
+
+      <p class="legal__cross">
+        Siehe auch: <a href={`${base}/impressum`} class="link-line">Impressum</a> ·
+        <a href={`${base}/datenschutz`} class="link-line">Datenschutz</a>
+      </p>
+    </div>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .legal {
+    padding-block: clamp(8rem, 18vh, 12rem) var(--section-gap);
+  }
+  .legal__lead {
+    margin-top: 1rem;
+    max-width: 68ch;
+    color: rgba(58, 42, 28, 0.82);
+  }
+  .legal h2 {
+    font-size: 1.3rem;
+    margin-top: 2.5rem;
+  }
+  .legal h3 {
+    font-size: 1.05rem;
+    margin-top: 1.5rem;
+  }
+  .legal p {
+    margin-top: 0.75rem;
+    max-width: 68ch;
+    line-height: 1.6;
+  }
+  .legal__cross {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--oak-line);
+  }
+</style>
