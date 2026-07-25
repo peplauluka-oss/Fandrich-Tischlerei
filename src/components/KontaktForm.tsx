@@ -196,11 +196,6 @@ export default function KontaktForm() {
                 {errors.kontakt && <p className="form__error">{errors.kontakt}</p>}
               </div>
 
-              <div className="form__field">
-                <textarea id="nachricht" name="Nachricht" placeholder=" " rows={2} />
-                <label htmlFor="nachricht">Kurz zum Projekt (optional)</label>
-              </div>
-
               <button type="submit" className="btn" disabled={status === 'sending'}>
                 {status === 'sending' ? 'Wird gesendet …' : 'Anfrage senden'}
                 <span className="arrow" aria-hidden="true">→</span>
